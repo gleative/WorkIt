@@ -59,19 +59,22 @@ public class NavigationDrawerFragment extends Fragment implements NavigationView
         switch (item.getItemId()) {
             case R.id.nav_home:
                 intent = new Intent(getActivity(), MainActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_SINGLE_TOP); // Gjør at den går ut av applikasjonen når brukeren trykker tilbake. Måtte være før "startActivity" for å fungere!
                 startActivity(intent);
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 break;
             case R.id.nav_profile:
                 intent = new Intent(getActivity(), ProfileActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP); // Hvis bruker går inn på denne to ganger på rad, så vil den ikke gå tilbake på denne activitien igjen
                 startActivity(intent);
                 break;
             case R.id.nav_exercises:
                 intent = new Intent(getActivity(), ExerciseActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 startActivity(intent);
                 break;
             case R.id.nav_myWorkouts:
                 intent = new Intent(getActivity(), MyWorkoutActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
 //                Toast.makeText(getActivity(), "Opening settings...", Toast.LENGTH_SHORT).show();
                 startActivity(intent);
                 break;
