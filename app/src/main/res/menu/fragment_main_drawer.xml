@@ -5,11 +5,15 @@
         <item
             android:id="@+id/nav_home"
             android:icon="@drawable/ic_menu_camera"
-            android:title="Home" />
+            android:title="Home"  />
         <item
             android:id="@+id/nav_profile"
             android:icon="@drawable/ic_menu_gallery"
             android:title="Profile" />
+        <item
+            android:id="@+id/nav_myWorkouts"
+            android:icon="@drawable/ic_menu_gallery"
+            android:title="My Workouts" />
         <item
             android:id="@+id/nav_exercises"
             android:icon="@drawable/ic_menu_slideshow"
@@ -20,17 +24,10 @@
             android:title="Tools" />
     </group>
 
-    <item android:title="Communicate">
-        <menu>
-            <item
-                android:id="@+id/nav_share"
-                android:icon="@drawable/ic_menu_share"
-                android:title="Share" />
-            <item
-                android:id="@+id/nav_send"
-                android:icon="@drawable/ic_menu_send"
-                android:title="Send" />
-        </menu>
-    </item>
+    <!--<item>-->
+        <!--<menu>-->
+
+        <!--</menu>-->
+    <!--</item>-->
 
 </menu>

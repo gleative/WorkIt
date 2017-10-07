@@ -17,6 +17,8 @@ import android.widget.Toast;
 
 import com.example.gleative.workit.ExerciseActivity;
 import com.example.gleative.workit.MainActivity;
+import com.example.gleative.workit.MyWorkoutActivity;
+import com.example.gleative.workit.ProfileActivity;
 import com.example.gleative.workit.R;
 
 public class NavigationDrawerFragment extends Fragment implements NavigationView.OnNavigationItemSelectedListener {
@@ -58,18 +60,21 @@ public class NavigationDrawerFragment extends Fragment implements NavigationView
             case R.id.nav_home:
                 intent = new Intent(getActivity(), MainActivity.class);
                 startActivity(intent);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 break;
             case R.id.nav_profile:
-//                intent = new Intent(getActivity(), ListActivity.class);
-//                startActivity(intent);
-//                break;
+                intent = new Intent(getActivity(), ProfileActivity.class);
+                startActivity(intent);
+                break;
             case R.id.nav_exercises:
                 intent = new Intent(getActivity(), ExerciseActivity.class);
                 startActivity(intent);
                 break;
-//            case R.id.nav_help_feedback:
+            case R.id.nav_myWorkouts:
+                intent = new Intent(getActivity(), MyWorkoutActivity.class);
 //                Toast.makeText(getActivity(), "Opening settings...", Toast.LENGTH_SHORT).show();
-//                break;
+                startActivity(intent);
+                break;
         }
 
         drawerLayout.closeDrawer(GravityCompat.START);

@@ -26,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         toolbar = (Toolbar) findViewById(R.id.toolbar); // Finner toolbaren i Activity
+        toolbar.setTitle("Home"); // Må sette title her av en eller annen grunn. Går ikke i manifest, ellers blir navn på appen Home
         setSupportActionBar(toolbar);
 
 //        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);

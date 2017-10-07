@@ -7,7 +7,7 @@ import android.support.v7.widget.Toolbar;
 
 import com.example.gleative.workit.fragments.NavigationDrawerFragment;
 
-public class ExerciseActivity extends AppCompatActivity {
+public class StartWorkoutActivity extends AppCompatActivity {
 
     Toolbar toolbar;
     NavigationDrawerFragment navigationDrawerFragment;
@@ -15,11 +15,9 @@ public class ExerciseActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_exercise);
+        setContentView(R.layout.activity_start_workout);
 
-        toolbar = (Toolbar) findViewById(R.id.toolbar); // Finner toolbaren i Activity
-//        SJEKK MANIFEST OG PÅ EXERCISES, VI KAN DEFINERE NAVN PÅ ACTIONBAR DER!
-//        toolbar.setTitle("Exercises"); // Setter title på actionbar
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         setUpDrawer();
@@ -37,7 +35,4 @@ public class ExerciseActivity extends AppCompatActivity {
 
         super.onStart();
     }
-
-
-
 }
