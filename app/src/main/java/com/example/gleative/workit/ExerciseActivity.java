@@ -3,14 +3,19 @@ package com.example.gleative.workit;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 
+import com.example.gleative.workit.adapter.ExercisesRecyclerAdapter;
 import com.example.gleative.workit.fragments.NavigationDrawerFragment;
+import com.example.gleative.workit.model.Exercise;
 
 public class ExerciseActivity extends AppCompatActivity {
 
     Toolbar toolbar;
     NavigationDrawerFragment navigationDrawerFragment;
+    RecyclerView recyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,6 +28,7 @@ public class ExerciseActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         setUpDrawer();
+        setUpRecyclerView();
     }
 
     private void setUpDrawer() {
@@ -36,6 +42,16 @@ public class ExerciseActivity extends AppCompatActivity {
         navigationDrawerFragment.updateCheckedItem(R.id.nav_exercises);
 
         super.onStart();
+    }
+
+    private void setUpRecyclerView(){
+        recyclerView = (RecyclerView) findViewById(R.id.exercise_recycler_view);
+        ExercisesRecyclerAdapter adapter = new ExercisesRecyclerAdapter(this, Exercise.getData()); // Må ha constructor på adapteren ellers du får error!
+        recyclerView.setAdapter(adapter);
+
+        LinearLayoutManager linearLayoutManagerVertical = new LinearLayoutManager(this);
+        linearLayoutManagerVertical.setOrientation(LinearLayoutManager.VERTICAL);
+        recyclerView.setLayoutManager(linearLayoutManagerVertical);
     }
 
 

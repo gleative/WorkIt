@@ -26,6 +26,7 @@
 
     </android.support.design.widget.CoordinatorLayout>
 
+    <!--Merk linje 36! Der tar den fra en annen layout fil!-->
     <fragment
         android:id="@+id/navigation_drawer_fragment"
         android:name="com.example.gleative.workit.fragments.NavigationDrawerFragment"
