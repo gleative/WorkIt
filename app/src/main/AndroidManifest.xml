@@ -21,12 +21,16 @@
         <activity
             android:name=".ExerciseActivity"
             android:label="Exercises" />
-        <activity android:name=".ProfileActivity"
+        <activity
+            android:name=".ProfileActivity"
             android:label="Profile" />
-        <activity android:name=".MyWorkoutActivity"
+        <activity
+            android:name=".MyWorkoutActivity"
             android:label="My Workouts" />
-        <activity android:name=".StartWorkoutActivity"
+        <activity
+            android:name=".StartWorkoutActivity"
             android:label="Start Workout" />
+        <activity android:name=".ExerciseInfoActivity"></activity>
     </application>
 
 </manifest>

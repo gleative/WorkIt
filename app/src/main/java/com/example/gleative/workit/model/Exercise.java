@@ -24,6 +24,7 @@ public class Exercise {
         for(int i = 0; i <= 40; i++){
             Exercise exercise = new Exercise();
             exercise.setExerciseName("Exercise " + i);
+            exercise.setExerciseDescription("Description for exercise: " + i);
 
             exerciseList.add(exercise);
         }

@@ -1,36 +1,39 @@
 package com.example.gleative.workit;
 
-import android.support.design.widget.Snackbar;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
+import android.widget.TextView;
 
 import com.example.gleative.workit.adapter.ExercisesRecyclerAdapter;
 import com.example.gleative.workit.fragments.NavigationDrawerFragment;
 import com.example.gleative.workit.model.Exercise;
 
-public class ExerciseActivity extends AppCompatActivity {
+import org.w3c.dom.Text;
+
+public class ExerciseInfoActivity extends AppCompatActivity {
+
+    Exercise selectedExercise;
 
     Toolbar toolbar;
     NavigationDrawerFragment navigationDrawerFragment;
-    RecyclerView recyclerView;
+
+    TextView textViewExerciseDesc;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_exercise);
+        setContentView(R.layout.activity_exercise_info);
 
-        toolbar = (Toolbar) findViewById(R.id.toolbar); // Finner toolbaren i Activity
-//        SJEKK MANIFEST OG PÅ EXERCISES, VI KAN DEFINERE NAVN PÅ ACTIONBAR DER!
-//        toolbar.setTitle("Exercises"); // Setter title på actionbar
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitle(selectedExercise.getExerciseName());
         setSupportActionBar(toolbar);
 
         setUpDrawer();
-        setUpRecyclerView();
+        addData();
     }
 
     private void setUpDrawer() {
@@ -46,15 +49,8 @@ public class ExerciseActivity extends AppCompatActivity {
         super.onStart();
     }
 
-    private void setUpRecyclerView(){
-        recyclerView = (RecyclerView) findViewById(R.id.exercise_recycler_view); // Henter listen fra layout fil
-        ExercisesRecyclerAdapter adapter = new ExercisesRecyclerAdapter(this, Exercise.getData()); // Må ha constructor på adapteren ellers du får error!
-        recyclerView.setAdapter(adapter);
-
-        // Setter opp hvordan listen skal se ut
-        LinearLayoutManager linearLayoutManagerVertical = new LinearLayoutManager(this);
-        linearLayoutManagerVertical.setOrientation(LinearLayoutManager.VERTICAL);
-        recyclerView.setLayoutManager(linearLayoutManagerVertical);
+    private void addData(){
+        textViewExerciseDesc = (TextView) findViewById(R.id.exercise_description);
+        textViewExerciseDesc.setText(selectedExercise.getExerciseDescription());
     }
-
 }
