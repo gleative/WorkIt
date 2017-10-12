@@ -1,6 +1,8 @@
 package com.example.gleative.workit;
 
+import android.content.Intent;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -10,13 +12,16 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 
 import com.example.gleative.workit.adapter.ExercisesRecyclerAdapter;
+import com.example.gleative.workit.fragments.ExerciseInfoFragment;
+import com.example.gleative.workit.fragments.ExerciseListFragment;
 import com.example.gleative.workit.fragments.NavigationDrawerFragment;
 import com.example.gleative.workit.model.Exercise;
 
-public class ExerciseActivity extends AppCompatActivity {
+public class ExerciseActivity extends AppCompatActivity implements ExerciseListFragment.OnExerciseFragmentSelectedListener{
 
     Toolbar toolbar;
     NavigationDrawerFragment navigationDrawerFragment;
+    ExerciseInfoFragment exerciseInfoFragment;
     RecyclerView recyclerView;
 
     @Override
@@ -30,7 +35,6 @@ public class ExerciseActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         setUpDrawer();
-        setUpRecyclerView();
     }
 
     private void setUpDrawer() {
@@ -46,15 +50,15 @@ public class ExerciseActivity extends AppCompatActivity {
         super.onStart();
     }
 
-    private void setUpRecyclerView(){
-        recyclerView = (RecyclerView) findViewById(R.id.exercise_recycler_view); // Henter listen fra layout fil
-        ExercisesRecyclerAdapter adapter = new ExercisesRecyclerAdapter(this, Exercise.getData()); // Må ha constructor på adapteren ellers du får error!
-        recyclerView.setAdapter(adapter);
+    @Override
+    public void onExerciseSelected(Exercise selectedExercise) {
+//        FragmentManager fragmentManager = getSupportFragmentManager();
+        exerciseInfoFragment = (ExerciseInfoFragment) getSupportFragmentManager().findFragmentById(R.id.exercise_info_fragment); // Fragment from "activity_exercise_info"
 
-        // Setter opp hvordan listen skal se ut
-        LinearLayoutManager linearLayoutManagerVertical = new LinearLayoutManager(this);
-        linearLayoutManagerVertical.setOrientation(LinearLayoutManager.VERTICAL);
-        recyclerView.setLayoutManager(linearLayoutManagerVertical);
+        exerciseInfoFragment.setDisplayDetail(selectedExercise.getExerciseID());
+
+        Intent intent = new Intent(this, ExerciseInfoActivity.class);
+        intent.putExtra("exercise_id", selectedExercise.getExerciseID());
+        startActivity(intent);
     }
-
 }

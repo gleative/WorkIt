@@ -1,85 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/drawer_layout"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="com.example.gleative.workit.ExerciseInfoActivity">
-
-
-    <!--Må ha en egen layout for innhold, ellers dekker action bar hele skjermen-->
-    <android.support.design.widget.CoordinatorLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <android.support.design.widget.AppBarLayout
-            android:id="@+id/appBarLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <!--Se på one note om hva collapsingToolbarLayout er-->
-            <android.support.design.widget.CollapsingToolbarLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:layout_scrollFlags="scroll|exitUntilCollapsed"
-                app:contentScrim="?attr/colorPrimary">
-
-                <!--ImageView må være før toolbar, ellers kan du ikke se hamburger icon!-->
-                <ImageView
-                    android:id="@+id/exercise_picture"
-                    android:layout_width="match_parent"
-                    android:layout_height="256dp"
-                    android:scaleType="centerCrop"
-                    app:layout_collapseMode="parallax"
-                    android:src="@drawable/testpicture"/>
-
-                    <!--Lager en toolbar-->
-                    <android.support.v7.widget.Toolbar
-                        android:id="@+id/toolbar"
-                        android:layout_width="match_parent"
-                        android:layout_height="?attr/actionBarSize"
-                        app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-                        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-                        app:layout_scrollFlags="scroll|enterAlways"/>
-                    <!--Linje 41 gjør at baren på toppen går vekk når du scroller-->
-
-
-
-            </android.support.design.widget.CollapsingToolbarLayout>
-        </android.support.design.widget.AppBarLayout>
-
-        <android.support.design.widget.FloatingActionButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="40dp"
-            android:src="@drawable/ic_favorite"
-            app:layout_anchor="@id/appBarLayout"
-            app:layout_anchorGravity="bottom|right|end"
-            />
-
-        <!--Linje 64 gjør at den er under appbarlayout!-->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior">
-            <TextView
-                android:id="@+id/exercise_description"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Desc"/>
-        </LinearLayout>
-
-
-
-    </android.support.design.widget.CoordinatorLayout>
-
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
     <fragment
-        android:id="@+id/navigation_drawer_fragment"
-        android:name="com.example.gleative.workit.fragments.NavigationDrawerFragment"
-        android:layout_width="@dimen/navigation_drawer_width"
+        android:id="@+id/exercise_info_fragment"
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_gravity="start"
-        tools:layout="@layout/fragment_navigation_drawer"/>
+        android:name="com.example.gleative.workit.fragments.ExerciseInfoFragment" />
 
-</android.support.v4.widget.DrawerLayout>
+</LinearLayout>

@@ -1,15 +1,12 @@
 package com.example.gleative.workit.adapter;
 
-import com.example.gleative.workit.ExerciseInfoActivity;
 import com.example.gleative.workit.R;
 
 import android.content.Context;
-import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.TextView;
 
 import com.example.gleative.workit.model.Exercise;
@@ -20,7 +17,7 @@ import java.util.List;
  * Created by gleative on 09.10.2017.
  */
 
-public class ExercisesRecyclerAdapter extends RecyclerView.Adapter<ExercisesRecyclerAdapter.MyViewHolder>{
+public class ExercisesRecyclerAdapter extends RecyclerView.Adapter<ExercisesRecyclerAdapter.ExerciseViewHolder>{
 
     private List<Exercise> exerciseList;
     private LayoutInflater inflater;
@@ -44,15 +41,13 @@ public class ExercisesRecyclerAdapter extends RecyclerView.Adapter<ExercisesRecy
         };
     }
 
-
-
     // Måtte ha disse pga extend RecyclerView
 
     // Får tak i layoutfilen
     @Override
-    public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public ExerciseViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = inflater.inflate(R.layout.list_exercises, parent, false); // Inflater list_exercise layout, sånn at hver data skal få dette utseende
-        MyViewHolder holder = new MyViewHolder(view);
+        ExerciseViewHolder holder = new ExerciseViewHolder(view);
 
         view.setOnClickListener(holder);
 
@@ -60,7 +55,7 @@ public class ExercisesRecyclerAdapter extends RecyclerView.Adapter<ExercisesRecy
     }
 
     @Override
-    public void onBindViewHolder(MyViewHolder holder, int position) {
+    public void onBindViewHolder(ExerciseViewHolder holder, int position) {
         Exercise current = exerciseList.get(position);
         holder.bind(current, exerciseSelectedListener);
         holder.setData(current);
@@ -74,12 +69,12 @@ public class ExercisesRecyclerAdapter extends RecyclerView.Adapter<ExercisesRecy
     }
 
 
-    class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+    class ExerciseViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         TextView title;
         TextView description;
         OnExerciseSelectedListener onExerciseSelectedListener;
 
-        public MyViewHolder(View itemView){
+        public ExerciseViewHolder(View itemView){
             super(itemView);
 
 //            // Gjør at listen er clickbar

@@ -11,35 +11,18 @@ import java.util.List;
 
 public class Exercise {
 
+    private int exerciseID;
     private String exerciseName;
     private String exerciseDescription;
     private int videoID;
     private int imageID; // Bildet som kommer til å være på høyre siden
 
-    // Legger til data sånn at det kan bli lagt inn i recycler view
-    public static ArrayList<Exercise> getData(){
-
-        ArrayList<Exercise> exerciseList = new ArrayList<>();
-
-        for(int i = 0; i <= 40; i++){
-            Exercise exercise = new Exercise();
-            exercise.setExerciseName("Exercise " + i);
-            exercise.setExerciseDescription("Description for exercise: " + i);
-
-            exerciseList.add(exercise);
-        }
-
-        return exerciseList;
+    public int getExerciseID(){
+        return exerciseID;
     }
 
-    public static int[] getImages(){
-
-        int[] images = {
-                R.drawable.e12_1, R.drawable.e12_2, R.drawable.e1621_1, R.drawable.e1621_2, R.drawable.e1_1,
-                R.drawable.e1_2, R.drawable.e70_1, R.drawable.e70_2
-        };
-
-        return images;
+    public void setExerciseID(int exerciseID){
+        this.exerciseID = exerciseID;
     }
 
     public String getExerciseName() {
@@ -72,5 +55,32 @@ public class Exercise {
 
     public void setImageID(int imageID) {
         this.imageID = imageID;
+    }
+
+    // Legger til data sånn at det kan bli lagt inn i recycler view
+    public static List<Exercise> getData(){
+
+        List<Exercise> exerciseList = new ArrayList<>();
+
+        for(int i = 0; i <= 40; i++){
+            Exercise exercise = new Exercise();
+            exercise.setExerciseID(i);
+            exercise.setExerciseName("Exercise " + i);
+            exercise.setExerciseDescription("Description for exercise: " + i);
+
+            exerciseList.add(exercise);
+        }
+
+        return exerciseList;
+    }
+
+    public static int[] getImages(){
+
+        int[] images = {
+                R.drawable.e12_1, R.drawable.e12_2, R.drawable.e1621_1, R.drawable.e1621_2, R.drawable.e1_1,
+                R.drawable.e1_2, R.drawable.e70_1, R.drawable.e70_2
+        };
+
+        return images;
     }
 }

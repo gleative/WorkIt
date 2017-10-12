@@ -8,71 +8,15 @@
     android:theme="@style/AppTheme.NoActionBar"
     tools:context="com.example.gleative.workit.ExerciseActivity">
 
-    <!--Må ha en egen layout for innhold, ellers dekker action bar hele skjermen-->
-    <android.support.design.widget.CoordinatorLayout
+    <!--List of exercises-->
+    <fragment
+        android:id="@+id/exercise_list_fragment"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <android.support.design.widget.AppBarLayout
-            android:id="@+id/appBarLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <!--Se på one note om hva collapsingToolbarLayout er-->
-            <android.support.design.widget.CollapsingToolbarLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:layout_scrollFlags="scroll|exitUntilCollapsed"
-                app:contentScrim="?attr/colorPrimary">
-
-                <!--ImageView må være før toolbar, ellers kan du ikke se hamburger icon!-->
-                <ImageView
-                    android:id="@+id/exercise_picture"
-                    android:layout_width="match_parent"
-                    android:layout_height="256dp"
-                    android:scaleType="centerCrop"
-                    app:layout_collapseMode="parallax"
-                    android:src="@drawable/testpicture"/>
-
-                    <!--Lager en toolbar-->
-                    <android.support.v7.widget.Toolbar
-                        android:id="@+id/toolbar"
-                        android:layout_width="match_parent"
-                        android:layout_height="?attr/actionBarSize"
-                        app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-                        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-                        app:layout_scrollFlags="scroll|enterAlways"/>
-                        <!--Linje 41 gjør at baren på toppen går vekk når du scroller-->
+        android:layout_height="match_parent"
+        android:name="com.example.gleative.workit.fragments.ExerciseListFragment"/>
 
 
-
-                </android.support.design.widget.CollapsingToolbarLayout>
-        </android.support.design.widget.AppBarLayout>
-
-                    <!--Linje 38 gjør at actionbar beveger seg når du scroller nedover-->
-                    <!--Merk line 37, MÅ ha den innenfor CoordinatorLayout! Fordi det er en funksjon fra den layouten.-->
-                    <!--Da ble også listene lagt under actionbar!! -->
-                    <android.support.v7.widget.RecyclerView
-                        android:id="@+id/exercise_recycler_view"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
-        
-                    <android.support.design.widget.FloatingActionButton
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="40dp"
-                        android:src="@drawable/ic_favorite"
-                        app:layout_anchor="@id/appBarLayout"
-                        app:layout_anchorGravity="bottom|right|end"
-                        />
-    </android.support.design.widget.CoordinatorLayout>
-
-
-
-
-
-
-    <!--Gjør at vi får navigation drawer i denne aktivitien-->
+    <!--Navigation drawer-->
     <fragment
         android:id="@+id/navigation_drawer_fragment"
         android:name="com.example.gleative.workit.fragments.NavigationDrawerFragment"
