@@ -14,6 +14,7 @@ public class Exercise {
     private int exerciseID;
     private String exerciseName;
     private String exerciseDescription;
+    private boolean timeBased;
     private int videoID;
     private int imageID; // Bildet som kommer til å være på høyre siden
 
@@ -39,6 +40,14 @@ public class Exercise {
 
     public void setExerciseDescription(String exerciseDescription) {
         this.exerciseDescription = exerciseDescription;
+    }
+
+    public boolean getTimeBased(){
+        return timeBased;
+    }
+
+    public void setTimeBased(boolean timeBased){
+        this.timeBased = timeBased;
     }
 
     public int getVideoID() {

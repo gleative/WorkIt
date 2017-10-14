@@ -8,12 +8,36 @@
     android:theme="@style/AppTheme.NoActionBar"
     tools:context="com.example.gleative.workit.ExerciseActivity">
 
-    <!--List of exercises-->
-    <fragment
-        android:id="@+id/exercise_list_fragment"
+    <android.support.design.widget.CoordinatorLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:name="com.example.gleative.workit.fragments.ExerciseListFragment"/>
+
+        android:layout_height="match_parent">
+        <android.support.design.widget.AppBarLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <!--Lager en toolbar-->
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+                app:layout_scrollFlags="scroll|enterAlways"/>
+            <!--Linje 25 gjør at baren på toppen går vekk når du scroller-->
+        </android.support.design.widget.AppBarLayout>
+
+        <!--List of exercises, had to be inside coordinatorlayout to get under actionbar!-->
+        <fragment
+            android:id="@+id/exercise_list_fragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:name="com.example.gleative.workit.fragments.ExerciseListFragment"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+
+    </android.support.design.widget.CoordinatorLayout>
+
+
 
 
     <!--Navigation drawer-->

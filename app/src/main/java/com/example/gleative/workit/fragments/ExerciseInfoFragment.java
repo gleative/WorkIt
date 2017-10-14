@@ -44,9 +44,8 @@ public class ExerciseInfoFragment extends Fragment{
         exerciseIndex = savedInstanceState == null? DEFAULT_EXERCISE_INDEX : savedInstanceState.getInt(EXERCISE_INDEX, DEFAULT_EXERCISE_INDEX);
     }
 
-    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         exerciseList = Exercise.getData();
 
         View fragmentView = inflater.inflate(R.layout.fragment_exercise_info, container, false); // Layout file

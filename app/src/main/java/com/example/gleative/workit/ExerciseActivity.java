@@ -2,7 +2,9 @@ package com.example.gleative.workit;
 
 import android.content.Intent;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -21,7 +23,7 @@ public class ExerciseActivity extends AppCompatActivity implements ExerciseListF
 
     Toolbar toolbar;
     NavigationDrawerFragment navigationDrawerFragment;
-    ExerciseInfoFragment exerciseInfoFragment;
+//    ExerciseInfoFragment exerciseInfoFragment;
     RecyclerView recyclerView;
 
     @Override
@@ -38,14 +40,14 @@ public class ExerciseActivity extends AppCompatActivity implements ExerciseListF
     }
 
     private void setUpDrawer() {
-        navigationDrawerFragment = (NavigationDrawerFragment) getSupportFragmentManager().findFragmentById(R.id.navigation_drawer_fragment);
-        DrawerLayout drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        navigationDrawerFragment.setUpDrawer(drawerLayout, toolbar, R.id.nav_exercises);
+//        navigationDrawerFragment = (NavigationDrawerFragment) getSupportFragmentManager().findFragmentById(R.id.navigation_drawer_fragment);
+//        DrawerLayout drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+//        navigationDrawerFragment.setUpDrawer(drawerLayout, toolbar, R.id.nav_exercises);
     }
 
     @Override
     protected void onStart(){
-        navigationDrawerFragment.updateCheckedItem(R.id.nav_exercises);
+//        navigationDrawerFragment.updateCheckedItem(R.id.nav_exercises);
 
         super.onStart();
     }
@@ -53,12 +55,14 @@ public class ExerciseActivity extends AppCompatActivity implements ExerciseListF
     @Override
     public void onExerciseSelected(Exercise selectedExercise) {
 //        FragmentManager fragmentManager = getSupportFragmentManager();
-        exerciseInfoFragment = (ExerciseInfoFragment) getSupportFragmentManager().findFragmentById(R.id.exercise_info_fragment); // Fragment from "activity_exercise_info"
-
-        exerciseInfoFragment.setDisplayDetail(selectedExercise.getExerciseID());
+//        exerciseInfoFragment = (ExerciseInfoFragment) fragmentManager.findFragmentById(R.id.exercise_info_fragment); // Fragment from "activity_exercise_info"
+//
+//        exerciseInfoFragment.setDisplayDetail(selectedExercise.getExerciseID());
 
         Intent intent = new Intent(this, ExerciseInfoActivity.class);
-        intent.putExtra("exercise_id", selectedExercise.getExerciseID());
+        //intent.putExtra("exercise_id", selectedExercise.getExerciseID());
         startActivity(intent);
+
+
     }
 }

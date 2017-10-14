@@ -1,8 +1,10 @@
 package com.example.gleative.workit;
 
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.Fragment;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.widget.TextView;
@@ -36,15 +38,15 @@ public class ExerciseInfoActivity extends AppCompatActivity {
 
         exerciseInfoFragment.setDisplayDetail(id);
 
-        setUpDrawer();
+//        setUpDrawer();
 //        addData();
     }
 
-    private void setUpDrawer() {
-        navigationDrawerFragment = (NavigationDrawerFragment) getSupportFragmentManager().findFragmentById(R.id.navigation_drawer_fragment);
-        DrawerLayout drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        navigationDrawerFragment.setUpDrawer(drawerLayout, toolbar, R.id.nav_exercises);
-    }
+//    private void setUpDrawer() {
+//        navigationDrawerFragment = (NavigationDrawerFragment) getSupportFragmentManager().findFragmentById(R.id.navigation_drawer_fragment);
+//        DrawerLayout drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+//        navigationDrawerFragment.setUpDrawer(drawerLayout, toolbar, R.id.nav_exercises);
+//    }
 //
 //    @Override
 //    protected void onStart(){
