@@ -19,11 +19,11 @@ import com.example.gleative.workit.fragments.ExerciseListFragment;
 import com.example.gleative.workit.fragments.NavigationDrawerFragment;
 import com.example.gleative.workit.model.Exercise;
 
-public class ExerciseActivity extends AppCompatActivity implements ExerciseListFragment.OnExerciseFragmentSelectedListener{
+public class ExerciseActivity extends AppCompatActivity implements ExerciseListFragment.OnExerciseFragmentInteractionListener{
 
     Toolbar toolbar;
     NavigationDrawerFragment navigationDrawerFragment;
-//    ExerciseInfoFragment exerciseInfoFragment;
+    ExerciseInfoFragment exerciseInfoFragment;
     RecyclerView recyclerView;
 
     @Override
@@ -57,10 +57,10 @@ public class ExerciseActivity extends AppCompatActivity implements ExerciseListF
 //        FragmentManager fragmentManager = getSupportFragmentManager();
 //        exerciseInfoFragment = (ExerciseInfoFragment) fragmentManager.findFragmentById(R.id.exercise_info_fragment); // Fragment from "activity_exercise_info"
 //
-//        exerciseInfoFragment.setDisplayDetail(selectedExercise.getExerciseID());
+//        exerciseInfoFragment.setDisplayedDetail(selectedExercise.getExerciseID());
 
         Intent intent = new Intent(this, ExerciseInfoActivity.class);
-        //intent.putExtra("exercise_id", selectedExercise.getExerciseID());
+        intent.putExtra("exercise_id", selectedExercise.getExerciseID());
         startActivity(intent);
 
 

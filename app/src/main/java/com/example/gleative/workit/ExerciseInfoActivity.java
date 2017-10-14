@@ -36,7 +36,7 @@ public class ExerciseInfoActivity extends AppCompatActivity {
         FragmentManager fragmentManager = getSupportFragmentManager();
         ExerciseInfoFragment exerciseInfoFragment = (ExerciseInfoFragment) fragmentManager.findFragmentById(R.id.exercise_info_fragment);
 
-        exerciseInfoFragment.setDisplayDetail(id);
+        exerciseInfoFragment.setDisplayedDetail(id);
 
 //        setUpDrawer();
 //        addData();

@@ -3,6 +3,7 @@ package com.example.gleative.workit.fragments;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -25,14 +26,14 @@ import com.example.gleative.workit.model.Exercise;
 public class ExerciseListFragment extends Fragment implements RecycleAdapterListener{
 
     private RecyclerView recyclerView;
-    private OnExerciseFragmentSelectedListener listener;
+    private OnExerciseFragmentInteractionListener listener;
 
     // Empty constructor required
     public ExerciseListFragment(){}
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_exercise_list, container, false); // Finds the given layout file that holds a list of exercises,
+        View view = inflater.inflate(R.layout.fragment_exercise_list, container, false);
 
         setUpRecyclerView(view);
 
@@ -42,10 +43,10 @@ public class ExerciseListFragment extends Fragment implements RecycleAdapterList
     @Override
     public void onStart() {
         super.onStart();
-        try{
-            listener = (OnExerciseFragmentSelectedListener) getActivity();
+        try {
+            listener = (OnExerciseFragmentInteractionListener) getActivity();
         } catch (ClassCastException e){
-            throw new ClassCastException(getActivity().toString() + " must implement OnFragmentInteractionListener");
+            throw new ClassCastException(getActivity().toString() + "must implement OnFragmentInteractionListener");
         }
     }
 
@@ -55,20 +56,24 @@ public class ExerciseListFragment extends Fragment implements RecycleAdapterList
         ExercisesRecyclerAdapter adapter = new ExercisesRecyclerAdapter(getContext(), Exercise.getData(), this); // Må ha constructor på adapteren ellers du får error! this, Exercise.getData()
         recyclerView.setAdapter(adapter);
 
-        // Sets up the list in a new layout
-        LinearLayoutManager linearLayoutManagerVertical = new LinearLayoutManager(getContext());
-        linearLayoutManagerVertical.setOrientation(LinearLayoutManager.VERTICAL);
-        recyclerView.setLayoutManager(linearLayoutManagerVertical);
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 2);
+        recyclerView.setLayoutManager(gridLayoutManager);
     }
 
     @Override
-    public void exerciseSelected(Exercise selectedExercise){
-        Toast.makeText(getContext(), selectedExercise.getExerciseName() + " Selected", Toast.LENGTH_SHORT).show();
+    public void exerciseSelected(Exercise exercise) {
+        Toast.makeText(getContext(), exercise.getExerciseName() + " Selected", Toast.LENGTH_SHORT).show();
 
-        listener.onExerciseSelected(selectedExercise);
+        listener.onExerciseSelected(exercise);
     }
 
-    public interface OnExerciseFragmentSelectedListener {
-        void onExerciseSelected(Exercise selectedExercise);
+    public interface OnExerciseFragmentInteractionListener{
+        void onExerciseSelected(Exercise exercise);
     }
 }
+
+//
+//    // Sets up the list in a new layout
+//    LinearLayoutManager linearLayoutManagerVertical = new LinearLayoutManager(getContext());
+//        linearLayoutManagerVertical.setOrientation(LinearLayoutManager.VERTICAL);
+//                recyclerView.setLayoutManager(linearLayoutManagerVertical);

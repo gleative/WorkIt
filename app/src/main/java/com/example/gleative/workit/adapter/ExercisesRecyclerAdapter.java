@@ -7,7 +7,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import com.example.gleative.workit.model.Exercise;
 
@@ -17,26 +16,24 @@ import java.util.List;
  * Created by gleative on 09.10.2017.
  */
 
-public class ExercisesRecyclerAdapter extends RecyclerView.Adapter<ExercisesRecyclerAdapter.ExerciseViewHolder>{
+public class ExercisesRecyclerAdapter extends RecyclerView.Adapter<ExerciseViewHolder>{
 
-    private List<Exercise> exerciseList;
+    private List<Exercise> exerciseData;
     private LayoutInflater inflater;
-
     private OnExerciseSelectedListener exerciseSelectedListener;
     private RecycleAdapterListener recycleAdapterListener;
 
-
     public ExercisesRecyclerAdapter(Context context, List<Exercise> data, RecycleAdapterListener _recycleAdapterListener){
+        this.exerciseData = data;
         this.inflater = LayoutInflater.from(context);
-        this.exerciseList = data;
 
         this.recycleAdapterListener = _recycleAdapterListener;
 
-        exerciseSelectedListener = new OnExerciseSelectedListener(){
+        exerciseSelectedListener = new OnExerciseSelectedListener() {
             @Override
-            public void exerciseSelected(int position){
-                Exercise selectedExercise = exerciseList.get(position);
-                recycleAdapterListener.exerciseSelected(selectedExercise);
+            public void exerciseSelected(int position) {
+                Exercise exercise = exerciseData.get(position);
+                recycleAdapterListener.exerciseSelected(exercise);
             }
         };
     }
@@ -56,53 +53,13 @@ public class ExercisesRecyclerAdapter extends RecyclerView.Adapter<ExercisesRecy
 
     @Override
     public void onBindViewHolder(ExerciseViewHolder holder, int position) {
-        Exercise current = exerciseList.get(position);
-        holder.bind(current, exerciseSelectedListener);
-        holder.setData(current);
-
-
+        Exercise currentObj = exerciseData.get(position);
+        holder.bind(currentObj, exerciseSelectedListener);
     }
 
     @Override
-    public int getItemCount(){
-        return exerciseList.size();
-    }
-
-
-    class ExerciseViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
-        TextView title;
-        TextView description;
-        OnExerciseSelectedListener onExerciseSelectedListener;
-
-        public ExerciseViewHolder(View itemView){
-            super(itemView);
-
-//            // Gjør at listen er clickbar
-//            itemView.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View view, int position){
-//                    intent = new Intent(view.getContext(), ExerciseInfoActivity.class);
-//                    startActivity(intent);
-//                }
-//            });
-            title = itemView.findViewById(R.id.exercise_title);
-            description = itemView.findViewById(R.id.exercise_description);
-        }
-
-        public void setData(Exercise current){
-            this.title.setText(current.getExerciseName()); // Setter titelen på øvelslen
-        }
-
-        public void bind(Exercise exercise, OnExerciseSelectedListener listener){
-            this.title.setText(exercise.getExerciseName());
-            this.onExerciseSelectedListener = listener;
-
-        }
-
-        @Override
-        public void onClick(View v){
-            onExerciseSelectedListener.exerciseSelected(getAdapterPosition());
-        }
+    public int getItemCount() {
+        return exerciseData.size();
     }
 
 }

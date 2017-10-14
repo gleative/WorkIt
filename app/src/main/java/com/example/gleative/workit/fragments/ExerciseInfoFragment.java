@@ -28,19 +28,16 @@ public class ExerciseInfoFragment extends Fragment{
     public final static String EXERCISE_INDEX = "exerciseIndex";
     private static final int DEFAULT_EXERCISE_INDEX = 1;
 
-    private TextView exerciseTitleView;
+    private TextView exerciseNameView;
     private TextView exerciseDescView;
-    private ImageView exerciseImageView;
     private int exerciseIndex;
 
-    // Empty constructor required
     public ExerciseInfoFragment(){}
 
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
 
-        // Sets the index to 0, if there is no savedInstanceState
         exerciseIndex = savedInstanceState == null? DEFAULT_EXERCISE_INDEX : savedInstanceState.getInt(EXERCISE_INDEX, DEFAULT_EXERCISE_INDEX);
     }
 
@@ -51,13 +48,12 @@ public class ExerciseInfoFragment extends Fragment{
         View fragmentView = inflater.inflate(R.layout.fragment_exercise_info, container, false); // Layout file
 
         // Finds referance to the diffrent views in "fragment_exercise_info" layout
-        exerciseTitleView = fragmentView.findViewById(R.id.exercise_title);
-        exerciseDescView = fragmentView.findViewById(R.id.exercise_description);
-        exerciseImageView = fragmentView.findViewById(R.id.exercise_picture);
+        exerciseNameView = fragmentView.findViewById(R.id.exercise_title);
+        exerciseDescView = fragmentView.findViewById(R.id.exercise_targeted_muscle);
 
-        setDisplayDetail(exerciseIndex);
+        setDisplayedDetail(exerciseIndex);
 
-        return fragmentView;
+        return super.onCreateView(inflater, container, savedInstanceState);
     }
 
     @Override
@@ -65,20 +61,11 @@ public class ExerciseInfoFragment extends Fragment{
         outState.putInt(EXERCISE_INDEX, exerciseIndex);
     }
 
-    // Sets values of the exercise data to the correct views
-    public void setDisplayDetail(int exerciseDescriptionIndex){
-        exerciseIndex = exerciseDescriptionIndex;
+    public void setDisplayedDetail(int exerciseDescIndex){
+        exerciseIndex = exerciseDescIndex;
 
         Exercise exercise = exerciseList.get(exerciseIndex);
 
-        exerciseTitleView.setText(exercise.getExerciseName());
-        exerciseDescView.setText(exercise.getExerciseDescription());
-//        exerciseImageView
-
-        // Sets the main image
-//        Drawable image = ContextCompat.getDrawable(getActivity(), exercise.getImageID());
-//        if(image != null){
-//            exerciseImageView.setImageDrawable(image);
-//        }
+        exerciseNameView.setText(exercise.getExerciseName());
     }
 }
