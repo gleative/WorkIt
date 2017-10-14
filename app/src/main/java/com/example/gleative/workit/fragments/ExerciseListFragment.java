@@ -56,8 +56,11 @@ public class ExerciseListFragment extends Fragment implements RecycleAdapterList
         ExercisesRecyclerAdapter adapter = new ExercisesRecyclerAdapter(getContext(), Exercise.getData(), this); // Må ha constructor på adapteren ellers du får error! this, Exercise.getData()
         recyclerView.setAdapter(adapter);
 
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 2);
-        recyclerView.setLayoutManager(gridLayoutManager);
+        // Sets up the list in a new layout
+        LinearLayoutManager linearLayoutManagerVertical = new LinearLayoutManager(getContext());
+        linearLayoutManagerVertical.setOrientation(LinearLayoutManager.VERTICAL);
+        recyclerView.setLayoutManager(linearLayoutManagerVertical);
+
     }
 
     @Override
@@ -71,9 +74,3 @@ public class ExerciseListFragment extends Fragment implements RecycleAdapterList
         void onExerciseSelected(Exercise exercise);
     }
 }
-
-//
-//    // Sets up the list in a new layout
-//    LinearLayoutManager linearLayoutManagerVertical = new LinearLayoutManager(getContext());
-//        linearLayoutManagerVertical.setOrientation(LinearLayoutManager.VERTICAL);
-//                recyclerView.setLayoutManager(linearLayoutManagerVertical);

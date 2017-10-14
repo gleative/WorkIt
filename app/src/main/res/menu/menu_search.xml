@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:myapp="http://schemas.android.com/apk/res-auto">
+    <!--Had to change "app" to "myapp" for some strange reason.... then it wasnt null anymore-->
+    <!--AND change the to values at line 10 and 11 to "myapp" or else it wouldnt work!!"-->
+
+    <item android:id="@+id/menu_search_button"
+        android:title="Search"
+        android:icon="@drawable/ic_action_search"
+        myapp:actionViewClass="android.support.v7.widget.SearchView"
+        myapp:showAsAction="always|collapseActionView"
+        />
+
+</menu>

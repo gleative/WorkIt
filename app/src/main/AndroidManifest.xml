@@ -20,7 +20,13 @@
         </activity>
         <activity
             android:name=".ExerciseActivity"
-            android:label="Exercises" />
+            android:label="Exercises">
+            <intent-filter>
+                <action android:name="android.intent.action.SEARCH"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+
+        </activity>
         <activity
             android:name=".ProfileActivity"
             android:label="Profile" />

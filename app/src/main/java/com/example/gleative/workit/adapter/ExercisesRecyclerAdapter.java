@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 
 import com.example.gleative.workit.model.Exercise;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -22,6 +23,8 @@ public class ExercisesRecyclerAdapter extends RecyclerView.Adapter<ExerciseViewH
     private LayoutInflater inflater;
     private OnExerciseSelectedListener exerciseSelectedListener;
     private RecycleAdapterListener recycleAdapterListener;
+
+    private List<Exercise> list; // This is needed for the filter method, that handles when user searches.
 
     public ExercisesRecyclerAdapter(Context context, List<Exercise> data, RecycleAdapterListener _recycleAdapterListener){
         this.exerciseData = data;
@@ -43,7 +46,7 @@ public class ExercisesRecyclerAdapter extends RecyclerView.Adapter<ExerciseViewH
     // Får tak i layoutfilen
     @Override
     public ExerciseViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = inflater.inflate(R.layout.list_exercises, parent, false); // Inflater list_exercise layout, sånn at hver data skal få dette utseende
+        View view = inflater.inflate(R.layout.list_exercises, parent, false); // Inflater list_exercise layout, so it gets its design
         ExerciseViewHolder holder = new ExerciseViewHolder(view);
 
         view.setOnClickListener(holder);
@@ -60,6 +63,17 @@ public class ExercisesRecyclerAdapter extends RecyclerView.Adapter<ExerciseViewH
     @Override
     public int getItemCount() {
         return exerciseData.size();
+    }
+
+    public Exercise getItem(int position){
+        return exerciseData.get(position);
+    }
+
+
+    public void setFilter(List<Exercise> newList){
+        list = new ArrayList<>();
+        list.addAll(newList);
+        notifyDataSetChanged(); // This refreshes the adapter.
     }
 
 }
