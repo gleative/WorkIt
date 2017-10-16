@@ -34,7 +34,6 @@ public class ExerciseInfoActivity extends AppCompatActivity {
 
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle("jajajaj");
         setSupportActionBar(toolbar);
         // Adds back button, check manifest and under ExerciseInfoActivity tag android:parentActivityName=".ExerciseActivity", so back button works
 //        getSupportActionBar().setDisplayHomeAsUpEnabled(true); // But, title bar gets pushed if you use this so.... dunno

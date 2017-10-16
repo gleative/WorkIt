@@ -48,58 +48,12 @@ public class ExerciseActivity extends AppCompatActivity implements ExerciseListF
 //        toolbar.setTitle("Exercises"); // Setter title på actionbar
         setSupportActionBar(toolbar);
 
-//        // Goes through all items in recycler view, and adds them to exercisesList
-//        for(int i = 0; i <= exercisesRecyclerAdapter.getItemCount(); i++){
-//            exercisesList.add(exercisesRecyclerAdapter.getItem(i));
-//        }
-
         exercisesList = Exercise.getData();
 
         // So we can access its methods
-        exerciseListFragment = (ExerciseListFragment) getSupportFragmentManager().findFragmentById(R.id.exercise_list_fragment);
+//        exerciseListFragment = (ExerciseListFragment) getSupportFragmentManager().findFragmentById(R.id.exercise_list_fragment);
 
         setUpDrawer();
-    }
-
-    // Adds the search button/bar
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu_search, menu); // The layout file
-        MenuItem item = menu.findItem(R.id.menu_search_button);
-        SearchView searchView = (SearchView) MenuItemCompat.getActionView(item);
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-
-            // Invoked when user presses enter
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                return false;
-            }
-
-            // Invoked when user types on the search bar
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                exerciseListFragment.filterExercises(newText);
-
-//                newText = newText.toLowerCase();
-//                List<Exercise> newList = new ArrayList<>();
-//
-//
-//                for(Exercise exercise: exercisesList){
-//                    String exerciseName = exercise.getExerciseName().toLowerCase();
-//                        // If the name is in the query from the user, add it to a new list, that will be displayed for the user
-//                        if(exerciseName.contains(newText)){
-//                            newList.add(exercise);
-//                        }
-//                }
-
-//                exercisesRecyclerAdapter.setFilter(newList);
-
-                return true;
-            }
-        });
-
-        return true;
     }
 
     private void setUpDrawer() {
@@ -117,15 +71,11 @@ public class ExerciseActivity extends AppCompatActivity implements ExerciseListF
 
     @Override
     public void onExerciseSelected(Exercise selectedExercise) {
-//        FragmentManager fragmentManager = getSupportFragmentManager();
-//        exerciseInfoFragment = (ExerciseInfoFragment) fragmentManager.findFragmentById(R.id.exercise_info_fragment); // Fragment from "activity_exercise_info"
-//
-//        exerciseInfoFragment.setDisplayedDetail(selectedExercise.getExerciseID());
-
         Intent intent = new Intent(this, ExerciseInfoActivity.class);
         intent.putExtra("exercise_id", selectedExercise.getExerciseID());
         startActivity(intent);
 
 
     }
+
 }

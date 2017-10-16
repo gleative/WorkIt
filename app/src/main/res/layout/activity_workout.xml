@@ -28,6 +28,10 @@
 
     </android.support.design.widget.CoordinatorLayout>
 
+    <!--<android.support.design.widget.FloatingActionButton-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content" />-->
+
 
     <!--Gjør at vi får navigation drawer i denne aktivitien-->
     <fragment

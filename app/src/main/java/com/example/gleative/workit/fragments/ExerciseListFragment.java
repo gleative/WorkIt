@@ -3,10 +3,15 @@ package com.example.gleative.workit.fragments;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
@@ -40,9 +45,32 @@ public class ExerciseListFragment extends Fragment implements RecycleAdapterList
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_exercise_list, container, false);
 
+        // Tells host activity that this fragment has menu options it wants to add
+        setHasOptionsMenu(true);
         setUpRecyclerView(view);
 
         return view;
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater){
+        inflater.inflate(R.menu.menu_search, menu); // The Layout file
+        MenuItem item = menu.findItem(R.id.menu_search_button);
+        SearchView searchView = (SearchView) item.getActionView();
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener(){
+
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                filterExercises(newText);
+
+                return true;
+            }
+        });
     }
 
     @Override
@@ -68,13 +96,8 @@ public class ExerciseListFragment extends Fragment implements RecycleAdapterList
 
     }
 
-    public void fillList(){
-        for(int i = 0; i <= adapter.getItemCount(); i++){
-            exercisesList.add(adapter.getItem(i));
-        }
-    }
-
     public void filterExercises(String newText){
+        exercisesList = Exercise.getData();
         newText = newText.toLowerCase();
         List<Exercise> newList = new ArrayList<>();
 
@@ -102,4 +125,5 @@ public class ExerciseListFragment extends Fragment implements RecycleAdapterList
     public interface OnExerciseFragmentInteractionListener{
         void onExerciseSelected(Exercise exercise);
     }
+
 }

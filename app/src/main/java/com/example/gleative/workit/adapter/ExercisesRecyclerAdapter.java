@@ -24,8 +24,6 @@ public class ExercisesRecyclerAdapter extends RecyclerView.Adapter<ExerciseViewH
     private OnExerciseSelectedListener exerciseSelectedListener;
     private RecycleAdapterListener recycleAdapterListener;
 
-    private List<Exercise> list; // This is needed for the filter method, that handles when user searches.
-
     public ExercisesRecyclerAdapter(Context context, List<Exercise> data, RecycleAdapterListener _recycleAdapterListener){
         this.exerciseData = data;
         this.inflater = LayoutInflater.from(context);
@@ -71,8 +69,7 @@ public class ExercisesRecyclerAdapter extends RecyclerView.Adapter<ExerciseViewH
 
 
     public void setFilter(List<Exercise> newList){
-        list = new ArrayList<>();
-        list.addAll(newList);
+        this.exerciseData = newList;
         notifyDataSetChanged(); // This refreshes the adapter.
     }
 
