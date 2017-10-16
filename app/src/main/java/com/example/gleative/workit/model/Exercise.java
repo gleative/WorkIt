@@ -71,6 +71,11 @@ public class Exercise {
 
         List<Exercise> exerciseList = new ArrayList<>();
 
+        int[] images = {
+                R.drawable.e12_1, R.drawable.e12_2, R.drawable.e1621_1, R.drawable.e1621_2, R.drawable.e1_1,
+                R.drawable.e1_2, R.drawable.e70_1, R.drawable.e70_2
+        };
+
         for(int i = 0; i <= 40; i++){
             Exercise exercise = new Exercise();
             exercise.setExerciseID(i);
@@ -83,13 +88,4 @@ public class Exercise {
         return exerciseList;
     }
 
-    public static int[] getImages(){
-
-        int[] images = {
-                R.drawable.e12_1, R.drawable.e12_2, R.drawable.e1621_1, R.drawable.e1621_2, R.drawable.e1_1,
-                R.drawable.e1_2, R.drawable.e70_1, R.drawable.e70_2
-        };
-
-        return images;
-    }
 }

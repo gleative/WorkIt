@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.gleative.workit.R;
+import com.example.gleative.workit.adapter.ExercisePicturesAdapter;
 import com.example.gleative.workit.model.Exercise;
 
 import java.util.List;
@@ -33,6 +35,7 @@ public class ExerciseInfoFragment extends Fragment{
     private TextView exerciseNameView;
     private TextView exerciseDescView;
     private int exerciseIndex;
+    private ViewPager exerciseViewPager; // Holds the pictures
 
     public ExerciseInfoFragment(){}
 
