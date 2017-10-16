@@ -55,6 +55,9 @@ public class ExerciseActivity extends AppCompatActivity implements ExerciseListF
 
         exercisesList = Exercise.getData();
 
+        // So we can access its methods
+        exerciseListFragment = (ExerciseListFragment) getSupportFragmentManager().findFragmentById(R.id.exercise_list_fragment);
+
         setUpDrawer();
     }
 

@@ -17,7 +17,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <!--Se på one note om hva collapsingToolbarLayout er-->
+            <!-- EVERYTHING HERE WILL COLLAPSE -->
             <android.support.design.widget.CollapsingToolbarLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -38,7 +38,6 @@
                         android:src="@drawable/testpicture"/>
                 <!--</android.support.v4.view.ViewPager>-->
 
-                <!--Lager en toolbar-->
                 <android.support.v7.widget.Toolbar
                     android:id="@+id/toolbar"
                     android:layout_width="match_parent"
@@ -46,7 +45,6 @@
                     app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
                     app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
                     app:layout_scrollFlags="scroll|enterAlways"/>
-                <!--Linje 41 gjør at baren på toppen går vekk når du scroller-->
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -61,6 +59,8 @@
                 </LinearLayout>
 
             </android.support.design.widget.CollapsingToolbarLayout>
+            <!--EVERYTHING AFTER THIS WILL BE PINNED, (Inside AppBarLayout)-->
+
         </android.support.design.widget.AppBarLayout>
 
         <android.support.design.widget.FloatingActionButton
@@ -72,7 +72,7 @@
             app:layout_anchorGravity="bottom|right|end"
             />
 
-        <!--Linje 64 gjør at den er under appbarlayout!-->
+        <!--app:layout_behavior and value makes so its under the AppBarLayout!-->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -83,8 +83,6 @@
                 android:layout_height="wrap_content"
                 android:text="Desc"/>
         </LinearLayout>
-
-
 
     </android.support.design.widget.CoordinatorLayout>
 

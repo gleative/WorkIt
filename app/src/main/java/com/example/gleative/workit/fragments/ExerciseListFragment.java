@@ -68,6 +68,12 @@ public class ExerciseListFragment extends Fragment implements RecycleAdapterList
 
     }
 
+    public void fillList(){
+        for(int i = 0; i <= adapter.getItemCount(); i++){
+            exercisesList.add(adapter.getItem(i));
+        }
+    }
+
     public void filterExercises(String newText){
         newText = newText.toLowerCase();
         List<Exercise> newList = new ArrayList<>();
