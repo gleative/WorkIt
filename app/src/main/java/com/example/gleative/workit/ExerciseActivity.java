@@ -32,6 +32,7 @@ public class ExerciseActivity extends AppCompatActivity implements ExerciseListF
     Toolbar toolbar;
     NavigationDrawerFragment navigationDrawerFragment;
     ExerciseInfoFragment exerciseInfoFragment;
+    ExerciseListFragment exerciseListFragment;
     RecyclerView recyclerView;
     ExercisesRecyclerAdapter exercisesRecyclerAdapter;
 
@@ -75,21 +76,21 @@ public class ExerciseActivity extends AppCompatActivity implements ExerciseListF
             // Invoked when user types on the search bar
             @Override
             public boolean onQueryTextChange(String newText) {
+                exerciseListFragment.filterExercises(newText);
 
+//                newText = newText.toLowerCase();
+//                List<Exercise> newList = new ArrayList<>();
+//
+//
+//                for(Exercise exercise: exercisesList){
+//                    String exerciseName = exercise.getExerciseName().toLowerCase();
+//                        // If the name is in the query from the user, add it to a new list, that will be displayed for the user
+//                        if(exerciseName.contains(newText)){
+//                            newList.add(exercise);
+//                        }
+//                }
 
-                newText = newText.toLowerCase();
-                List<Exercise> newList = new ArrayList<>();
-
-
-                for(Exercise exercise: exercisesList){
-                    String exerciseName = exercise.getExerciseName().toLowerCase();
-                        // If the name is in the query from the user, add it to a new list, that will be displayed for the user
-                        if(exerciseName.contains(newText)){
-                            newList.add(exercise);
-                        }
-                }
-
-                exercisesRecyclerAdapter.setFilter(newList);
+//                exercisesRecyclerAdapter.setFilter(newList);
 
                 return true;
             }
@@ -99,14 +100,14 @@ public class ExerciseActivity extends AppCompatActivity implements ExerciseListF
     }
 
     private void setUpDrawer() {
-//        navigationDrawerFragment = (NavigationDrawerFragment) getSupportFragmentManager().findFragmentById(R.id.navigation_drawer_fragment);
-//        DrawerLayout drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-//        navigationDrawerFragment.setUpDrawer(drawerLayout, toolbar, R.id.nav_exercises);
+        navigationDrawerFragment = (NavigationDrawerFragment) getSupportFragmentManager().findFragmentById(R.id.navigation_drawer_fragment);
+        DrawerLayout drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        navigationDrawerFragment.setUpDrawer(drawerLayout, toolbar, R.id.nav_exercises);
     }
 
     @Override
     protected void onStart(){
-//        navigationDrawerFragment.updateCheckedItem(R.id.nav_exercises);
+        navigationDrawerFragment.updateCheckedItem(R.id.nav_exercises);
 
         super.onStart();
     }

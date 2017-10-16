@@ -17,6 +17,9 @@ import com.example.gleative.workit.adapter.OnExerciseSelectedListener;
 import com.example.gleative.workit.adapter.RecycleAdapterListener;
 import com.example.gleative.workit.model.Exercise;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by gleative on 12.10.2017.
  *
@@ -27,6 +30,8 @@ public class ExerciseListFragment extends Fragment implements RecycleAdapterList
 
     private RecyclerView recyclerView;
     private OnExerciseFragmentInteractionListener listener;
+    ExercisesRecyclerAdapter adapter;
+    private List<Exercise> exercisesList;
 
     // Empty constructor required
     public ExerciseListFragment(){}
@@ -53,7 +58,7 @@ public class ExerciseListFragment extends Fragment implements RecycleAdapterList
     // Sets up the recyclerView with the type of linear layout
     private void setUpRecyclerView(View view){
         recyclerView = view.findViewById(R.id.exercise_recycler_view); // Henter listen fra layout fil "fragment_exercise_list"
-        ExercisesRecyclerAdapter adapter = new ExercisesRecyclerAdapter(getContext(), Exercise.getData(), this); // Må ha constructor på adapteren ellers du får error! this, Exercise.getData()
+        adapter = new ExercisesRecyclerAdapter(getContext(), Exercise.getData(), this); // Må ha constructor på adapteren ellers du får error! this, Exercise.getData()
         recyclerView.setAdapter(adapter);
 
         // Sets up the list in a new layout
@@ -62,6 +67,24 @@ public class ExerciseListFragment extends Fragment implements RecycleAdapterList
         recyclerView.setLayoutManager(linearLayoutManagerVertical);
 
     }
+
+    public void filterExercises(String newText){
+        newText = newText.toLowerCase();
+        List<Exercise> newList = new ArrayList<>();
+
+
+        for(Exercise exercise: exercisesList){
+            String exerciseName = exercise.getExerciseName().toLowerCase();
+            // If the name is in the query from the user, add it to a new list, that will be displayed for the user
+            if(exerciseName.contains(newText)){
+                newList.add(exercise);
+            }
+        }
+
+        adapter.setFilter(newList);
+    }
+
+
 
     @Override
     public void exerciseSelected(Exercise exercise) {

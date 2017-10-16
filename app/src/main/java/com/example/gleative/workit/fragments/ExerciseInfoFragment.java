@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,6 +29,7 @@ public class ExerciseInfoFragment extends Fragment{
     public final static String EXERCISE_INDEX = "exerciseIndex";
     private static final int DEFAULT_EXERCISE_INDEX = 1;
 
+    private Toolbar exerciseNameToolbar;
     private TextView exerciseNameView;
     private TextView exerciseDescView;
     private int exerciseIndex;
@@ -48,12 +50,13 @@ public class ExerciseInfoFragment extends Fragment{
         View fragmentView = inflater.inflate(R.layout.fragment_exercise_info, container, false); // Layout file
 
         // Finds referance to the diffrent views in "fragment_exercise_info" layout
-        exerciseNameView = fragmentView.findViewById(R.id.exercise_title);
-        exerciseDescView = fragmentView.findViewById(R.id.exercise_targeted_muscle);
+        exerciseNameToolbar = fragmentView.findViewById(R.id.toolbar);
+//        exerciseNameView = fragmentView.findViewById(R.id.exercise_title);
+        exerciseDescView = fragmentView.findViewById(R.id.exercise_description);
 
         setDisplayedDetail(exerciseIndex);
 
-        return super.onCreateView(inflater, container, savedInstanceState);
+        return fragmentView;
     }
 
     @Override
@@ -66,6 +69,7 @@ public class ExerciseInfoFragment extends Fragment{
 
         Exercise exercise = exerciseList.get(exerciseIndex);
 
-        exerciseNameView.setText(exercise.getExerciseName());
+        exerciseNameToolbar.setTitle(exercise.getExerciseName());
+        exerciseDescView.setText(exercise.getExerciseDescription());
     }
 }
