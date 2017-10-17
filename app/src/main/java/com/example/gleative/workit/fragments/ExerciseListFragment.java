@@ -45,18 +45,20 @@ public class ExerciseListFragment extends Fragment implements RecycleAdapterList
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_exercise_list, container, false);
 
-        // Tells host activity that this fragment has menu options it wants to add
+        // Tells host activity that this fragment has menu options it wants to add, or else search bar wont show up
         setHasOptionsMenu(true);
         setUpRecyclerView(view);
 
         return view;
     }
 
+    // Creates the search bar
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater){
         inflater.inflate(R.menu.menu_search, menu); // The Layout file
         MenuItem item = menu.findItem(R.id.menu_search_button);
         SearchView searchView = (SearchView) item.getActionView();
+        searchView.setQueryHint("Exercise name, main muscle..."); // Adds a hint for what the user can search for
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener(){
 
             @Override
@@ -83,7 +85,7 @@ public class ExerciseListFragment extends Fragment implements RecycleAdapterList
         }
     }
 
-    // Sets up the recyclerView with the type of linear layout
+    // Sets up the recycler view with the type of linear layout
     private void setUpRecyclerView(View view){
         recyclerView = view.findViewById(R.id.exercise_recycler_view); // Henter listen fra layout fil "fragment_exercise_list"
         adapter = new ExercisesRecyclerAdapter(getContext(), Exercise.getData(), this); // Må ha constructor på adapteren ellers du får error! this, Exercise.getData()
@@ -96,6 +98,7 @@ public class ExerciseListFragment extends Fragment implements RecycleAdapterList
 
     }
 
+    // Filters the list so it only contains what the user is searching for
     public void filterExercises(String newText){
         exercisesList = Exercise.getData();
         newText = newText.toLowerCase();
@@ -110,6 +113,7 @@ public class ExerciseListFragment extends Fragment implements RecycleAdapterList
             }
         }
 
+        // Send it to the adapter, so it can notify the recycler view that it has changed, and will update
         adapter.setFilter(newList);
     }
 

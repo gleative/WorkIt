@@ -22,10 +22,10 @@
             android:name=".ExerciseActivity"
             android:label="Exercises">
             <intent-filter>
-                <action android:name="android.intent.action.SEARCH"/>
-                <category android:name="android.intent.category.DEFAULT"/>
-            </intent-filter>
+                <action android:name="android.intent.action.SEARCH" />
 
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
         </activity>
         <activity
             android:name=".ProfileActivity"
@@ -36,9 +36,11 @@
         <activity
             android:name=".StartWorkoutActivity"
             android:label="Start Workout" />
-        <activity android:name=".ExerciseInfoActivity"
-            android:parentActivityName=".ExerciseActivity"
-            android:label="Exercise"/>
+        <activity
+            android:name=".ExerciseInfoActivity"
+            android:label="Exercise"
+            android:parentActivityName=".ExerciseActivity" />
+        <activity android:name=".CreateWorkoutActivity"></activity>
     </application>
 
 </manifest>

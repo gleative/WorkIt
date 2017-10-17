@@ -13,16 +13,16 @@ import com.example.gleative.workit.model.Exercise;
 
 public class ExerciseViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
-    TextView name;
+    TextView exerciseName;
     OnExerciseSelectedListener onExerciseSelectedListener;
 
     public ExerciseViewHolder(View itemView){
         super(itemView);
-        name = itemView.findViewById(R.id.exercise_title);
+        exerciseName = itemView.findViewById(R.id.exercise_title);
     }
 
     public void bind(Exercise exercise, OnExerciseSelectedListener listener){ // Setter titelen på øvelslen
-        this.name.setText(exercise.getExerciseName());
+        this.exerciseName.setText(exercise.getExerciseName());
         this.onExerciseSelectedListener = listener;
     }
 
