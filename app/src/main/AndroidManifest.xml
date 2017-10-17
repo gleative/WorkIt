@@ -40,7 +40,10 @@
             android:name=".ExerciseInfoActivity"
             android:label="Exercise"
             android:parentActivityName=".ExerciseActivity" />
-        <activity android:name=".CreateWorkoutActivity"></activity>
+        <activity
+            android:name=".CreateWorkoutActivity"
+            android:label="Create Workout"
+            android:parentActivityName=".MyWorkoutActivity"/>
     </application>
 
 </manifest>

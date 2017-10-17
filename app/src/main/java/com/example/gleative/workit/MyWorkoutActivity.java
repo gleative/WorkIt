@@ -1,9 +1,11 @@
 package com.example.gleative.workit;
 
+import android.content.Intent;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
 
 import com.example.gleative.workit.fragments.NavigationDrawerFragment;
 
@@ -34,5 +36,11 @@ public class MyWorkoutActivity extends AppCompatActivity {
         navigationDrawerFragment.updateCheckedItem(R.id.nav_myWorkouts);
 
         super.onStart();
+    }
+
+    // FAB button in activity_workout.xml, Starts CreateWorkoutActivity
+    public void createWorkout(View view) {
+        Intent intent = new Intent(this, CreateWorkoutActivity.class);
+        startActivity(intent);
     }
 }
