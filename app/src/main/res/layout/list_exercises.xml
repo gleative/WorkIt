@@ -5,8 +5,10 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginLeft="5dp"
+    card_view:contentPadding="5dp"
     android:layout_marginRight="5dp"
     android:layout_marginTop="5dp">
+    <!--Fix contentpadding if you want less space-->
 
     <LinearLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
@@ -31,11 +33,11 @@
             android:text="Title"/>
 
         <TextView
-            android:id="@+id/exercise_targeted_muscle"
+            android:id="@+id/exercise_body_part"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_margin="5dp"
-            android:text="Main muscle"/>
+            android:text="Body part"/>
 
         </LinearLayout>
 

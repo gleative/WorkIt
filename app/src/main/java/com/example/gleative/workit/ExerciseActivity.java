@@ -17,8 +17,10 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.example.gleative.workit.adapter.ExercisesRecyclerAdapter;
 import com.example.gleative.workit.fragments.ExerciseInfoFragment;
@@ -29,7 +31,7 @@ import com.example.gleative.workit.model.Exercise;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ExerciseActivity extends AppCompatActivity implements ExerciseListFragment.OnExerciseFragmentInteractionListener{
+public class ExerciseActivity extends AppCompatActivity implements ExerciseListFragment.OnExerciseFragmentInteractionListener, Spinner.OnItemSelectedListener{
 
     Toolbar toolbar;
     NavigationDrawerFragment navigationDrawerFragment;
@@ -57,7 +59,7 @@ public class ExerciseActivity extends AppCompatActivity implements ExerciseListF
 
         exercisesList = Exercise.getData();
 
-        // So we can access its methods
+//        // So we can access its methods
 //        exerciseListFragment = (ExerciseListFragment) getSupportFragmentManager().findFragmentById(R.id.exercise_list_fragment);
 
         setUpDrawer();
@@ -74,9 +76,13 @@ public class ExerciseActivity extends AppCompatActivity implements ExerciseListF
     private void setUpSpinner(){
         // Spinner element
         categorySpinner = (Spinner) findViewById(R.id.category_spinner);
-        categoryAdapter = new ArrayAdapter<>(this, R.layout.spinner_category_item, categories); // The layout is for how a element in spinner should look like
 
+        // Adds on click listener on the spinner
+        categorySpinner.setOnItemSelectedListener(this);
+
+        categoryAdapter = new ArrayAdapter<>(this, R.layout.spinner_category_item, categories); // The layout is for how a element in spinner should look like
         categorySpinner.setAdapter(categoryAdapter);
+
     }
 
     @Override
@@ -95,4 +101,49 @@ public class ExerciseActivity extends AppCompatActivity implements ExerciseListF
 
     }
 
+    // When user selects one of the given categories
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        String selectedItem = parent.getItemAtPosition(position).toString();
+
+        // So we can access its methods
+        exerciseListFragment = (ExerciseListFragment) getSupportFragmentManager().findFragmentById(R.id.exercise_list_fragment);
+
+        // Checks which item was selected
+        switch (selectedItem){
+            case "All":
+                // Resets the list so all exercises shows
+                exerciseListFragment.filterExercises("");
+                break;
+            case "Arms":
+                exerciseListFragment.spinnerFilterExercises(selectedItem);
+                Toast.makeText(this, selectedItem + " Selected", Toast.LENGTH_SHORT).show();
+                break;
+            case "Back":
+                exerciseListFragment.spinnerFilterExercises(selectedItem);
+                Toast.makeText(this, selectedItem + " Selected", Toast.LENGTH_SHORT).show();
+                break;
+            case "Chest":
+                exerciseListFragment.spinnerFilterExercises(selectedItem);
+                Toast.makeText(this, selectedItem + " Selected", Toast.LENGTH_SHORT).show();
+                break;
+            case "Legs":
+                exerciseListFragment.spinnerFilterExercises(selectedItem);
+                Toast.makeText(this, selectedItem + " Selected", Toast.LENGTH_SHORT).show();
+                break;
+            case "Shoulders":
+                exerciseListFragment.spinnerFilterExercises(selectedItem);
+                Toast.makeText(this, selectedItem + " Selected", Toast.LENGTH_SHORT).show();
+                break;
+        }
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+
+    }
+
+    public void resetSpinnerPosition(){
+        categorySpinner.setSelection(0);
+    }
 }

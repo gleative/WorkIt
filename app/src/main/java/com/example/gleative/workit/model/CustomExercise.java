@@ -6,7 +6,7 @@ package com.example.gleative.workit.model;
  * Created by gleative on 09.10.2017.
  */
 
-public class CustomExercise {
+public class CustomExercise extends Exercise{
 
     private Exercise exercise;
     private int sets;

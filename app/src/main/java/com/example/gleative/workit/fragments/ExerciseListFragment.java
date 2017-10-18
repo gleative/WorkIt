@@ -18,6 +18,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.example.gleative.workit.ExerciseActivity;
 import com.example.gleative.workit.R;
 import com.example.gleative.workit.adapter.ExercisesRecyclerAdapter;
 import com.example.gleative.workit.adapter.OnExerciseSelectedListener;
@@ -60,7 +61,7 @@ public class ExerciseListFragment extends Fragment implements RecycleAdapterList
         inflater.inflate(R.menu.menu_search, menu); // The Layout file
         MenuItem item = menu.findItem(R.id.menu_search_button);
         SearchView searchView = (SearchView) item.getActionView();
-        searchView.setQueryHint("Exercise name, main muscle..."); // Adds a hint for what the user can search for
+        searchView.setQueryHint("Exercise name, body part..."); // Adds a hint for what the user can search for
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener(){
 
             @Override
@@ -75,6 +76,9 @@ public class ExerciseListFragment extends Fragment implements RecycleAdapterList
                 return true;
             }
         });
+
+        // Resets the position for the spinner, so searching and choosing between categories will be a better experience for the user
+        ((ExerciseActivity)getActivity()).resetSpinnerPosition();
     }
 
     @Override
@@ -100,6 +104,20 @@ public class ExerciseListFragment extends Fragment implements RecycleAdapterList
 
     }
 
+    public void spinnerFilterExercises(String selectedCategory){
+        exercisesList = Exercise.getData();
+        List<Exercise> newList = new ArrayList<>();
+
+        for(Exercise exercise: exercisesList){
+            String exerciseBodyPart = exercise.getBodyPart();
+            if(exerciseBodyPart.contains(selectedCategory)){
+                newList.add(exercise);
+            }
+        }
+
+        adapter.setFilter(newList);
+    }
+
     // Filters the list so it only contains what the user is searching for
     public void filterExercises(String newText){
         exercisesList = Exercise.getData();
@@ -109,8 +127,9 @@ public class ExerciseListFragment extends Fragment implements RecycleAdapterList
 
         for(Exercise exercise: exercisesList){
             String exerciseName = exercise.getExerciseName().toLowerCase();
-            // If the name is in the query from the user, add it to a new list, that will be displayed for the user
-            if(exerciseName.contains(newText)){
+            String exerciseBodyPart = exercise.getBodyPart().toLowerCase();
+            // If the exercise name or body part is in the query from the user, add it to a new list, that will be displayed for the user
+            if(exerciseName.contains(newText) || exerciseBodyPart.contains(newText)){
                 newList.add(exercise);
             }
         }
