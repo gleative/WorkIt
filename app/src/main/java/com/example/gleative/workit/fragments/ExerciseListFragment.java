@@ -40,10 +40,6 @@ public class ExerciseListFragment extends Fragment implements RecycleAdapterList
     ExercisesRecyclerAdapter adapter;
     private List<Exercise> exercisesList;
 
-    private String[] categories = {"All", "Arms", "Back", "Chest", "Legs", "Shoulders"};
-    private ArrayAdapter<String> categoryAdapter;
-    private Spinner categoriSpinner;
-
     // Empty constructor required
     public ExerciseListFragment(){}
 
@@ -54,7 +50,6 @@ public class ExerciseListFragment extends Fragment implements RecycleAdapterList
         // Tells host activity that this fragment has menu options it wants to add, or else search bar wont show up
         setHasOptionsMenu(true);
         setUpRecyclerView(view);
-        setUpSpinner(view);
 
         return view;
     }
@@ -103,11 +98,6 @@ public class ExerciseListFragment extends Fragment implements RecycleAdapterList
         linearLayoutManagerVertical.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(linearLayoutManagerVertical);
 
-    }
-
-    private void setUpSpinner(View view){
-        categoriSpinner = view.findViewById(R.id.category_spinner);
-        categoryAdapter = new ArrayAdapter<String>(getActivity().getApplicationContext(), categoriSpinner, categories);
     }
 
     // Filters the list so it only contains what the user is searching for

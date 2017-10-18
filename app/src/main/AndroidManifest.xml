@@ -38,7 +38,6 @@
             android:label="Start Workout" />
         <activity
             android:name=".ExerciseInfoActivity"
-            android:label="Exercise"
             android:parentActivityName=".ExerciseActivity" />
         <activity
             android:name=".CreateWorkoutActivity"

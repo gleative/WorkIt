@@ -17,6 +17,8 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
 
 import com.example.gleative.workit.adapter.ExercisesRecyclerAdapter;
 import com.example.gleative.workit.fragments.ExerciseInfoFragment;
@@ -38,6 +40,10 @@ public class ExerciseActivity extends AppCompatActivity implements ExerciseListF
 
     private List<Exercise> exercisesList;
 
+    private String[] categories = {"All", "Arms", "Back", "Chest", "Legs", "Shoulders"};
+    ArrayAdapter<String> categoryAdapter;
+    Spinner categorySpinner;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,6 +53,7 @@ public class ExerciseActivity extends AppCompatActivity implements ExerciseListF
 //        SJEKK MANIFEST OG PÅ EXERCISES, VI KAN DEFINERE NAVN PÅ ACTIONBAR DER!
 //        toolbar.setTitle("Exercises"); // Setter title på actionbar
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false); // Disables title bar text
 
         exercisesList = Exercise.getData();
 
@@ -54,12 +61,22 @@ public class ExerciseActivity extends AppCompatActivity implements ExerciseListF
 //        exerciseListFragment = (ExerciseListFragment) getSupportFragmentManager().findFragmentById(R.id.exercise_list_fragment);
 
         setUpDrawer();
+        setUpSpinner();
     }
 
     private void setUpDrawer() {
         navigationDrawerFragment = (NavigationDrawerFragment) getSupportFragmentManager().findFragmentById(R.id.navigation_drawer_fragment);
         DrawerLayout drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         navigationDrawerFragment.setUpDrawer(drawerLayout, toolbar, R.id.nav_exercises);
+    }
+
+    // Sets up a spinner, had to do it here, and not in the fragment. Because here vi access the activity_exercise, which we need!
+    private void setUpSpinner(){
+        // Spinner element
+        categorySpinner = (Spinner) findViewById(R.id.category_spinner);
+        categoryAdapter = new ArrayAdapter<>(this, R.layout.spinner_category_item, categories); // The layout is for how a element in spinner should look like
+
+        categorySpinner.setAdapter(categoryAdapter);
     }
 
     @Override
