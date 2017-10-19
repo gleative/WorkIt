@@ -1,5 +1,6 @@
 package com.example.gleative.workit.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -8,9 +9,18 @@ import java.util.List;
 
 public class Workout {
 
+    private int workoutID;
     private String workoutName;
     private String workoutDescription;
     private List<CustomExercise> customExercises;
+
+    public int getWorkoutID() {
+        return workoutID;
+    }
+
+    public void setWorkoutID(int workoutID) {
+        this.workoutID = workoutID;
+    }
 
     public String getWorkoutName() {
         return workoutName;
@@ -34,5 +44,26 @@ public class Workout {
 
     public void setCustomExercises(List<CustomExercise> customExercises) {
         this.customExercises = customExercises;
+    }
+
+    public int getAmountExercises(){
+        return customExercises.size();
+    }
+
+    public static List<Workout> getData(){
+        List<Workout> workoutList = new ArrayList<>();
+
+        for(int i = 0; i <= 7; i++){
+            Workout workout = new Workout();
+            workout.setWorkoutID(i);
+            workout.setWorkoutName("Workout " + i);
+            workout.setWorkoutDescription("Desc for workout" + i);
+            workout.setCustomExercises(CustomExercise.getCustomExerciseData());
+
+            workoutList.add(workout);
+
+        }
+
+        return workoutList;
     }
 }

@@ -1,5 +1,9 @@
 package com.example.gleative.workit.model;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+
 /**
  * Is a exercise, but has custom reps, sets or time
  *
@@ -43,5 +47,23 @@ public class CustomExercise extends Exercise{
 
     public void setTime(int time) {
         this.time = time;
+    }
+
+    public static List<CustomExercise> getCustomExerciseData(){
+        List<CustomExercise> customExerciseList = new ArrayList<>();
+
+        Random randomNumber = new Random();
+        int number = randomNumber.nextInt(8);
+
+        for(int i = 0; i <= number; i++){
+            CustomExercise customExercise = new CustomExercise();
+            customExercise.setExercise(new Exercise());
+            customExercise.setReps(12);
+            customExercise.setSets(3);
+
+            customExerciseList.add(customExercise);
+        }
+
+        return customExerciseList;
     }
 }

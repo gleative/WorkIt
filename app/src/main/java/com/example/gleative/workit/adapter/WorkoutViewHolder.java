@@ -14,15 +14,18 @@ import com.example.gleative.workit.model.Workout;
 public class WorkoutViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
     TextView workoutName;
+    TextView workoutAmountExercises;
     OnWorkoutSelectedListener onWorkoutSelectedListener;
 
     public WorkoutViewHolder(View itemView) {
         super(itemView);
         workoutName = itemView.findViewById(R.id.workout_title);
+        workoutAmountExercises = itemView.findViewById(R.id.workout_exercise_amount);
     }
 
     public void bind(Workout workout, OnWorkoutSelectedListener listener){
         this.workoutName.setText(workout.getWorkoutName());
+        this.workoutAmountExercises.setText("Exercises: " + workout.getAmountExercises());
         this.onWorkoutSelectedListener = listener;
     }
 

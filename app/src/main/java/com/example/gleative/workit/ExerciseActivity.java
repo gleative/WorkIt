@@ -59,9 +59,6 @@ public class ExerciseActivity extends AppCompatActivity implements ExerciseListF
 
         exercisesList = Exercise.getData();
 
-//        // So we can access its methods
-//        exerciseListFragment = (ExerciseListFragment) getSupportFragmentManager().findFragmentById(R.id.exercise_list_fragment);
-
         setUpDrawer();
         setUpSpinner();
     }
@@ -101,7 +98,7 @@ public class ExerciseActivity extends AppCompatActivity implements ExerciseListF
 
     }
 
-    // When user selects one of the given categories
+    // When user selects one of the given categories in the spinner
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         String selectedItem = parent.getItemAtPosition(position).toString();
@@ -139,9 +136,7 @@ public class ExerciseActivity extends AppCompatActivity implements ExerciseListF
     }
 
     @Override
-    public void onNothingSelected(AdapterView<?> parent) {
-
-    }
+    public void onNothingSelected(AdapterView<?> parent) {}
 
     public void resetSpinnerPosition(){
         categorySpinner.setSelection(0);

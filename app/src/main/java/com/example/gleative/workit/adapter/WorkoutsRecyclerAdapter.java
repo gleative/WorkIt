@@ -15,15 +15,15 @@ import java.util.List;
  * Created by glenn on 17.10.2017.
  */
 
-public class WorkoutRecyclerAdapter extends RecyclerView.Adapter<WorkoutViewHolder>{
+public class WorkoutsRecyclerAdapter extends RecyclerView.Adapter<WorkoutViewHolder>{
 
     private List<Workout> workoutData;
     private LayoutInflater inflater;
     private OnWorkoutSelectedListener workoutSelectedListener;
     private WorkoutRecycleAdapterListener workoutRecycleAdapterListener;
 
-    public WorkoutRecyclerAdapter(Context context, List<Workout> data,
-                                  WorkoutRecycleAdapterListener _workoutRecycleAdapterListener){
+    public WorkoutsRecyclerAdapter(Context context, List<Workout> data,
+                                   WorkoutRecycleAdapterListener _workoutRecycleAdapterListener){
         this.workoutData = data;
         this.inflater = LayoutInflater.from(context);
 
