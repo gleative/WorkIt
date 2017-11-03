@@ -50,7 +50,7 @@
             android:id="@+id/exercise_list_fragment"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:name="com.example.gleative.workit.fragments.ExerciseListFragment"
+            android:name="com.example.gleative.workit.fragments.AddExerciseFragment"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
             tools:layout="@layout/fragment_exercise_list" />
 

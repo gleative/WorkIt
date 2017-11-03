@@ -32,6 +32,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:name="com.example.gleative.workit.fragments.CreateWorkoutFragment"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior"
                 tools:layout="@layout/fragment_create_workout"/>
                 <!--layout_behavior makes so it isnt inside the toolbar-->
 

@@ -52,8 +52,11 @@ public class CreateWorkoutActivity extends AppCompatActivity implements Exercise
         startActivity(intent);
     }
 
-    public void addExercise(View view){
-//        Intent intent = new Intent(this, );
+    // When user presses the add button
+    public void addExercise(Exercise exercise){
+        Intent intent = new Intent(this, CreateCustomExerciseActivity.class);
+        intent.putExtra("exercise_id", exercise.getExerciseID());
+        startActivity(intent);
     }
 
     @Override
