@@ -13,13 +13,26 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 
 import com.example.gleative.workit.fragments.NavigationDrawerFragment;
+import com.example.gleative.workit.model.Exercise;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import org.w3c.dom.Text;
 
 
 public class MainActivity extends AppCompatActivity {
     Toolbar toolbar;
     NavigationDrawerFragment navigationDrawerFragment;
+
+    TextView textView;
+
+    DatabaseReference dbReference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,14 +42,24 @@ public class MainActivity extends AppCompatActivity {
         toolbar.setTitle("Home"); // Må sette title her av en eller annen grunn. Går ikke i manifest, ellers blir navn på appen Home
         setSupportActionBar(toolbar);
 
-//        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-//        fab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Snackbar.make(view, "Hello, I'm a snackbar!", Snackbar.LENGTH_LONG)
-//                        .setAction("Kill", new MyActionListener()).show();
-//            }
-//        });
+        textView = (TextView) findViewById(R.id.text);
+
+        dbReference = FirebaseDatabase.getInstance().getReference().child("text"); // Gets reference of the the child "text"
+
+        // Reads from the database
+        dbReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                String e = dataSnapshot.getValue().toString();
+
+                textView.setText(e);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
 
         setUpDrawer();
     }
