@@ -52,6 +52,10 @@ public class CreateWorkoutActivity extends AppCompatActivity implements Exercise
         startActivity(intent);
     }
 
+    public void addExercise(View view){
+//        Intent intent = new Intent(this, );
+    }
+
     @Override
     public void onExerciseSelected(Exercise exercise) {
         // Her kan du ha at den går til vinduet hvor du kan definere hvor mange sets og reps du skal ha
