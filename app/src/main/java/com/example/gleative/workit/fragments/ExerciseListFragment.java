@@ -1,6 +1,7 @@
 package com.example.gleative.workit.fragments;
 
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.MenuItemCompat;
@@ -24,6 +25,11 @@ import com.example.gleative.workit.adapter.ExercisesRecyclerAdapter;
 import com.example.gleative.workit.adapter.OnExerciseSelectedListener;
 import com.example.gleative.workit.adapter.RecycleAdapterListener;
 import com.example.gleative.workit.model.Exercise;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,10 +42,14 @@ import java.util.List;
 
 public class ExerciseListFragment extends Fragment implements RecycleAdapterListener{
 
+    DatabaseReference dbReference;
+
     private RecyclerView recyclerView;
     private OnExerciseFragmentInteractionListener listener;
     ExercisesRecyclerAdapter adapter;
+    RecycleAdapterListener recycleAdapterListener;
     private List<Exercise> exercisesList;
+    private List<Exercise> eList;
 
     // Empty constructor required
     public ExerciseListFragment(){}
@@ -51,6 +61,7 @@ public class ExerciseListFragment extends Fragment implements RecycleAdapterList
         // Tells host activity that this fragment has menu options it wants to add, or else search bar wont show up
         setHasOptionsMenu(true);
         setUpRecyclerView(view);
+        getData();
 
         return view;
     }
@@ -94,51 +105,147 @@ public class ExerciseListFragment extends Fragment implements RecycleAdapterList
         }
     }
 
-    // Sets up the recycler view with the type of linear layout
+//    // Gets the exercises data from the database
+//    private void getData(){
+//        eList = new ArrayList<>();
+//
+//        // Gets a reference to the child "exercises" in the database
+//        dbReference = FirebaseDatabase.getInstance().getReference().child("exercises");
+//
+//        dbReference.addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(DataSnapshot dataSnapshot) {
+//                for(DataSnapshot exerciseSnapshot : dataSnapshot.getChildren()){
+//                    Exercise exercise = new Exercise();
+//                    System.out.println(exerciseSnapshot.getKey());
+//                    exercise.setExerciseID(Integer.parseInt(exerciseSnapshot.getKey())); // Gets the Key Value, which is the exerciseID in this case
+//                    exercise.setExerciseName(exerciseSnapshot.child("exerciseName").getValue().toString());
+//                    exercise.setExerciseDescription(exerciseSnapshot.child("exerciseDescription").getValue().toString());
+//                    exercise.setBodyPart(exerciseSnapshot.child("bodyPart").getValue().toString());
+//                    eList.add(exercise);
+//                }
+//
+//            }
+//
+//            @Override
+//            public void onCancelled(DatabaseError databaseError) {
+//
+//            }
+//        });
+//
+//    }
+
+    // Retrieves the exercises data from the database and adds the data to the recycler view
+    private void getData(){
+//        recyclerView = view.findViewById(R.id.exercise_recycler_view); // Henter listen fra layout fil "fragment_exercise_list"
+//        adapter = new ExercisesRecyclerAdapter(getContext(), Exercise.getData(), this); // Må ha constructor på adapteren ellers du får error! this, Exercise.getData()
+//        recyclerView.setAdapter(adapter);
+//
+//        // Sets up the list in a new layout
+//        LinearLayoutManager linearLayoutManagerVertical = new LinearLayoutManager(getContext());
+//        linearLayoutManagerVertical.setOrientation(LinearLayoutManager.VERTICAL);
+//        recyclerView.setLayoutManager(linearLayoutManagerVertical);
+
+        eList = new ArrayList<>();
+
+        // Gets a reference to the child "exercises" in the database
+        dbReference = FirebaseDatabase.getInstance().getReference().child("exercises");
+
+        dbReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for(DataSnapshot exerciseSnapshot : dataSnapshot.getChildren()){
+                    Exercise exercise = new Exercise();
+                    System.out.println(exerciseSnapshot.getKey());
+                    exercise.setExerciseID(Integer.parseInt(exerciseSnapshot.getKey())); // Gets the Key Value, which is the exerciseID in this case
+                    exercise.setExerciseName(exerciseSnapshot.child("exerciseName").getValue().toString());
+                    exercise.setExerciseDescription(exerciseSnapshot.child("exerciseDescription").getValue().toString());
+                    exercise.setBodyPart(exerciseSnapshot.child("bodyPart").getValue().toString());
+                    eList.add(exercise);
+                }
+
+                // Adds the exercises to the recycler view
+                createAdapter(eList);
+//                adapter = new ExercisesRecyclerAdapter(getContext(), eList, recycleAdapterListener);
+//                recyclerView.setAdapter(adapter);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+//        recyclerView = view.findViewById(R.id.exercise_recycler_view); // Henter listen fra layout fil "fragment_exercise_list"
+//        adapter = new ExercisesRecyclerAdapter(getContext(), eList, this); // Må ha constructor på adapteren ellers du får error! this, Exercise.getData()
+//        recyclerView.setAdapter(adapter);
+
+        // Sets up the list in a new layout
+//        LinearLayoutManager linearLayoutManagerVertical = new LinearLayoutManager(getContext());
+//        linearLayoutManagerVertical.setOrientation(LinearLayoutManager.VERTICAL);
+//        recyclerView.setLayoutManager(linearLayoutManagerVertical);
+
+    }
+
+    // Finds the recycler view and sets it up with the type of linear layout
     private void setUpRecyclerView(View view){
-        recyclerView = view.findViewById(R.id.exercise_recycler_view); // Henter listen fra layout fil "fragment_exercise_list"
-        adapter = new ExercisesRecyclerAdapter(getContext(), Exercise.getData(), this); // Må ha constructor på adapteren ellers du får error! this, Exercise.getData()
-        recyclerView.setAdapter(adapter);
+        // Finds the recycler_view from the layout file "fragment_exercise_list"
+        recyclerView = view.findViewById(R.id.exercise_recycler_view);
+//        adapter = new ExercisesRecyclerAdapter(getContext(), exerciseData, this); // Må ha constructor på adapteren ellers du får error! this, Exercise.getData()
 
         // Sets up the list in a new layout
         LinearLayoutManager linearLayoutManagerVertical = new LinearLayoutManager(getContext());
         linearLayoutManagerVertical.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(linearLayoutManagerVertical);
-
     }
 
-    public void spinnerFilterExercises(String selectedCategory){
-        exercisesList = Exercise.getData();
-        List<Exercise> newList = new ArrayList<>();
+    // Initiates a new ExerciseRecyclerAdapter, and adds the exercise data to the recycler view
+    private void createAdapter(List<Exercise> exerciseData){
+        adapter = new ExercisesRecyclerAdapter(getContext(), exerciseData, this);
+        recyclerView.setAdapter(adapter);
+    }
 
-        for(Exercise exercise: exercisesList){
-            String exerciseBodyPart = exercise.getBodyPart();
-            if(exerciseBodyPart.contains(selectedCategory)){
-                newList.add(exercise);
+    // Filters the exercises depentend on what catergory on the spinner is selected
+    public void spinnerFilterExercises(String selectedCategory){
+        // Need to have this if statement, or the program crashes, because the listener will listen before the data is added
+        if(adapter != null){
+            exercisesList = eList;
+            List<Exercise> newList = new ArrayList<>();
+
+            for(Exercise exercise: exercisesList){
+                String exerciseBodyPart = exercise.getBodyPart();
+                if(exerciseBodyPart.contains(selectedCategory)){
+                    newList.add(exercise);
+                }
             }
+
+            adapter.setFilter(newList);
         }
 
-        adapter.setFilter(newList);
     }
 
     // Filters the list so it only contains what the user is searching for
     public void filterExercises(String newText){
-        exercisesList = Exercise.getData();
-        newText = newText.toLowerCase();
-        List<Exercise> newList = new ArrayList<>();
+        // Need to have this if statement, or the program crashes, because the listener will listen before the data is added
+        if(adapter != null){
+            exercisesList = eList; // The list that holds the exercise data from the database
+            newText = newText.toLowerCase();
+            List<Exercise> newList = new ArrayList<>();
 
 
-        for(Exercise exercise: exercisesList){
-            String exerciseName = exercise.getExerciseName().toLowerCase();
-            String exerciseBodyPart = exercise.getBodyPart().toLowerCase();
-            // If the exercise name or body part is in the query from the user, add it to a new list, that will be displayed for the user
-            if(exerciseName.contains(newText) || exerciseBodyPart.contains(newText)){
-                newList.add(exercise);
+            for(Exercise exercise: exercisesList){
+                String exerciseName = exercise.getExerciseName().toLowerCase();
+                String exerciseBodyPart = exercise.getBodyPart().toLowerCase();
+                // If the exercise name or body part is in the query from the user, add it to a new list, that will be displayed for the user
+                if(exerciseName.contains(newText) || exerciseBodyPart.contains(newText)){
+                    newList.add(exercise);
+                }
             }
+
+            // Send it to the adapter, so it can notify the recycler view that it has changed, and will update
+            adapter.setFilter(newList);
         }
 
-        // Send it to the adapter, so it can notify the recycler view that it has changed, and will update
-        adapter.setFilter(newList);
     }
 
 

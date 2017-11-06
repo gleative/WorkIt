@@ -92,7 +92,8 @@ public class ExerciseActivity extends AppCompatActivity implements ExerciseListF
     @Override
     public void onExerciseSelected(Exercise selectedExercise) {
         Intent intent = new Intent(this, ExerciseInfoActivity.class);
-        intent.putExtra("exercise_id", selectedExercise.getExerciseID());
+//        intent.putExtra("exercise_id", selectedExercise.getExerciseID());
+        intent.putExtra("exercise", selectedExercise);
         startActivity(intent);
 
 

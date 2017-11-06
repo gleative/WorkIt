@@ -30,23 +30,19 @@ public class ExerciseInfoActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_exercise_info);
 
-
-
-
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         // Adds back button, check manifest and under ExerciseInfoActivity tag android:parentActivityName=".ExerciseActivity", so back button works
 //        getSupportActionBar().setDisplayHomeAsUpEnabled(true); // But, title bar gets pushed if you use this so.... dunno
 
-//        viewPager = (ViewPager) findViewById(R.id.viewPager);
-//        setUpViewPager();
-
-        int id = getIntent().getIntExtra("exercise_id", 1);
+        // Gets the exercise object, by getting the key name og the value
+        selectedExercise = getIntent().getParcelableExtra("exercise");
 
         FragmentManager fragmentManager = getSupportFragmentManager();
         ExerciseInfoFragment exerciseInfoFragment = (ExerciseInfoFragment) fragmentManager.findFragmentById(R.id.exercise_info_fragment);
 
-        exerciseInfoFragment.setDisplayedDetail(id);
+        // Displays the exercise information on the layout
+        exerciseInfoFragment.setDisplayedDetail(selectedExercise);
 
     }
 

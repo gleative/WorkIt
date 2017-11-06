@@ -12,11 +12,18 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.gleative.workit.R;
 import com.example.gleative.workit.adapter.ExercisePicturesAdapter;
 import com.example.gleative.workit.model.Exercise;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -26,7 +33,10 @@ import java.util.List;
  */
 
 public class ExerciseInfoFragment extends Fragment{
+    DatabaseReference dbReference;
+
     private List<Exercise> exerciseList;
+    private List<Exercise> eList;
 
     public final static String EXERCISE_INDEX = "exerciseIndex";
     private static final int DEFAULT_EXERCISE_INDEX = 1;
@@ -48,29 +58,50 @@ public class ExerciseInfoFragment extends Fragment{
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        exerciseList = Exercise.getData();
+//        getData(exerciseIndex);
+//        exerciseList = Exercise.getData();
 
         View fragmentView = inflater.inflate(R.layout.fragment_exercise_info, container, false); // Layout file
 
         // Finds referance to the diffrent views in "fragment_exercise_info" layout
-        exerciseNameToolbar = fragmentView.findViewById(R.id.toolbar);
+        exerciseNameToolbar = fragmentView.findViewById(R.id.exercise_name); // Couldnt have toolbar as ID or else it wouldnt change name on toolbar for some reason....
 //        exerciseNameView = fragmentView.findViewById(R.id.exercise_title);
         exerciseDescView = fragmentView.findViewById(R.id.exercise_description);
 
-        setDisplayedDetail(exerciseIndex);
+//        setDisplayedDetail(exerciseIndex);
 
         return fragmentView;
     }
+
+//    private void getData(int exerciseIndex){
+//        eList = new ArrayList<>();
+//
+//        dbReference = FirebaseDatabase.getInstance().getReference().child("exercises");
+//
+//        dbReference.addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(DataSnapshot dataSnapshot) {
+//                if(dataSnapshot.getKey() == exerciseIndex){
+//
+//                }
+//            }
+//
+//            @Override
+//            public void onCancelled(DatabaseError databaseError) {
+//
+//            }
+//        });
+//    }
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
         outState.putInt(EXERCISE_INDEX, exerciseIndex);
     }
 
-    public void setDisplayedDetail(int exerciseDescIndex){
-        exerciseIndex = exerciseDescIndex;
+    public void setDisplayedDetail(Exercise exercise){
+//        exerciseIndex = exerciseDescIndex;
 
-        Exercise exercise = exerciseList.get(exerciseIndex);
+//        Exercise exercise = exerciseList.get(exerciseIndex);
 
         exerciseNameToolbar.setTitle(exercise.getExerciseName());
         exerciseDescView.setText(exercise.getExerciseDescription());
