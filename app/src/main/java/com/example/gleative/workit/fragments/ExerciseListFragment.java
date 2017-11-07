@@ -161,7 +161,6 @@ public class ExerciseListFragment extends Fragment implements RecycleAdapterList
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for(DataSnapshot exerciseSnapshot : dataSnapshot.getChildren()){
                     Exercise exercise = new Exercise();
-                    System.out.println(exerciseSnapshot.getKey());
                     exercise.setExerciseID(Integer.parseInt(exerciseSnapshot.getKey())); // Gets the Key Value, which is the exerciseID in this case
                     exercise.setExerciseName(exerciseSnapshot.child("exerciseName").getValue().toString());
                     exercise.setExerciseDescription(exerciseSnapshot.child("exerciseDescription").getValue().toString());

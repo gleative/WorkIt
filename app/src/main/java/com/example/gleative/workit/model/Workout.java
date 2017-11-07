@@ -9,7 +9,7 @@ import java.util.List;
 
 public class Workout {
 
-    private int workoutID;
+    private String workoutID;
     private String workoutName;
     private String workoutDescription;
     private List<CustomExercise> customExercises;
@@ -21,11 +21,11 @@ public class Workout {
         this.workoutDescription = _workoutDescription;
     }
 
-    public int getWorkoutID() {
+    public String getWorkoutID() {
         return workoutID;
     }
 
-    public void setWorkoutID(int workoutID) {
+    public void setWorkoutID(String workoutID) {
         this.workoutID = workoutID;
     }
 
@@ -62,20 +62,20 @@ public class Workout {
         }
     }
 
-    public static List<Workout> getData(){
-        List<Workout> workoutList = new ArrayList<>();
-
-        for(int i = 0; i <= 7; i++){
-            Workout workout = new Workout();
-            workout.setWorkoutID(i);
-            workout.setWorkoutName("Workout " + i);
-            workout.setWorkoutDescription("Desc for workout" + i);
-            workout.setCustomExercises(CustomExercise.getCustomExerciseData());
-
-            workoutList.add(workout);
-
-        }
-
-        return workoutList;
-    }
+//    public static List<Workout> getData(){
+//        List<Workout> workoutList = new ArrayList<>();
+//
+//        for(int i = 0; i <= 7; i++){
+//            Workout workout = new Workout();
+//            workout.setWorkoutID(i);
+//            workout.setWorkoutName("Workout " + i);
+//            workout.setWorkoutDescription("Desc for workout" + i);
+//            workout.setCustomExercises(CustomExercise.getCustomExerciseData());
+//
+//            workoutList.add(workout);
+//
+//        }
+//
+//        return workoutList;
+//    }
 }

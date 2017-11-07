@@ -28,7 +28,7 @@
         </android.support.design.widget.AppBarLayout>
 
             <fragment
-                android:id="@+id/exercise_list_fragment"
+                android:id="@+id/create_workout_fragment"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:name="com.example.gleative.workit.fragments.CreateWorkoutFragment"
