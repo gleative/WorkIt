@@ -1,5 +1,6 @@
 package com.example.gleative.workit.adapter;
 
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
@@ -23,9 +24,11 @@ public class ExerciseViewHolder extends RecyclerView.ViewHolder implements View.
         // Sets the value to the given xml item
         exerciseName = itemView.findViewById(R.id.exercise_title);
         exerciseBodyPart = itemView.findViewById(R.id.exercise_body_part);
+
     }
 
-    public void bind(Exercise exercise, OnExerciseSelectedListener listener){ // Setter titelen på øvelslen
+    // Sets the values to the views in the recycler view
+    public void bind(Exercise exercise, OnExerciseSelectedListener listener){
         this.exerciseName.setText(exercise.getExerciseName());
         this.exerciseBodyPart.setText(exercise.getBodyPart());
         this.onExerciseSelectedListener = listener;

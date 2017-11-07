@@ -19,6 +19,7 @@ import com.example.gleative.workit.adapter.AddExerciseAdapter;
 import com.example.gleative.workit.adapter.ExercisesRecyclerAdapter;
 import com.example.gleative.workit.adapter.RecycleAdapterListener;
 import com.example.gleative.workit.model.Exercise;
+import com.google.firebase.database.DatabaseReference;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,6 +29,8 @@ import java.util.List;
  */
 
 public class AddExerciseFragment extends Fragment implements RecycleAdapterListener {
+
+    DatabaseReference dbReference;
 
     private RecyclerView recyclerView;
     private ExerciseListFragment.OnExerciseFragmentInteractionListener listener;
@@ -142,6 +145,11 @@ public class AddExerciseFragment extends Fragment implements RecycleAdapterListe
 
         listener.onExerciseSelected(exercise);
     }
+
+//    @Override
+//    public void addExerciseSelected(Exercise selectedExercise) {
+//
+//    }
 
     public interface OnExerciseFragmentInteractionListener{
         void onExerciseSelected(Exercise exercise);

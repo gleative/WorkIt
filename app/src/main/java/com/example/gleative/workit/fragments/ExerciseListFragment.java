@@ -21,6 +21,7 @@ import android.widget.Toast;
 
 import com.example.gleative.workit.ExerciseActivity;
 import com.example.gleative.workit.R;
+import com.example.gleative.workit.adapter.AddExerciseAdapter;
 import com.example.gleative.workit.adapter.ExercisesRecyclerAdapter;
 import com.example.gleative.workit.adapter.OnExerciseSelectedListener;
 import com.example.gleative.workit.adapter.RecycleAdapterListener;
@@ -47,9 +48,12 @@ public class ExerciseListFragment extends Fragment implements RecycleAdapterList
     private RecyclerView recyclerView;
     private OnExerciseFragmentInteractionListener listener;
     ExercisesRecyclerAdapter adapter;
+    AddExerciseAdapter addExerciseAdapter;
     RecycleAdapterListener recycleAdapterListener;
     private List<Exercise> exercisesList;
     private List<Exercise> eList;
+
+    private int layout;
 
     // Empty constructor required
     public ExerciseListFragment(){}
@@ -61,7 +65,7 @@ public class ExerciseListFragment extends Fragment implements RecycleAdapterList
         // Tells host activity that this fragment has menu options it wants to add, or else search bar wont show up
         setHasOptionsMenu(true);
         setUpRecyclerView(view);
-        getData();
+        getData(0);
 
         return view;
     }
@@ -136,7 +140,7 @@ public class ExerciseListFragment extends Fragment implements RecycleAdapterList
 //    }
 
     // Retrieves the exercises data from the database and adds the data to the recycler view
-    private void getData(){
+    private void getData(int selectedLayout){
 //        recyclerView = view.findViewById(R.id.exercise_recycler_view); // Henter listen fra layout fil "fragment_exercise_list"
 //        adapter = new ExercisesRecyclerAdapter(getContext(), Exercise.getData(), this); // Må ha constructor på adapteren ellers du får error! this, Exercise.getData()
 //        recyclerView.setAdapter(adapter);
@@ -145,6 +149,7 @@ public class ExerciseListFragment extends Fragment implements RecycleAdapterList
 //        LinearLayoutManager linearLayoutManagerVertical = new LinearLayoutManager(getContext());
 //        linearLayoutManagerVertical.setOrientation(LinearLayoutManager.VERTICAL);
 //        recyclerView.setLayoutManager(linearLayoutManagerVertical);
+        layout = selectedLayout;
 
         eList = new ArrayList<>();
 
@@ -165,7 +170,7 @@ public class ExerciseListFragment extends Fragment implements RecycleAdapterList
                 }
 
                 // Adds the exercises to the recycler view
-                createAdapter(eList);
+                createAdapter(eList, layout);
 //                adapter = new ExercisesRecyclerAdapter(getContext(), eList, recycleAdapterListener);
 //                recyclerView.setAdapter(adapter);
             }
@@ -200,9 +205,22 @@ public class ExerciseListFragment extends Fragment implements RecycleAdapterList
     }
 
     // Initiates a new ExerciseRecyclerAdapter, and adds the exercise data to the recycler view
-    private void createAdapter(List<Exercise> exerciseData){
-        adapter = new ExercisesRecyclerAdapter(getContext(), exerciseData, this);
-        recyclerView.setAdapter(adapter);
+    private void createAdapter(List<Exercise> exerciseData, int layout){
+        if(layout == 1){
+            recyclerView.setAdapter(null);
+            addExerciseAdapter = new AddExerciseAdapter(getContext(), exerciseData, this);
+            recyclerView.setAdapter(addExerciseAdapter);
+        }
+        else{
+            adapter = new ExercisesRecyclerAdapter(getContext(), exerciseData, this);
+            recyclerView.setAdapter(adapter);
+        }
+
+
+    }
+
+    public void useAddExerciseLayout(int selectedLayout){
+        getData(selectedLayout);
     }
 
     // Filters the exercises depentend on what catergory on the spinner is selected
@@ -247,8 +265,6 @@ public class ExerciseListFragment extends Fragment implements RecycleAdapterList
         }
 
     }
-
-
 
     @Override
     public void exerciseSelected(Exercise exercise) {

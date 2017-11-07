@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.Toast;
 
 import com.example.gleative.workit.fragments.CreateWorkoutFragment;
 import com.example.gleative.workit.fragments.ExerciseListFragment;
@@ -21,7 +22,7 @@ public class CreateWorkoutActivity extends AppCompatActivity implements Exercise
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_create_workout);
+        setContentView(R.layout.activity_exercise);
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -29,7 +30,12 @@ public class CreateWorkoutActivity extends AppCompatActivity implements Exercise
         setUpDrawer();
 
         FragmentManager fragmentManager = getSupportFragmentManager();
-        CreateWorkoutFragment createWorkoutFragment = (CreateWorkoutFragment) fragmentManager.findFragmentById(R.id.create_workout_fragment);
+//        CreateWorkoutFragment createWorkoutFragment = (CreateWorkoutFragment) fragmentManager.findFragmentById(R.id.create_workout_fragment);
+        // So we can access its methods
+        ExerciseListFragment exerciseListFragment = (ExerciseListFragment) getSupportFragmentManager().findFragmentById(R.id.exercise_list_fragment);
+
+        // Send with parameter 1 so it uses the exercise layout where the user can add a exercise
+//        exerciseListFragment.useAddExerciseLayout(1);
 
     }
 
@@ -46,25 +52,15 @@ public class CreateWorkoutActivity extends AppCompatActivity implements Exercise
         super.onStart();
     }
 
-    // FAB button
-    public void addCustomExercise(View view) {
-        Intent intent = new Intent(this, ExerciseActivity.class);
+
+    @Override
+    public void onExerciseSelected(Exercise selectedExercise) {
+        // Her kan du ha at den går til vinduet hvor du kan definere hvor mange sets og reps du skal ha
+        Intent intent = new Intent(this, CreateCustomExerciseActivity.class);
+        intent.putExtra("exercise", selectedExercise);
         startActivity(intent);
     }
 
     // When user presses the add button
-    public void addExercise(Exercise exercise){
-        Intent intent = new Intent(this, CreateCustomExerciseActivity.class);
-        intent.putExtra("exercise_id", exercise.getExerciseID());
-        startActivity(intent);
-    }
-
-    @Override
-    public void onExerciseSelected(Exercise exercise) {
-        // Her kan du ha at den går til vinduet hvor du kan definere hvor mange sets og reps du skal ha
-        Intent intent = new Intent(this, ExerciseInfoActivity.class);
-        intent.putExtra("exercise_id", exercise.getExerciseID());
-        startActivity(intent);
-    }
 
 }

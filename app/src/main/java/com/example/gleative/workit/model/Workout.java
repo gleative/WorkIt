@@ -14,6 +14,13 @@ public class Workout {
     private String workoutDescription;
     private List<CustomExercise> customExercises;
 
+    public Workout(){}
+
+    public Workout(String _workoutName, String _workoutDescription){
+        this.workoutName = _workoutName;
+        this.workoutDescription = _workoutDescription;
+    }
+
     public int getWorkoutID() {
         return workoutID;
     }
@@ -47,7 +54,12 @@ public class Workout {
     }
 
     public int getAmountExercises(){
-        return customExercises.size();
+        if(customExercises != null){
+            return customExercises.size();
+        }
+        else{
+            return 0;
+        }
     }
 
     public static List<Workout> getData(){

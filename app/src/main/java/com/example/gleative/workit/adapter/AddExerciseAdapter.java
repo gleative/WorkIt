@@ -27,21 +27,19 @@ public class AddExerciseAdapter extends RecyclerView.Adapter<ExerciseViewHolder>
 
         this.recycleAdapterListener = _recycleAdapterListener;
 
-        exerciseSelectedListener = new OnExerciseSelectedListener() {
-            @Override
-            public void exerciseSelected(int position) {
-                Exercise exercise = exerciseData.get(position);
-                recycleAdapterListener.exerciseSelected(exercise);
-            }
-        };
+//        exerciseSelectedListener = new OnExerciseSelectedListener() {
+//            @Override
+//            public void exerciseSelected(int position) {
+//                Exercise exercise = exerciseData.get(position);
+//                recycleAdapterListener.exerciseSelected(exercise);
+//            }
+//        };
     }
 
-    // Måtte ha disse pga extend RecyclerView
-
-    // Får tak i layoutfilen
+    // Gets the given layout file, and sets onClicklistener on it
     @Override
     public ExerciseViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = inflater.inflate(R.layout.list_exercises_add, parent, false); // Inflater list_exercise layout, so it gets its design
+        View view = inflater.inflate(R.layout.list_exercises_add, parent, false); // Inflater list_exercises_add layout, so it gets its design
         ExerciseViewHolder holder = new ExerciseViewHolder(view);
 
         view.setOnClickListener(holder);

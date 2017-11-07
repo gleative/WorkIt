@@ -8,8 +8,13 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 
 import com.example.gleative.workit.fragments.NavigationDrawerFragment;
+import com.example.gleative.workit.model.Workout;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class MyWorkoutActivity extends AppCompatActivity {
+
+    DatabaseReference dbReference;
 
     Toolbar toolbar;
     NavigationDrawerFragment navigationDrawerFragment;
@@ -23,6 +28,7 @@ public class MyWorkoutActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         setUpDrawer();
+
     }
 
     private void setUpDrawer() {
@@ -40,6 +46,16 @@ public class MyWorkoutActivity extends AppCompatActivity {
 
     // FAB button in activity_workout.xml, Starts CreateWorkoutActivity
     public void createWorkout(View view) {
+        dbReference = FirebaseDatabase.getInstance().getReference("workouts");
+
+        // Creates a user node, and returns a unique key value
+        String workoutID = dbReference.push().getKey();
+
+        Workout workout = new Workout("untitled","empty");
+
+        // Adds the given values to the database
+        dbReference.child(workoutID).setValue(workout);
+
         Intent intent = new Intent(this, CreateWorkoutActivity.class);
         startActivity(intent);
     }

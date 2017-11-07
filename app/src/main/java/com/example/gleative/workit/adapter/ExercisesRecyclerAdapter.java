@@ -36,6 +36,7 @@ public class ExercisesRecyclerAdapter extends RecyclerView.Adapter<ExerciseViewH
                 Exercise exercise = exerciseData.get(position);
                 recycleAdapterListener.exerciseSelected(exercise);
             }
+
         };
     }
 
@@ -71,6 +72,10 @@ public class ExercisesRecyclerAdapter extends RecyclerView.Adapter<ExerciseViewH
     public void setFilter(List<Exercise> newList){
         this.exerciseData = newList;
         notifyDataSetChanged(); // This refreshes the adapter.
+    }
+
+    public void clearData(){
+        this.exerciseData.clear();
     }
 
 }
