@@ -9,6 +9,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.gleative.workit.fragments.ExerciseListFragment;
 import com.example.gleative.workit.fragments.NavigationDrawerFragment;
@@ -76,11 +77,18 @@ public class CreateWorkoutActivity extends AppCompatActivity implements Exercise
 
     // When user presses the add button
     public void addExerciseToWorkout(View view){
-        workout = createWorkout(workoutNameText.getText().toString(), workoutDescriptionText.getText().toString());
+        // If any of the edit text's are empty
+        if(workoutNameText.getText().toString().isEmpty() || workoutDescriptionText.getText().toString().isEmpty()){
+            Toast.makeText(this, "You have to fill out both fields!", Toast.LENGTH_SHORT).show();
+        }
+        else{
+            workout = createWorkout(workoutNameText.getText().toString(), workoutDescriptionText.getText().toString());
 
-        Intent intent = new Intent(this, AddExerciseToWorkoutActivity.class);
-        intent.putExtra("workout", workout);
-        startActivity(intent);
+            Intent intent = new Intent(this, AddExerciseToWorkoutActivity.class);
+            intent.putExtra("workout", workout);
+            startActivity(intent);
+        }
+
     }
 
     // Creates the workout with name and desc, sends to database, and returns the created object
@@ -91,6 +99,7 @@ public class CreateWorkoutActivity extends AppCompatActivity implements Exercise
         String workoutID = dbReference.push().getKey();
 
         Workout newWorkout = new Workout(workoutName,workoutDescription);
+        newWorkout.setWorkoutID(workoutID); // Adds the unique ID genereated by firebase to the workout object so can find it here
 
         // Adds the given values to the database
         dbReference.child(workoutID).setValue(newWorkout);

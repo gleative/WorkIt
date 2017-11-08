@@ -12,10 +12,10 @@ import java.util.Random;
  * Created by gleative on 09.10.2017.
  */
 
-public class CustomExercise extends Exercise{
+public class CustomExercise{
 
-    private Workout workout; // Which workout the customexercise is in
-    private Exercise exercise; // Which exercise is customized
+    private String workoutID; // Which workout the customexercise is in
+    private int exerciseID; // Which exercise is customized
     private int sets;
     private int reps;
     private int time;
@@ -24,27 +24,43 @@ public class CustomExercise extends Exercise{
         super();
     }
 
-    public CustomExercise(Workout _workout, Exercise _exercise, int _sets, int _reps){
-        this.workout = _workout;
-        this.exercise = _exercise;
+    public CustomExercise(String _workoutID, int _exerciseID, int _sets, int _reps){
+        this.workoutID = _workoutID;
+        this.exerciseID = _exerciseID;
         this.sets = _sets;
         this.reps = _reps;
     }
 
-    public Workout getWorkout(){
-        return workout;
+//    public Workout getWorkout(){
+//        return workout;
+//    }
+//
+//    public void setWorkout(Workout workout){
+//        this.workout = workout;
+//    }
+//
+//    public Exercise getExercise() {
+//        return exercise;
+//    }
+//
+//    public void setExercise(Exercise exercise) {
+//        this.exercise = exercise;
+//    }
+
+    public String getWorkoutID(){
+        return workoutID;
     }
 
-    public void setWorkout(Workout workout){
-        this.workout = workout;
+    public void setWorkoutID(String workoutID){
+        this.workoutID = workoutID;
     }
 
-    public Exercise getExercise() {
-        return exercise;
+    public int getExerciseID(){
+        return exerciseID;
     }
 
-    public void setExercise(Exercise exercise) {
-        this.exercise = exercise;
+    public void setExerciseID(int exerciseID){
+        this.exerciseID = exerciseID;
     }
 
     public int getSets() {
@@ -71,21 +87,21 @@ public class CustomExercise extends Exercise{
         this.time = time;
     }
 
-    public static List<CustomExercise> getCustomExerciseData(){
-        List<CustomExercise> customExerciseList = new ArrayList<>();
-
-        Random randomNumber = new Random();
-        int number = randomNumber.nextInt(8);
-
-        for(int i = 0; i <= number; i++){
-            CustomExercise customExercise = new CustomExercise();
-            customExercise.setExercise(new Exercise());
-            customExercise.setReps(12);
-            customExercise.setSets(3);
-
-            customExerciseList.add(customExercise);
-        }
-
-        return customExerciseList;
-    }
+//    public static List<CustomExercise> getCustomExerciseData(){
+//        List<CustomExercise> customExerciseList = new ArrayList<>();
+//
+//        Random randomNumber = new Random();
+//        int number = randomNumber.nextInt(8);
+//
+//        for(int i = 0; i <= number; i++){
+//            CustomExercise customExercise = new CustomExercise();
+//            customExercise.setExercise(new Exercise());
+//            customExercise.setReps(12);
+//            customExercise.setSets(3);
+//
+//            customExerciseList.add(customExercise);
+//        }
+//
+//        return customExerciseList;
+//    }
 }

@@ -1,5 +1,6 @@
 package com.example.gleative.workit;
 
+import android.content.Intent;
 import android.provider.ContactsContract;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
@@ -56,18 +57,29 @@ public class CreateCustomExerciseActivity extends AppCompatActivity {
 
     }
 
-
+    // Adds the custome exercise to the created workout, unless the fields are empty.
     public void addCustomExerciseToWorkout(View view) {
-        customExercise = createCustomExercise(Integer.parseInt(sets.getText().toString()), Integer.parseInt(reps.getText().toString()));
+        // If any of the edit text's are empty
+        if(sets.getText().toString().isEmpty() || reps.getText().toString().isEmpty()){
+            Toast.makeText(this, "You have to fill out both fields!", Toast.LENGTH_SHORT).show();
+        }
+        else {
+            customExercise = createCustomExercise(Integer.parseInt(sets.getText().toString()), Integer.parseInt(reps.getText().toString()));
+
+            Intent intent = new Intent(this, AddExerciseToWorkoutActivity.class);
+            startActivity(intent);
+        }
     }
 
+    // Creates the custom exercise sends to database, and returns the created object
     private CustomExercise createCustomExercise(int sets, int reps){
         dbReference = FirebaseDatabase.getInstance().getReference("customExercises");
 
         // Creates a user node with random generated ID, and returns a unique key value (ID)
         String customExerciseID = dbReference.push().getKey();
 
-        CustomExercise newCustomExercise = new CustomExercise(workout, selectedExercise, sets, reps);
+        // IF THERE ARE SOME VALUES YOU DONT WANT IN THE CHILD, REMOVE GETTER AND SETTER FOR THAT VALUE, OR ELSE IT WILL DISPLAY!
+        CustomExercise newCustomExercise = new CustomExercise(workout.getWorkoutID(), selectedExercise.getExerciseID(), sets, reps);
 
         // Adds the given values to the database
         dbReference.child(customExerciseID).setValue(newCustomExercise);
