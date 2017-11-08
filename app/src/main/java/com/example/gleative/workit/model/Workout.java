@@ -90,6 +90,10 @@ public class Workout implements Parcelable {
         this.customExercises = customExercises;
     }
 
+    public void addCustomExerciseToWorkout(CustomExercise customExercise){
+        customExercises.add(customExercise);
+    }
+
     public int getAmountExercises(){
         if(customExercises != null){
             return customExercises.size();

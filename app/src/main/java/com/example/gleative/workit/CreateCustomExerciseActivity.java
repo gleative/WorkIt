@@ -50,7 +50,7 @@ public class CreateCustomExerciseActivity extends AppCompatActivity {
         FragmentManager fragmentManager = getSupportFragmentManager();
         CreateCustomExerciseFragment createCustomExerciseFragment = (CreateCustomExerciseFragment) fragmentManager.findFragmentById(R.id.create_custom_exercise_fragment);
 
-        Toast.makeText(this, "Add " + selectedExercise.getExerciseName() + " to: " + workout.getWorkoutName() + workout.getWorkoutID(), Toast.LENGTH_SHORT).show();
+//        Toast.makeText(this, "Add " + selectedExercise.getExerciseName() + " to: " + workout.getWorkoutName() + workout.getWorkoutID(), Toast.LENGTH_SHORT).show();
 
         // Displays the exercise information on the layout
         createCustomExerciseFragment.setDisplayedDetail(selectedExercise);

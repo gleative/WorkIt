@@ -76,10 +76,14 @@ public class WorkoutListFragment extends Fragment implements WorkoutRecycleAdapt
                     workout.setWorkoutName(workoutSnapshot.child("workoutName").getValue().toString());
                     workout.setWorkoutDescription(workoutSnapshot.child("workoutDescription").getValue().toString());
 
-                    workout.setCustomExercises(getCustomExercises(workout.getWorkoutID())); // Gets the custom exercises
+//                    workout.setCustomExercises(getCustomExercises(workout.getWorkoutID())); // Gets the custom exercises
 
                     workoutsList.add(workout);
                 }
+
+//                for(Workout workout : workoutsList){
+//                    workout.setCustomExercises(getCustomExercises(workout.getWorkoutID()));
+//                }
 
                 // Adds the exercises to the recycler view
                 createAdapter(workoutsList);
@@ -90,35 +94,37 @@ public class WorkoutListFragment extends Fragment implements WorkoutRecycleAdapt
 
             }
         });
+
+
     }
 
-    private List<CustomExercise> getCustomExercises(final String workoutID){
-
-        customExerciseList = new ArrayList<>();
-
-        dbReference2 = FirebaseDatabase.getInstance().getReference().child("customExercises");
-
-        dbReference2.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                for(DataSnapshot customExerciseSnapshot : dataSnapshot.getChildren()){
-                    CustomExercise customExercise = customExerciseSnapshot.getValue(CustomExercise.class);
-
-                    // WorkoutID had to be final, check that if it cause trouble
-                    if(customExercise.getWorkoutID().equals(workoutID)){
-                        customExerciseList.add(customExercise);
-                    }
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
-
-        return customExerciseList;
-    }
+//    private List<CustomExercise> getCustomExercises(final String workoutID){
+//
+//        customExerciseList = new ArrayList<>();
+//
+//        dbReference2 = FirebaseDatabase.getInstance().getReference().child("customExercises");
+//
+//        dbReference2.addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(DataSnapshot dataSnapshot) {
+//                for(DataSnapshot customExerciseSnapshot : dataSnapshot.getChildren()){
+//                    CustomExercise customExercise = customExerciseSnapshot.getValue(CustomExercise.class);
+//
+//                    // WorkoutID had to be final, check that if it cause trouble
+//                    if(customExercise.getWorkoutID().equals(workoutID)){
+//                        customExerciseList.add(customExercise);
+//                    }
+//                }
+//            }
+//
+//            @Override
+//            public void onCancelled(DatabaseError databaseError) {
+//
+//            }
+//        });
+//
+//        return customExerciseList;
+//    }
 
     // Finds the recycler view and sets it up with the type of linear layout
     private void setUpRecyclerView(View view){
@@ -133,8 +139,12 @@ public class WorkoutListFragment extends Fragment implements WorkoutRecycleAdapt
     }
 
     private void createAdapter(List<Workout> workoutData){
-        adapter = new WorkoutsRecyclerAdapter(getContext(), workoutData, this);
-        recyclerView.setAdapter(adapter);
+        if(getActivity() != null){
+            adapter = new WorkoutsRecyclerAdapter(getContext(), workoutData, this);
+            recyclerView.setAdapter(adapter);
+        }
+//        adapter = new WorkoutsRecyclerAdapter(getContext(), workoutData, this);
+//        recyclerView.setAdapter(adapter);
     }
 
     @Override
