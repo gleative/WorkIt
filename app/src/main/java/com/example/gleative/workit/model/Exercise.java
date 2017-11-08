@@ -34,10 +34,6 @@ public class Exercise implements Parcelable{
         this.bodyPart = parcel.readString();
     }
 
-    public int getExerciseID(){
-        return exerciseID;
-    }
-
     @Override
     public int describeContents() {
         return 0;
@@ -62,6 +58,10 @@ public class Exercise implements Parcelable{
             return new Exercise[0];
         }
     };
+
+    public int getExerciseID(){
+        return exerciseID;
+    }
 
     public void setExerciseID(int exerciseID){
         this.exerciseID = exerciseID;

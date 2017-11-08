@@ -7,17 +7,26 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.widget.Toast;
+import android.widget.EditText;
+import android.widget.TextView;
 
-import com.example.gleative.workit.fragments.CreateWorkoutFragment;
 import com.example.gleative.workit.fragments.ExerciseListFragment;
 import com.example.gleative.workit.fragments.NavigationDrawerFragment;
 import com.example.gleative.workit.model.Exercise;
+import com.example.gleative.workit.model.Workout;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class CreateWorkoutActivity extends AppCompatActivity implements ExerciseListFragment.OnExerciseFragmentInteractionListener{
 
+    DatabaseReference dbReference;
+
     Toolbar toolbar;
     NavigationDrawerFragment navigationDrawerFragment;
+
+    Workout workout;
+    EditText workoutNameText;
+    EditText workoutDescriptionText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,8 +36,6 @@ public class CreateWorkoutActivity extends AppCompatActivity implements Exercise
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        setUpDrawer();
-
         FragmentManager fragmentManager = getSupportFragmentManager();
 //        CreateWorkoutFragment createWorkoutFragment = (CreateWorkoutFragment) fragmentManager.findFragmentById(R.id.create_workout_fragment);
         // So we can access its methods
@@ -36,6 +43,12 @@ public class CreateWorkoutActivity extends AppCompatActivity implements Exercise
 
         // Send with parameter 1 so it uses the exercise layout where the user can add a exercise
 //        exerciseListFragment.useAddExerciseLayout(1);
+
+        // Finds the EditText views
+        workoutNameText = findViewById(R.id.workout_name);
+        workoutDescriptionText = findViewById(R.id.workout_desc);
+
+        setUpDrawer();
 
     }
 
@@ -62,5 +75,27 @@ public class CreateWorkoutActivity extends AppCompatActivity implements Exercise
     }
 
     // When user presses the add button
+    public void addExerciseToWorkout(View view){
+        workout = createWorkout(workoutNameText.getText().toString(), workoutDescriptionText.getText().toString());
+
+        Intent intent = new Intent(this, AddExerciseToWorkoutActivity.class);
+        intent.putExtra("workout", workout);
+        startActivity(intent);
+    }
+
+    // Creates the workout with name and desc, sends to database, and returns the created object
+    private Workout createWorkout(String workoutName, String workoutDescription){
+        dbReference = FirebaseDatabase.getInstance().getReference("workouts");
+
+        // Creates a user node, and returns a unique key value
+        String workoutID = dbReference.push().getKey();
+
+        Workout newWorkout = new Workout(workoutName,workoutDescription);
+
+        // Adds the given values to the database
+        dbReference.child(workoutID).setValue(newWorkout);
+
+        return newWorkout;
+    }
 
 }

@@ -1,5 +1,7 @@
 package com.example.gleative.workit.model;
 
+import com.example.gleative.workit.adapter.ExercisesRecyclerAdapter;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -12,10 +14,30 @@ import java.util.Random;
 
 public class CustomExercise extends Exercise{
 
-    private Exercise exercise;
+    private Workout workout; // Which workout the customexercise is in
+    private Exercise exercise; // Which exercise is customized
     private int sets;
     private int reps;
     private int time;
+
+    public CustomExercise(){
+        super();
+    }
+
+    public CustomExercise(Workout _workout, Exercise _exercise, int _sets, int _reps){
+        this.workout = _workout;
+        this.exercise = _exercise;
+        this.sets = _sets;
+        this.reps = _reps;
+    }
+
+    public Workout getWorkout(){
+        return workout;
+    }
+
+    public void setWorkout(Workout workout){
+        this.workout = workout;
+    }
 
     public Exercise getExercise() {
         return exercise;
