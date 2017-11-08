@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.gleative.workit.model.CustomExercise;
 import com.example.gleative.workit.model.Exercise;
 
 import java.util.ArrayList;
@@ -23,6 +24,7 @@ public class ExercisesRecyclerAdapter extends RecyclerView.Adapter<ExerciseViewH
     private LayoutInflater inflater;
     private OnExerciseSelectedListener exerciseSelectedListener;
     private RecycleAdapterListener recycleAdapterListener;
+    private String layoutType;
 
     public ExercisesRecyclerAdapter(Context context, List<Exercise> data, RecycleAdapterListener _recycleAdapterListener){
         this.exerciseData = data;
@@ -42,7 +44,7 @@ public class ExercisesRecyclerAdapter extends RecyclerView.Adapter<ExerciseViewH
 
     // Måtte ha disse pga extend RecyclerView
 
-    // Får tak i layoutfilen
+    // Gets the layout file
     @Override
     public ExerciseViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = inflater.inflate(R.layout.list_exercises, parent, false); // Inflater list_exercise layout, so it gets its design

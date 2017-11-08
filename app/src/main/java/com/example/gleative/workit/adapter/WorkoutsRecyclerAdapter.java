@@ -41,7 +41,7 @@ public class WorkoutsRecyclerAdapter extends RecyclerView.Adapter<WorkoutViewHol
 
     @Override
     public WorkoutViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = inflater.inflate(R.layout.list_workout, parent, false);
+        View view = inflater.inflate(R.layout.list_workout, parent, false); // Inflater list_exercise layout, so it gets its design
         WorkoutViewHolder holder = new WorkoutViewHolder(view);
 
         view.setOnClickListener(holder);
@@ -58,5 +58,9 @@ public class WorkoutsRecyclerAdapter extends RecyclerView.Adapter<WorkoutViewHol
     @Override
     public int getItemCount() {
         return workoutData.size();
+    }
+
+    public Workout getItem(int position){
+        return workoutData.get(position);
     }
 }

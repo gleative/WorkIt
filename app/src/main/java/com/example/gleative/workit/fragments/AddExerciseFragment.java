@@ -18,6 +18,7 @@ import com.example.gleative.workit.R;
 import com.example.gleative.workit.adapter.AddExerciseAdapter;
 import com.example.gleative.workit.adapter.ExercisesRecyclerAdapter;
 import com.example.gleative.workit.adapter.RecycleAdapterListener;
+import com.example.gleative.workit.model.CustomExercise;
 import com.example.gleative.workit.model.Exercise;
 import com.google.firebase.database.DatabaseReference;
 
@@ -144,6 +145,11 @@ public class AddExerciseFragment extends Fragment implements RecycleAdapterListe
         Toast.makeText(getContext(), exercise.getExerciseName() + " Selected", Toast.LENGTH_SHORT).show();
 
         listener.onExerciseSelected(exercise);
+    }
+
+    @Override
+    public void customExerciseSelected(CustomExercise selectedCustomExercise) {
+
     }
 
 //    @Override

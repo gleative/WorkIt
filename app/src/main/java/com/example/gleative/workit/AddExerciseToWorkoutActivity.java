@@ -28,7 +28,7 @@ public class AddExerciseToWorkoutActivity extends AppCompatActivity implements  
         // Gets the workout object
         workout = getIntent().getParcelableExtra("workout");
 
-        Toast.makeText(this, "Add exercises to: " + workout.getWorkoutName() + workout.getWorkoutID(), Toast.LENGTH_SHORT).show();
+//        Toast.makeText(this, "Add exercises to: " + workout.getWorkoutName() + workout.getWorkoutID(), Toast.LENGTH_SHORT).show();
 
     }
 

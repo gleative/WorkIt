@@ -32,6 +32,5 @@ public class WorkoutViewHolder extends RecyclerView.ViewHolder implements View.O
     @Override
     public void onClick(View view) {
         onWorkoutSelectedListener.workoutSelected(getAdapterPosition());
-
     }
 }

@@ -8,11 +8,12 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 
 import com.example.gleative.workit.fragments.NavigationDrawerFragment;
+import com.example.gleative.workit.fragments.WorkoutListFragment;
 import com.example.gleative.workit.model.Workout;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-public class MyWorkoutActivity extends AppCompatActivity {
+public class MyWorkoutActivity extends AppCompatActivity implements WorkoutListFragment.OnWorkoutFragmentInteractionListener{
 
     DatabaseReference dbReference;
 
@@ -57,6 +58,14 @@ public class MyWorkoutActivity extends AppCompatActivity {
 //        dbReference.child(workoutID).setValue(workout);
 
         Intent intent = new Intent(this, CreateWorkoutActivity.class);
+        startActivity(intent);
+    }
+
+    // Find the specific workout selected by the user
+    @Override
+    public void onWorkoutSelected(Workout workout) {
+        Intent intent = new Intent(this, MyWorkoutInfoActivity.class);
+        intent.putExtra("workout", workout);
         startActivity(intent);
     }
 }

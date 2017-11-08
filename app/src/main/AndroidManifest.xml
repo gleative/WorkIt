@@ -44,7 +44,8 @@
             android:label="Create Workout"
             android:parentActivityName=".MyWorkoutActivity" />
         <activity android:name=".CreateCustomExerciseActivity" />
-        <activity android:name=".AddExerciseToWorkoutActivity"></activity>
+        <activity android:name=".AddExerciseToWorkoutActivity" />
+        <activity android:name=".MyWorkoutInfoActivity"></activity>
     </application>
 
 </manifest>

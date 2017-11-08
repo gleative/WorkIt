@@ -6,4 +6,5 @@ package com.example.gleative.workit.adapter;
 
 public interface OnExerciseSelectedListener {
     void exerciseSelected(int position);
+
 }
