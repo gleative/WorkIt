@@ -66,12 +66,17 @@ public class CreateCustomExerciseActivity extends AppCompatActivity {
         else {
             customExercise = createCustomExercise(Integer.parseInt(sets.getText().toString()), Integer.parseInt(reps.getText().toString()));
 
-            Intent intent = new Intent(this, AddExerciseToWorkoutActivity.class);
+            // Adds the custom exercise just created to the workouts list, so when the user is sendt to MyWorkoutInfoActivity, the custom exercise is displayed
+            workout.addCustomExerciseToWorkout(customExercise);
+
+            // This is where the user is sendt after adding a custom exercise to the workout
+            Intent intent = new Intent(this, MyWorkoutInfoActivity.class);
+            intent.putExtra("workout", workout);
             startActivity(intent);
         }
     }
 
-    // Creates the custom exercise sends to database, and returns the created object
+    // Creates the custom exercise and sends to database, and returns the created object
     private CustomExercise createCustomExercise(int sets, int reps){
         dbReference = FirebaseDatabase.getInstance().getReference("customExercises");
 
