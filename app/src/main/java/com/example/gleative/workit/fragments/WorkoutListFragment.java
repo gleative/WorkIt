@@ -30,8 +30,9 @@ import java.util.List;
 
 public class WorkoutListFragment extends Fragment implements WorkoutRecycleAdapterListener{
 
-    DatabaseReference dbReference;
-    DatabaseReference dbReference2;
+    private FirebaseDatabase firebaseDatabase;
+    private DatabaseReference dbReference;
+    private DatabaseReference dbReference2;
 
     private RecyclerView recyclerView;
     private OnWorkoutFragmentInteractionListener listener;
@@ -44,6 +45,11 @@ public class WorkoutListFragment extends Fragment implements WorkoutRecycleAdapt
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_workout_list, container, false);
+
+        workoutsList = new ArrayList<>();
+
+        firebaseDatabase = FirebaseDatabase.getInstance();
+        dbReference = firebaseDatabase.getReference().child("workouts");
 
         setUpRecyclerView(view);
         getData();
@@ -63,13 +69,11 @@ public class WorkoutListFragment extends Fragment implements WorkoutRecycleAdapt
 
     // Retrieves the workouts data from the database and adds the data to the recycler view
     private void getData(){
-        workoutsList = new ArrayList<>();
-
-        dbReference = FirebaseDatabase.getInstance().getReference().child("workouts");
 
         dbReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+                workoutsList.clear(); // Clear list before getting the data, if data already exist it will be duplicates
                 for(DataSnapshot workoutSnapshot : dataSnapshot.getChildren()){
                     Workout workout = new Workout();
                     workout.setWorkoutID(workoutSnapshot.getKey().toString());
@@ -89,8 +93,8 @@ public class WorkoutListFragment extends Fragment implements WorkoutRecycleAdapt
 //                    workout.setCustomExercises(getCustomExercises(workout.getWorkoutID()));
 //                }
 
-                // Adds the exercises to the recycler view
-                createAdapter(workoutsList);
+                // Tells the adapter to update so it has the newest data
+                adapter.updateAdapter(workoutsList);
             }
 
             @Override
@@ -138,13 +142,24 @@ public class WorkoutListFragment extends Fragment implements WorkoutRecycleAdapt
 
     // Finds the recycler view and sets it up with the type of linear layout
     private void setUpRecyclerView(View view){
+//        // Finds the recycler_view from the layout file "fragment_exercise_list"
+//        recyclerView = view.findViewById(R.id.workout_recycler_view);
+//
+//        // Sets up the list in a new layout
+//        LinearLayoutManager linearLayoutManagerVertical = new LinearLayoutManager(getContext());
+//        linearLayoutManagerVertical.setOrientation(LinearLayoutManager.VERTICAL);
+//        recyclerView.setLayoutManager(linearLayoutManagerVertical);
+
         // Finds the recycler_view from the layout file "fragment_exercise_list"
         recyclerView = view.findViewById(R.id.workout_recycler_view);
+        adapter = new WorkoutsRecyclerAdapter(getContext(), workoutsList, this);
+        recyclerView.setAdapter(adapter);
 
         // Sets up the list in a new layout
         LinearLayoutManager linearLayoutManagerVertical = new LinearLayoutManager(getContext());
         linearLayoutManagerVertical.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(linearLayoutManagerVertical);
+
 
     }
 

@@ -63,4 +63,11 @@ public class WorkoutsRecyclerAdapter extends RecyclerView.Adapter<WorkoutViewHol
     public Workout getItem(int position){
         return workoutData.get(position);
     }
+
+    public void updateAdapter(List<Workout> newList){
+        this.workoutData = newList;
+        notifyDataSetChanged();
+    }
+
+
 }

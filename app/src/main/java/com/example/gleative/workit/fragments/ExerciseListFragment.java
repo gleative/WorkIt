@@ -9,6 +9,7 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -27,6 +28,7 @@ import com.example.gleative.workit.adapter.OnExerciseSelectedListener;
 import com.example.gleative.workit.adapter.RecycleAdapterListener;
 import com.example.gleative.workit.model.CustomExercise;
 import com.example.gleative.workit.model.Exercise;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -44,7 +46,10 @@ import java.util.List;
 
 public class ExerciseListFragment extends Fragment implements RecycleAdapterListener{
 
-    DatabaseReference dbReference;
+    private FirebaseDatabase firebaseDatabase;
+    private DatabaseReference dbReference;
+
+    private ChildEventListener childEventListener;
 
     private RecyclerView recyclerView;
     private OnExerciseFragmentInteractionListener listener;
@@ -62,6 +67,13 @@ public class ExerciseListFragment extends Fragment implements RecycleAdapterList
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_exercise_list, container, false);
+
+
+        eList = new ArrayList<>();
+
+        firebaseDatabase = FirebaseDatabase.getInstance();
+
+        dbReference = firebaseDatabase.getReference().child("exercises");
 
         // Tells host activity that this fragment has menu options it wants to add, or else search bar wont show up
         setHasOptionsMenu(true);
@@ -142,24 +154,17 @@ public class ExerciseListFragment extends Fragment implements RecycleAdapterList
 
     // Retrieves the exercises data from the database and adds the data to the recycler view
     private void getData(int selectedLayout){
-//        recyclerView = view.findViewById(R.id.exercise_recycler_view); // Henter listen fra layout fil "fragment_exercise_list"
-//        adapter = new ExercisesRecyclerAdapter(getContext(), Exercise.getData(), this); // Må ha constructor på adapteren ellers du får error! this, Exercise.getData()
-//        recyclerView.setAdapter(adapter);
+//        layout = selectedLayout;
 //
-//        // Sets up the list in a new layout
-//        LinearLayoutManager linearLayoutManagerVertical = new LinearLayoutManager(getContext());
-//        linearLayoutManagerVertical.setOrientation(LinearLayoutManager.VERTICAL);
-//        recyclerView.setLayoutManager(linearLayoutManagerVertical);
-        layout = selectedLayout;
-
-        eList = new ArrayList<>();
+//        eList = new ArrayList<>();
 
         // Gets a reference to the child "exercises" in the database
-        dbReference = FirebaseDatabase.getInstance().getReference().child("exercises");
+//        dbReference = FirebaseDatabase.getInstance().getReference().child("exercises");
 
         dbReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+                eList.clear(); // Clears the list before filling the list with data again, or else it will have duplicates
                 for(DataSnapshot exerciseSnapshot : dataSnapshot.getChildren()){
                     Exercise exercise = new Exercise();
                     exercise.setExerciseID(Integer.parseInt(exerciseSnapshot.getKey())); // Gets the Key Value, which is the exerciseID in this case
@@ -167,10 +172,12 @@ public class ExerciseListFragment extends Fragment implements RecycleAdapterList
                     exercise.setExerciseDescription(exerciseSnapshot.child("exerciseDescription").getValue().toString());
                     exercise.setBodyPart(exerciseSnapshot.child("bodyPart").getValue().toString());
                     eList.add(exercise);
+
                 }
 
+                adapter.updateAdapter(eList); // Tells the adapter to update so it has the newest data
                 // Adds the exercises to the recycler view
-                createAdapter(eList, layout);
+//                createAdapter(eList, layout);
 //                adapter = new ExercisesRecyclerAdapter(getContext(), eList, recycleAdapterListener);
 //                recyclerView.setAdapter(adapter);
             }
@@ -181,27 +188,78 @@ public class ExerciseListFragment extends Fragment implements RecycleAdapterList
             }
         });
 
-//        recyclerView = view.findViewById(R.id.exercise_recycler_view); // Henter listen fra layout fil "fragment_exercise_list"
-//        adapter = new ExercisesRecyclerAdapter(getContext(), eList, this); // Må ha constructor på adapteren ellers du får error! this, Exercise.getData()
-//        recyclerView.setAdapter(adapter);
 
-        // Sets up the list in a new layout
-//        LinearLayoutManager linearLayoutManagerVertical = new LinearLayoutManager(getContext());
-//        linearLayoutManagerVertical.setOrientation(LinearLayoutManager.VERTICAL);
-//        recyclerView.setLayoutManager(linearLayoutManagerVertical);
+//        childEventListener = new ChildEventListener() {
+//            @Override
+//            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+//                Log.d("Hello", "Exercise added -------------------------------");
+//                Exercise exercise = dataSnapshot.getValue(Exercise.class);
+//                exercise.setExerciseID(Integer.parseInt(dataSnapshot.getKey()));
+//                if(!eList.contains(exercise)){
+//                    eList.add(exercise);
+//                    adapter.notifyItemInserted(eList.size()-1);
+//                }
+//            }
+//
+//            @Override
+//            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+//                Exercise exercise = dataSnapshot.getValue(Exercise.class);
+//                exercise.setExerciseID(Integer.parseInt(dataSnapshot.getKey()));
+//
+//                int position = eList.indexOf(exercise);
+//
+//                eList.set(position,exercise);
+//                adapter.notifyItemChanged(position);
+//
+//            }
+//
+//            @Override
+//            public void onChildRemoved(DataSnapshot dataSnapshot) {
+//                Log.d("Hello", "Exercise removed -------------------------------");
+//
+//                Exercise removedExercise = dataSnapshot.getValue(Exercise.class);
+//                removedExercise.setExerciseID(Integer.parseInt(dataSnapshot.getKey()));
+//
+//                int position = eList.indexOf(removedExercise);
+//                adapter.notifyItemRemoved(position);
+//
+//            }
+//
+//            @Override
+//            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+//
+//            }
+//
+//            @Override
+//            public void onCancelled(DatabaseError databaseError) {
+//
+//            }
+//        };
+//
+//        dbReference.addChildEventListener(childEventListener);
 
     }
 
     // Finds the recycler view and sets it up with the type of linear layout
     private void setUpRecyclerView(View view){
         // Finds the recycler_view from the layout file "fragment_exercise_list"
-        recyclerView = view.findViewById(R.id.exercise_recycler_view);
-//        adapter = new ExercisesRecyclerAdapter(getContext(), exerciseData, this); // Må ha constructor på adapteren ellers du får error! this, Exercise.getData()
+//        recyclerView = view.findViewById(R.id.exercise_recycler_view);
+//
+//        // Sets up the list in a new layout
+//        LinearLayoutManager linearLayoutManagerVertical = new LinearLayoutManager(getContext());
+//        linearLayoutManagerVertical.setOrientation(LinearLayoutManager.VERTICAL);
+//        recyclerView.setLayoutManager(linearLayoutManagerVertical);
 
-        // Sets up the list in a new layout
+        //NEW
+
+        recyclerView = view.findViewById(R.id.exercise_recycler_view);
+        adapter = new ExercisesRecyclerAdapter(getContext(), eList, this);
+        recyclerView.setAdapter(adapter);
+
         LinearLayoutManager linearLayoutManagerVertical = new LinearLayoutManager(getContext());
         linearLayoutManagerVertical.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(linearLayoutManagerVertical);
+
     }
 
     // Initiates a new ExerciseRecyclerAdapter, and adds the exercise data to the recycler view
@@ -282,4 +340,16 @@ public class ExerciseListFragment extends Fragment implements RecycleAdapterList
         void onExerciseSelected(Exercise exercise);
     }
 
+//    @Override
+//    public void onPause() {
+//        super.onPause();
+//        eList.clear();
+//        adapter.notifyDataSetChanged();
+//    }
+//
+//    @Override
+//    public void onResume() {
+//        super.onResume();
+//        adapter.notifyDataSetChanged();
+//    }
 }

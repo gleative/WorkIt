@@ -76,6 +76,11 @@ public class ExercisesRecyclerAdapter extends RecyclerView.Adapter<ExerciseViewH
         notifyDataSetChanged(); // This refreshes the adapter.
     }
 
+    public void updateAdapter(List<Exercise> newList){
+        this.exerciseData = newList;
+        notifyDataSetChanged();
+    }
+
     public void clearData(){
         this.exerciseData.clear();
     }
