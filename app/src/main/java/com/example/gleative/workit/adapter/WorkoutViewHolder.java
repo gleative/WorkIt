@@ -2,6 +2,7 @@ package com.example.gleative.workit.adapter;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.gleative.workit.R;
@@ -15,12 +16,23 @@ public class WorkoutViewHolder extends RecyclerView.ViewHolder implements View.O
 
     TextView workoutName;
     TextView workoutAmountExercises;
+    ImageView imgDelete;
+    ImageView imgEdit;
     OnWorkoutSelectedListener onWorkoutSelectedListener;
 
     public WorkoutViewHolder(View itemView) {
         super(itemView);
         workoutName = itemView.findViewById(R.id.workout_title);
         workoutAmountExercises = itemView.findViewById(R.id.workout_exercise_amount);
+        imgDelete = itemView.findViewById(R.id.img_delete_workout);
+        imgEdit = itemView.findViewById(R.id.img_edit_workout);
+
+    }
+
+    // Adds listeners to the icons delete and edit
+    public void setListenersToImages(){
+        imgDelete.setOnClickListener(WorkoutViewHolder.this);
+        imgEdit.setOnClickListener(WorkoutViewHolder.this);
     }
 
     public void bind(Workout workout, OnWorkoutSelectedListener listener){
@@ -32,5 +44,13 @@ public class WorkoutViewHolder extends RecyclerView.ViewHolder implements View.O
     @Override
     public void onClick(View view) {
         onWorkoutSelectedListener.workoutSelected(getAdapterPosition());
+
+//        switch (view.getId()){
+//            case R.id.img_delete_workout:
+//                removeItem(position);
+//                break;
+//            case R.id.img_edit_workout:
+//
+//        }
     }
 }

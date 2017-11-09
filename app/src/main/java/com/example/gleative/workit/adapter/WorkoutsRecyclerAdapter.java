@@ -45,6 +45,7 @@ public class WorkoutsRecyclerAdapter extends RecyclerView.Adapter<WorkoutViewHol
         WorkoutViewHolder holder = new WorkoutViewHolder(view);
 
         view.setOnClickListener(holder);
+        holder.setListenersToImages(); // Adds listeners to the icons delete and edit
 
         return holder;
     }
