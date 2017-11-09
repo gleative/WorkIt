@@ -1,5 +1,8 @@
 package com.example.gleative.workit.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.example.gleative.workit.adapter.ExercisesRecyclerAdapter;
 
 import java.util.ArrayList;
@@ -12,7 +15,7 @@ import java.util.Random;
  * Created by gleative on 09.10.2017.
  */
 
-public class CustomExercise{
+public class CustomExercise implements Parcelable{
 
     private String workoutID; // Which workout the customexercise is in
     private int exerciseID; // Which exercise is customized
@@ -31,7 +34,42 @@ public class CustomExercise{
         this.reps = _reps;
     }
 
-//    public Workout getWorkout(){
+    public CustomExercise(Parcel parcel){
+        this.workoutID = parcel.readString();
+        this.exerciseID = parcel.readInt();
+        this.sets = parcel.readInt();
+        this.reps = parcel.readInt();
+        this.time = parcel.readInt();
+    }
+
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.workoutID);
+        dest.writeInt(this.exerciseID);
+        dest.writeInt(this.sets);
+        dest.writeInt(this.reps);
+        dest.writeInt(this.time);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    public static final Creator<CustomExercise> CREATOR = new Creator<CustomExercise>() {
+        @Override
+        public CustomExercise createFromParcel(Parcel in) {
+            return new CustomExercise(in);
+        }
+
+        @Override
+        public CustomExercise[] newArray(int size) {
+            return new CustomExercise[size];
+        }
+    };
+
+    //    public Workout getWorkout(){
 //        return workout;
 //    }
 //

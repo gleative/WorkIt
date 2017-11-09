@@ -15,6 +15,7 @@ import com.example.gleative.workit.adapter.ExercisesRecyclerAdapter;
 import com.example.gleative.workit.adapter.RecycleAdapterListener;
 import com.example.gleative.workit.model.CustomExercise;
 import com.example.gleative.workit.model.Exercise;
+import com.example.gleative.workit.model.Workout;
 import com.google.firebase.FirebaseApiNotAvailableException;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -66,29 +67,35 @@ public class WorkoutCustomExercisesListFragment extends Fragment implements Recy
         }
     }
 
-    private void getData(){
+    public void getData(){
 
-        dbReference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                customExerciseList.clear(); // Clear list before getting the data, if data already exist it will be duplicates
-                for(DataSnapshot customExerciseSnapshot : dataSnapshot.getChildren()){
-                    CustomExercise customExercise = new CustomExercise();
-                    customExercise.setWorkoutID(customExerciseSnapshot.child("workoutID").getValue().toString());
-                    customExercise.setExerciseID(Integer.parseInt(customExerciseSnapshot.child("exerciseID").getValue().toString()));
-                    customExercise.setSets(Integer.parseInt(customExerciseSnapshot.child("sets").getValue().toString()));
-                    customExercise.setReps(Integer.parseInt(customExerciseSnapshot.child("reps").getValue().toString()));
-                    customExerciseList.add(customExercise);
-                }
+//        dbReference.addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(DataSnapshot dataSnapshot) {
+//                customExerciseList.clear(); // Clear list before getting the data, if data already exist it will be duplicates
+//                for(DataSnapshot customExerciseSnapshot : dataSnapshot.getChildren()){
+//                    CustomExercise customExercise = new CustomExercise();
+//                    customExercise.setWorkoutID(customExerciseSnapshot.child("workoutID").getValue().toString());
+//                    customExercise.setExerciseID(Integer.parseInt(customExerciseSnapshot.child("exerciseID").getValue().toString()));
+//                    customExercise.setSets(Integer.parseInt(customExerciseSnapshot.child("sets").getValue().toString()));
+//                    customExercise.setReps(Integer.parseInt(customExerciseSnapshot.child("reps").getValue().toString()));
+//                    customExerciseList.add(customExercise);
+//                }
+//
+//                adapter.updateAdapter(customExerciseList);
+//            }
+//
+//            @Override
+//            public void onCancelled(DatabaseError databaseError) {
+//
+//            }
+//        });
+    }
 
-                adapter.updateAdapter(customExerciseList);
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
+    // Gets the custom exercises the workout has, and updates the adapter that is displayed in MyWorkoutInfo
+    public void getCustomExercisesFromWorkout(Workout workout){
+        customExerciseList = workout.getCustomExercises();
+        adapter.updateAdapter(customExerciseList);
     }
 
     // Finds the recycler view and sets it up with the type of linear layout

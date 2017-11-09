@@ -28,6 +28,13 @@
         android:layout_height="1dp"
         android:background="@android:color/background_dark"/>
 
+    <!--<ListView-->
+        <!--android:id="@+id/custom_exercise_list"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content">-->
+
+    <!--</ListView>-->
+
     <fragment
         android:id="@+id/myWorkout_info_fragment"
         android:layout_width="match_parent"

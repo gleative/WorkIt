@@ -32,6 +32,7 @@ public class Workout implements Parcelable {
         this.workoutID = parcel.readString();
         this.workoutName = parcel.readString();
         this.workoutDescription = parcel.readString();
+        this.customExercises = parcel.readArrayList(Workout.class.getClassLoader());
     }
 
     @Override
@@ -44,6 +45,8 @@ public class Workout implements Parcelable {
         dest.writeString(this.workoutID);
         dest.writeString(this.workoutName);
         dest.writeString(this.workoutDescription);
+        dest.writeList(this.customExercises);
+
     }
 
     public static final Creator<Workout> CREATOR = new Creator<Workout>() {
@@ -54,7 +57,7 @@ public class Workout implements Parcelable {
 
         @Override
         public Workout[] newArray(int size) {
-            return new Workout[0];
+            return new Workout[size];
         }
     };
 

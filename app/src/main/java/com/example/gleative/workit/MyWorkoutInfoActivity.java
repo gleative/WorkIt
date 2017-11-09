@@ -3,6 +3,8 @@ package com.example.gleative.workit;
 import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.gleative.workit.fragments.ExerciseListFragment;
@@ -27,6 +29,7 @@ public class MyWorkoutInfoActivity extends AppCompatActivity implements WorkoutC
 
     TextView workoutName;
     TextView workoutDesc;
+    ListView customExercisesListView;
     WorkoutCustomExercisesListFragment workoutCustomExercisesListFragment;
 
     @Override
@@ -38,10 +41,12 @@ public class MyWorkoutInfoActivity extends AppCompatActivity implements WorkoutC
 
         workoutName = findViewById(R.id.selected_workout_name);
         workoutDesc = findViewById(R.id.selected_workout_desc);
+//        customExercisesListView = findViewById(R.id.custom_exercise_list);
 
         dbReference = FirebaseDatabase.getInstance().getReference().child("customExercises");
 
-
+        // So we can access its methods
+        workoutCustomExercisesListFragment = (WorkoutCustomExercisesListFragment) getSupportFragmentManager().findFragmentById(R.id.myWorkout_info_fragment);
 
         setDisplayedDetail(selectedWorkout);
     }
@@ -49,30 +54,7 @@ public class MyWorkoutInfoActivity extends AppCompatActivity implements WorkoutC
     public void setDisplayedDetail(Workout workout){
         workoutName.setText(workout.getWorkoutName());
         workoutDesc.setText(workout.getWorkoutDescription());
-
-
-
-//        List<CustomExercise> customExerciseList = new ArrayList<>();
-
-//        dbReference.addListenerForSingleValueEvent(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(DataSnapshot dataSnapshot) {
-//                for(DataSnapshot customExerciseSnapshot : dataSnapshot.getChildren()){
-//                    CustomExercise customExercise = customExerciseSnapshot.getValue(CustomExercise.class);
-//
-//                    if(customExercise.getWorkoutID().equals(workout.getWorkoutID())){
-//                        customExerciseList.add(customExercise);
-//                    }
-//
-//                }
-//
-//            }
-//
-//            @Override
-//            public void onCancelled(DatabaseError databaseError) {
-//
-//            }
-//        });
+        workoutCustomExercisesListFragment.getCustomExercisesFromWorkout(workout); // Sends the custom exercises list to the adapter, so it can display workouts custom exercises
     }
 
     @Override
