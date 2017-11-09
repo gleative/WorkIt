@@ -31,7 +31,8 @@ import java.util.List;
 
 public class WorkoutCustomExercisesListFragment extends Fragment implements RecycleAdapterListener{
 
-    DatabaseReference dbReference;
+    private FirebaseDatabase firebaseDatabase;
+    private DatabaseReference dbReference;
 
     private RecyclerView recyclerView;
     private WorkoutCustomExercisesListFragment.OnCustomExerciseFragmentInteractionListener listener;
@@ -43,6 +44,11 @@ public class WorkoutCustomExercisesListFragment extends Fragment implements Recy
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_workout_selected_list, container, false);
+
+        customExerciseList = new ArrayList<>();
+
+        firebaseDatabase = FirebaseDatabase.getInstance();
+        dbReference = firebaseDatabase.getReference().child("customExercises");
 
         setUpRecyclerView(view);
         getData();
@@ -61,13 +67,11 @@ public class WorkoutCustomExercisesListFragment extends Fragment implements Recy
     }
 
     private void getData(){
-        customExerciseList = new ArrayList<>();
-
-        dbReference = FirebaseDatabase.getInstance().getReference().child("customExercises");
 
         dbReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+                customExerciseList.clear(); // Clear list before getting the data, if data already exist it will be duplicates
                 for(DataSnapshot customExerciseSnapshot : dataSnapshot.getChildren()){
                     CustomExercise customExercise = new CustomExercise();
                     customExercise.setWorkoutID(customExerciseSnapshot.child("workoutID").getValue().toString());
@@ -77,7 +81,7 @@ public class WorkoutCustomExercisesListFragment extends Fragment implements Recy
                     customExerciseList.add(customExercise);
                 }
 
-                createAdapter(customExerciseList);
+                adapter.updateAdapter(customExerciseList);
             }
 
             @Override
@@ -91,6 +95,8 @@ public class WorkoutCustomExercisesListFragment extends Fragment implements Recy
     private void setUpRecyclerView(View view){
         // Finds the recycler_view from the layout file "fragment_workout_selected_list"
         recyclerView = view.findViewById(R.id.workout_selected_list_recycler_list);
+        adapter = new CustomExerciseRecyclerAdapter(getContext(), customExerciseList, this);
+        recyclerView.setAdapter(adapter);
 
         // Sets up the list in a new layout
         LinearLayoutManager linearLayoutManagerVertical = new LinearLayoutManager(getContext());

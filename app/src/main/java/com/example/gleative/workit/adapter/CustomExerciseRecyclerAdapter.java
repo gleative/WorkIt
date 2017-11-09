@@ -101,6 +101,12 @@ public class CustomExerciseRecyclerAdapter extends RecyclerView.Adapter<CustomEx
         return customExerciseData.size();
     }
 
+    // Updates the adapter with new data
+    public void updateAdapter(List<CustomExercise> newList){
+        this.customExerciseData = newList;
+        notifyDataSetChanged();
+    }
+
 //    private Exercise getExercise(int position){
 //        final CustomExercise currObj = customExerciseData.get(position);
 //
