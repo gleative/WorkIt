@@ -30,8 +30,15 @@ public class CustomExerciseViewHolder extends RecyclerView.ViewHolder implements
 
     }
 
-    public void bind(CustomExercise customExercise, Exercise exercise, OnExerciseSelectedListener listener){
-        this.customExerciseName.setText(exercise.getExerciseName());
+//    public void bind(CustomExercise customExercise, Exercise exercise, OnExerciseSelectedListener listener){
+//        this.customExerciseName.setText(exercise.getExerciseName());
+//        this.customExerciseSets.setText(Integer.toString(customExercise.getSets())); // Had to make them to strings for it to display
+//        this.customExerciseReps.setText(Integer.toString(customExercise.getReps())); // Had to make them to strings for it to display
+//        this.onExerciseSelectedListener = listener;
+//    }
+
+    public void bind(CustomExercise customExercise, int exerciseID, OnExerciseSelectedListener listener){
+//        this.customExerciseName.setText(exercise.getExerciseName());
         this.customExerciseSets.setText(Integer.toString(customExercise.getSets())); // Had to make them to strings for it to display
         this.customExerciseReps.setText(Integer.toString(customExercise.getReps())); // Had to make them to strings for it to display
         this.onExerciseSelectedListener = listener;

@@ -56,38 +56,44 @@ public class CustomExerciseRecyclerAdapter extends RecyclerView.Adapter<CustomEx
         return holder;
     }
 
+//    @Override
+//    public void onBindViewHolder(final CustomExerciseViewHolder holder, int position) {
+//        final CustomExercise currObj = customExerciseData.get(position);
+//
+//        final String value = String.valueOf(currObj.getExerciseID());
+//
+//        dbReference = FirebaseDatabase.getInstance().getReference().child("exercises");
+//
+//
+//        dbReference.addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(DataSnapshot dataSnapshot) {
+//                for(DataSnapshot exerciseDataSnapshot : dataSnapshot.getChildren()){
+//                    // Gets the value of the exercise that customExercise is
+//                    if(value.equals(exerciseDataSnapshot.getKey())){
+//                        Exercise newExercise = dataSnapshot.child(value).getValue(Exercise.class);
+//                        holder.bind(currObj, newExercise, exerciseSelectedListener);
+//                    }
+//                }
+//
+//            }
+//
+//            @Override
+//            public void onCancelled(DatabaseError databaseError) {
+//
+//            }
+//        });
+//
+//
+//
+//        // Binds the values to the different views for each item on the list
+////        holder.bind(currObj, exercise, exerciseSelectedListener);
+//    }
+
     @Override
-    public void onBindViewHolder(final CustomExerciseViewHolder holder, int position) {
-        final CustomExercise currObj = customExerciseData.get(position);
-
-        final String value = String.valueOf(currObj.getExerciseID());
-
-        dbReference = FirebaseDatabase.getInstance().getReference().child("exercises");
-
-
-        dbReference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                for(DataSnapshot exerciseDataSnapshot : dataSnapshot.getChildren()){
-                    // Gets the value of the exercise that customExercise is
-                    if(value.equals(exerciseDataSnapshot.getKey())){
-                        Exercise newExercise = dataSnapshot.child(value).getValue(Exercise.class);
-                        holder.bind(currObj, newExercise, exerciseSelectedListener);
-                    }
-                }
-
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
-
-
-
-        // Binds the values to the different views for each item on the list
-//        holder.bind(currObj, exercise, exerciseSelectedListener);
+    public void onBindViewHolder(CustomExerciseViewHolder holder, int position){
+        CustomExercise currObj = customExerciseData.get(position);
+        holder.bind(currObj, currObj.getExerciseID(), exerciseSelectedListener);
     }
 
     @Override

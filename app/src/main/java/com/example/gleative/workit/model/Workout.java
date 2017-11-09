@@ -15,7 +15,7 @@ public class Workout implements Parcelable {
     private String workoutID;
     private String workoutName;
     private String workoutDescription;
-    private List<CustomExercise> customExercises;
+    private List<CustomExercise> customExercises = new ArrayList<>();
 
     public Workout(){
         super();

@@ -80,7 +80,7 @@ public class WorkoutListFragment extends Fragment implements WorkoutRecycleAdapt
 
                     workoutsList.add(workout);
 
-//                    getCustomExercises(workoutsList.size()-1);
+                    getCustomExercises(workoutsList.size()-1);
 
 //                    workoutsList.add(workout);
                 }
@@ -102,39 +102,39 @@ public class WorkoutListFragment extends Fragment implements WorkoutRecycleAdapt
 
     }
 
-//    private void getCustomExercises(final int workoutListID){
-//
-//        customExerciseList = new ArrayList<>();
-//
-//        dbReference2 = FirebaseDatabase.getInstance().getReference().child("customExercises");
-//
-//        dbReference2.addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(DataSnapshot dataSnapshot) {
-//                for(DataSnapshot customExerciseSnapshot : dataSnapshot.getChildren()){
-//
-//                    Workout workout = workoutsList.get(workoutListID);
-//                    CustomExercise customExercise = customExerciseSnapshot.getValue(CustomExercise.class);
-//
-//                    if(customExercise.getWorkoutID().equals(workout.getWorkoutID())){
-//                        workout.getCustomExercises().add(customExercise);
+    private void getCustomExercises(final int workoutListID){
+
+        customExerciseList = new ArrayList<>();
+
+        dbReference2 = FirebaseDatabase.getInstance().getReference().child("customExercises");
+
+        dbReference2.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for(DataSnapshot customExerciseSnapshot : dataSnapshot.getChildren()){
+
+                    Workout workout = workoutsList.get(workoutListID);
+                    CustomExercise customExercise = customExerciseSnapshot.getValue(CustomExercise.class);
+
+                    if(customExercise.getWorkoutID().equals(workout.getWorkoutID())){
+                        workout.getCustomExercises().add(customExercise);
+                    }
+
+//                    // WorkoutID had to be final, check that if it cause trouble
+//                    if(customExercise.getWorkoutID().equals(workoutID)){
+//                        customExerciseList.add(customExercise);
 //                    }
-//
-////                    // WorkoutID had to be final, check that if it cause trouble
-////                    if(customExercise.getWorkoutID().equals(workoutID)){
-////                        customExerciseList.add(customExercise);
-////                    }
-//                }
-//            }
-//
-//            @Override
-//            public void onCancelled(DatabaseError databaseError) {
-//
-//            }
-//        });
-//
-////        return customExerciseList;
-//    }
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+//        return customExerciseList;
+    }
 
     // Finds the recycler view and sets it up with the type of linear layout
     private void setUpRecyclerView(View view){
