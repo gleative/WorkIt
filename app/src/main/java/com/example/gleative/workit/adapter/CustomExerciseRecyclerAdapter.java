@@ -57,19 +57,25 @@ public class CustomExerciseRecyclerAdapter extends RecyclerView.Adapter<CustomEx
     }
 
     @Override
-    public void onBindViewHolder(CustomExerciseViewHolder holder, int position) {
-        CustomExercise currObj = customExerciseData.get(position);
+    public void onBindViewHolder(final CustomExerciseViewHolder holder, int position) {
+        final CustomExercise currObj = customExerciseData.get(position);
 
-        String value = String.valueOf(currObj.getExerciseID());
+        final String value = String.valueOf(currObj.getExerciseID());
 
-        dbReference = FirebaseDatabase.getInstance().getReference().child("exercises").child(value);
+        dbReference = FirebaseDatabase.getInstance().getReference().child("exercises");
 
 
         dbReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                // Gets the value of the exercise that customExercise is
-                exercise = dataSnapshot.getValue(Exercise.class);
+                for(DataSnapshot exerciseDataSnapshot : dataSnapshot.getChildren()){
+                    // Gets the value of the exercise that customExercise is
+                    if(value.equals(exerciseDataSnapshot.getKey())){
+                        Exercise newExercise = dataSnapshot.child(value).getValue(Exercise.class);
+                        holder.bind(currObj, newExercise, exerciseSelectedListener);
+                    }
+                }
+
             }
 
             @Override
@@ -78,12 +84,38 @@ public class CustomExerciseRecyclerAdapter extends RecyclerView.Adapter<CustomEx
             }
         });
 
+
+
         // Binds the values to the different views for each item on the list
-        holder.bind(currObj, exercise, exerciseSelectedListener);
+//        holder.bind(currObj, exercise, exerciseSelectedListener);
     }
 
     @Override
     public int getItemCount() {
         return customExerciseData.size();
     }
+
+//    private Exercise getExercise(int position){
+//        final CustomExercise currObj = customExerciseData.get(position);
+//
+//        String value = String.valueOf(currObj.getExerciseID());
+//
+//        dbReference = FirebaseDatabase.getInstance().getReference().child("exercises").child(value);
+//
+//
+//        dbReference.addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(DataSnapshot dataSnapshot) {
+//                // Gets the value of the exercise that customExercise is
+//                Exercise newExercise = dataSnapshot.getValue(Exercise.class);
+//            }
+//
+//            @Override
+//            public void onCancelled(DatabaseError databaseError) {
+//
+//            }
+//
+//
+//        });
+//    }
 }

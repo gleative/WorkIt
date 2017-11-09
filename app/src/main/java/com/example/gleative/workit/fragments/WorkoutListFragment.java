@@ -79,6 +79,10 @@ public class WorkoutListFragment extends Fragment implements WorkoutRecycleAdapt
 //                    workout.setCustomExercises(getCustomExercises(workout.getWorkoutID())); // Gets the custom exercises
 
                     workoutsList.add(workout);
+
+//                    getCustomExercises(workoutsList.size()-1);
+
+//                    workoutsList.add(workout);
                 }
 
 //                for(Workout workout : workoutsList){
@@ -98,7 +102,7 @@ public class WorkoutListFragment extends Fragment implements WorkoutRecycleAdapt
 
     }
 
-//    private List<CustomExercise> getCustomExercises(final String workoutID){
+//    private void getCustomExercises(final int workoutListID){
 //
 //        customExerciseList = new ArrayList<>();
 //
@@ -108,12 +112,18 @@ public class WorkoutListFragment extends Fragment implements WorkoutRecycleAdapt
 //            @Override
 //            public void onDataChange(DataSnapshot dataSnapshot) {
 //                for(DataSnapshot customExerciseSnapshot : dataSnapshot.getChildren()){
+//
+//                    Workout workout = workoutsList.get(workoutListID);
 //                    CustomExercise customExercise = customExerciseSnapshot.getValue(CustomExercise.class);
 //
-//                    // WorkoutID had to be final, check that if it cause trouble
-//                    if(customExercise.getWorkoutID().equals(workoutID)){
-//                        customExerciseList.add(customExercise);
+//                    if(customExercise.getWorkoutID().equals(workout.getWorkoutID())){
+//                        workout.getCustomExercises().add(customExercise);
 //                    }
+//
+////                    // WorkoutID had to be final, check that if it cause trouble
+////                    if(customExercise.getWorkoutID().equals(workoutID)){
+////                        customExerciseList.add(customExercise);
+////                    }
 //                }
 //            }
 //
@@ -123,7 +133,7 @@ public class WorkoutListFragment extends Fragment implements WorkoutRecycleAdapt
 //            }
 //        });
 //
-//        return customExerciseList;
+////        return customExerciseList;
 //    }
 
     // Finds the recycler view and sets it up with the type of linear layout
