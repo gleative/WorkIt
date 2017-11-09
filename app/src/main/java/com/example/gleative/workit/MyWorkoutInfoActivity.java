@@ -1,5 +1,6 @@
 package com.example.gleative.workit;
 
+import android.content.Intent;
 import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -60,5 +61,12 @@ public class MyWorkoutInfoActivity extends AppCompatActivity implements WorkoutC
     @Override
     public void onCustomExerciseSelected(CustomExercise customExercise) {
 
+    }
+
+    // When the user press back, they will be sendt to MyWorkoutsActivity, and not go through all the process they did when they created a workout
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        startActivity(new Intent(MyWorkoutInfoActivity.this, MyWorkoutActivity.class));
     }
 }
