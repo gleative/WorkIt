@@ -23,7 +23,8 @@ import java.util.List;
 
 public class CustomExerciseRecyclerAdapter extends RecyclerView.Adapter<CustomExerciseViewHolder>{
 
-    DatabaseReference dbReference;
+    FirebaseDatabase firebaseDatabase;
+    DatabaseReference dbReferenceExercises;
 
     private Exercise exercise;
     private List<CustomExercise> customExerciseData;
@@ -50,6 +51,9 @@ public class CustomExerciseRecyclerAdapter extends RecyclerView.Adapter<CustomEx
     public CustomExerciseViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = inflater.inflate(R.layout.list_custom_exercises, parent, false);
         CustomExerciseViewHolder holder = new CustomExerciseViewHolder(view);
+
+        firebaseDatabase = FirebaseDatabase.getInstance();
+        dbReferenceExercises = firebaseDatabase.getReference().child("exercises");
 
         view.setOnClickListener(holder);
 
@@ -93,8 +97,30 @@ public class CustomExerciseRecyclerAdapter extends RecyclerView.Adapter<CustomEx
     @Override
     public void onBindViewHolder(CustomExerciseViewHolder holder, int position){
         CustomExercise currObj = customExerciseData.get(position);
-        holder.bind(currObj, currObj.getExerciseID(), exerciseSelectedListener);
+//        Exercise exercise = findExercise(currObj.getExerciseID());
+        holder.bind(currObj, exercise, exerciseSelectedListener);
     }
+
+//    private void findExercise(final int exerciseID){
+//        dbReferenceExercises.addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(DataSnapshot dataSnapshot) {
+//                for(DataSnapshot exerciseSnapshot : dataSnapshot.getChildren()){
+//                    Exercise currExercise = exerciseSnapshot.getValue(Exercise.class);
+//
+//                    if(currExercise.getExerciseID() == exerciseID){
+//                        exercise = currExercise;
+//                    }
+//                }
+//            }
+//
+//            @Override
+//            public void onCancelled(DatabaseError databaseError) {
+//
+//            }
+//        });
+//
+//    }
 
     @Override
     public int getItemCount() {

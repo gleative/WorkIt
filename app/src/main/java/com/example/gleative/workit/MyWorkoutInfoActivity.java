@@ -79,6 +79,7 @@ public class MyWorkoutInfoActivity extends AppCompatActivity implements WorkoutC
     public void addNewCustomExerciseToWorkout(View view) {
         Intent intent = new Intent(this, AddExerciseToWorkoutActivity.class);
         intent.putExtra("workout", selectedWorkout);
+        intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP); // So MyWorkoutActivity wont overlap on eachother when user presses back
         startActivity(intent);
     }
 }

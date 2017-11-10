@@ -31,8 +31,9 @@ import java.util.List;
 public class WorkoutListFragment extends Fragment implements WorkoutRecycleAdapterListener{
 
     private FirebaseDatabase firebaseDatabase;
-    private DatabaseReference dbReference;
-    private DatabaseReference dbReference2;
+    private DatabaseReference dbReferenceWorkouts;
+    private DatabaseReference dbReferenceCustomExercises;
+    private DatabaseReference dbReference3;
 
     private RecyclerView recyclerView;
     private OnWorkoutFragmentInteractionListener listener;
@@ -49,7 +50,7 @@ public class WorkoutListFragment extends Fragment implements WorkoutRecycleAdapt
         workoutsList = new ArrayList<>();
 
         firebaseDatabase = FirebaseDatabase.getInstance();
-        dbReference = firebaseDatabase.getReference().child("workouts");
+        dbReferenceWorkouts = firebaseDatabase.getReference().child("workouts");
 
         setUpRecyclerView(view);
         getData();
@@ -70,7 +71,7 @@ public class WorkoutListFragment extends Fragment implements WorkoutRecycleAdapt
     // Retrieves the workouts data from the database and adds the data to the recycler view
     private void getData(){
 
-        dbReference.addValueEventListener(new ValueEventListener() {
+        dbReferenceWorkouts.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 workoutsList.clear(); // Clear list before getting the data, if data already exist it will be duplicates
@@ -111,9 +112,9 @@ public class WorkoutListFragment extends Fragment implements WorkoutRecycleAdapt
 
         customExerciseList = new ArrayList<>();
 
-        dbReference2 = FirebaseDatabase.getInstance().getReference().child("customExercises");
+        dbReferenceCustomExercises = FirebaseDatabase.getInstance().getReference().child("customExercises");
 
-        dbReference2.addValueEventListener(new ValueEventListener() {
+        dbReferenceCustomExercises.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for(DataSnapshot customExerciseSnapshot : dataSnapshot.getChildren()){
@@ -122,6 +123,8 @@ public class WorkoutListFragment extends Fragment implements WorkoutRecycleAdapt
                     CustomExercise customExercise = customExerciseSnapshot.getValue(CustomExercise.class);
 
                     if(customExercise.getWorkoutID().equals(workout.getWorkoutID())){
+
+
                         workout.getCustomExercises().add(customExercise);
                     }
 
@@ -139,6 +142,10 @@ public class WorkoutListFragment extends Fragment implements WorkoutRecycleAdapt
         });
 
 //        return customExerciseList;
+    }
+
+    private void getExercise(){
+
     }
 
     // Finds the recycler view and sets it up with the type of linear layout
