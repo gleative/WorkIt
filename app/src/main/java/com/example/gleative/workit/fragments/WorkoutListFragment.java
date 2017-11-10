@@ -84,7 +84,7 @@ public class WorkoutListFragment extends Fragment implements WorkoutRecycleAdapt
 
                     workoutsList.add(workout);
 
-                    getCustomExercises(workoutsList.size()-1);
+                    getCustomExercises(workoutsList.size()-1); // The current workout is the one that is last on the list.
 
 //                    workoutsList.add(workout);
                 }
@@ -106,6 +106,7 @@ public class WorkoutListFragment extends Fragment implements WorkoutRecycleAdapt
 
     }
 
+    // Gets the custom exercises that is in the workout
     private void getCustomExercises(final int workoutListID){
 
         customExerciseList = new ArrayList<>();
@@ -117,7 +118,7 @@ public class WorkoutListFragment extends Fragment implements WorkoutRecycleAdapt
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for(DataSnapshot customExerciseSnapshot : dataSnapshot.getChildren()){
 
-                    Workout workout = workoutsList.get(workoutListID);
+                    Workout workout = workoutsList.get(workoutListID); // Gets reference to the workout object
                     CustomExercise customExercise = customExerciseSnapshot.getValue(CustomExercise.class);
 
                     if(customExercise.getWorkoutID().equals(workout.getWorkoutID())){

@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -63,10 +64,21 @@ public class MyWorkoutInfoActivity extends AppCompatActivity implements WorkoutC
 
     }
 
+
+
     // When the user press back, they will be sendt to MyWorkoutsActivity, and not go through all the process they did when they created a workout
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        startActivity(new Intent(MyWorkoutInfoActivity.this, MyWorkoutActivity.class));
+        Intent intent = new Intent(this, MyWorkoutActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP); // So MyWorkoutActivity wont overlap on eachother when user presses back
+        startActivity(intent);
+    }
+
+    // When user presses the FAB button
+    public void addNewCustomExerciseToWorkout(View view) {
+        Intent intent = new Intent(this, AddExerciseToWorkoutActivity.class);
+        intent.putExtra("workout", selectedWorkout);
+        startActivity(intent);
     }
 }

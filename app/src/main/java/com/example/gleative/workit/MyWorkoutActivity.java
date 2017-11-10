@@ -65,6 +65,7 @@ public class MyWorkoutActivity extends AppCompatActivity implements WorkoutListF
     @Override
     public void onWorkoutSelected(Workout workout) {
         Intent intent = new Intent(this, MyWorkoutInfoActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
         intent.putExtra("workout", workout);
         startActivity(intent);
     }
