@@ -17,6 +17,7 @@ import org.w3c.dom.Text;
 public class CustomExerciseViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
     TextView customExerciseName;
+    TextView customExerciseBodyPart;
     TextView customExerciseSets;
     TextView customExerciseReps;
     OnExerciseSelectedListener onExerciseSelectedListener;
@@ -25,6 +26,7 @@ public class CustomExerciseViewHolder extends RecyclerView.ViewHolder implements
         super(itemView);
 
         customExerciseName = itemView.findViewById(R.id.custom_exercise_title);
+        customExerciseBodyPart = itemView.findViewById(R.id.custom_exercise_body_part);
         customExerciseSets = itemView.findViewById(R.id.custom_exercise_sets);
         customExerciseReps = itemView.findViewById(R.id.custom_exercise_reps);
 
@@ -37,8 +39,9 @@ public class CustomExerciseViewHolder extends RecyclerView.ViewHolder implements
 //        this.onExerciseSelectedListener = listener;
 //    }
 
-    public void bind(CustomExercise customExercise, Exercise exercise, OnExerciseSelectedListener listener){
-//        this.customExerciseName.setText(exercise.getExerciseName());
+    public void bind(CustomExercise customExercise, OnExerciseSelectedListener listener){
+        this.customExerciseName.setText(customExercise.getExercise().getExerciseName());
+        this.customExerciseBodyPart.setText(customExercise.getExercise().getBodyPart());
         this.customExerciseSets.setText("Sets  : " + Integer.toString(customExercise.getSets())); // Had to make them to strings for it to display
         this.customExerciseReps.setText("Reps : " + Integer.toString(customExercise.getReps())); // Had to make them to strings for it to display
         this.onExerciseSelectedListener = listener;

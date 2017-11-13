@@ -7,11 +7,13 @@
     android:layout_height="match_parent"
     tools:context="com.example.gleative.workit.StartWorkoutActivity">
 
-    <android.support.design.widget.CoordinatorLayout
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/constraintLayout"
         android:layout_width="match_parent"
-
         android:layout_height="match_parent">
+
         <android.support.design.widget.AppBarLayout
+            android:id="@+id/appBarLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
@@ -20,13 +22,124 @@
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
-                app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+                app:layout_scrollFlags="scroll|enterAlways"
                 app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-                app:layout_scrollFlags="scroll|enterAlways"/>
+                app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
             <!--Linje 25 gjør at baren på toppen går vekk når du scroller-->
         </android.support.design.widget.AppBarLayout>
 
-    </android.support.design.widget.CoordinatorLayout>
+        <TextView
+            android:id="@+id/current_exercise_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:text="Exercise Name"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/appBarLayout"
+            app:layout_constraintBottom_toTopOf="@+id/divider_1"/>
+
+        <!--Divider-->
+        <View
+            android:id="@+id/divider_1"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="4dp"
+            android:background="@android:color/background_dark"
+            app:layout_constraintBottom_toBottomOf="@+id/current_exercise_name"
+            app:layout_constraintTop_toTopOf="@+id/current_exercise_picture"/>
+        <ImageView
+            android:id="@+id/current_exercise_picture"
+            android:layout_width="match_parent"
+            android:layout_height="250dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginBottom="2dp"
+            android:src="@drawable/e1_1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/divider_1"/>
+
+        <View
+            android:id="@+id/divider_2"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_marginBottom="4dp"
+            android:background="@android:color/background_dark"
+            app:layout_constraintTop_toBottomOf="@+id/current_exercise_picture" />
+
+        <TextView
+            android:id="@+id/reps_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="20dp"
+            android:text="Reps:"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/divider_2" />
+
+        <TextView
+            android:id="@+id/current_exercise_reps"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:textSize="50sp"
+            android:text="XX"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/reps_text" />
+
+        <TextView
+            android:id="@+id/sets_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:text="Sets:"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+
+            app:layout_constraintTop_toBottomOf="@+id/current_exercise_reps"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <TextView
+            android:id="@+id/current_exercise_sets"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:text="XX/XX"
+            android:textSize="50sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/sets_text" />
+
+        <Button
+            android:id="@+id/continue_button"
+            android:layout_width="300dp"
+            android:layout_height="90dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginBottom="4dp"
+            android:background="@color/colorRed"
+            android:text="continue button"
+            android:onClick="proceedInWorkout"
+            android:textColor="#ffffff"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/current_exercise_sets" />
+
+    </android.support.constraint.ConstraintLayout>
 
 
     <!--Gjør at vi får navigation drawer i denne aktivitien-->

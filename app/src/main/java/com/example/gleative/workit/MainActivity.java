@@ -77,6 +77,13 @@ public class MainActivity extends AppCompatActivity {
         super.onStart();
     }
 
+    // When user presses FAB button
+    public void startWorkout(View view) {
+        Intent intent = new Intent(this, MyWorkoutActivity.class);
+        intent.putExtra("startWorkout", 1); // Sends value to MyWorkoutActivity that it wants to start the workout the user chooses.
+        startActivity(intent);
+    }
+
 
 //    private class MyActionListener  implements View.OnClickListener{
 //

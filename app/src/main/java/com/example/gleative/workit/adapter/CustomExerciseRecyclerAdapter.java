@@ -98,29 +98,32 @@ public class CustomExerciseRecyclerAdapter extends RecyclerView.Adapter<CustomEx
     public void onBindViewHolder(CustomExerciseViewHolder holder, int position){
         CustomExercise currObj = customExerciseData.get(position);
 //        Exercise exercise = findExercise(currObj.getExerciseID());
-        holder.bind(currObj, exercise, exerciseSelectedListener);
+//        Exercise exercise = currObj.getExercise();
+        findExercise(currObj.getExerciseID(), position);
+        holder.bind(currObj, exerciseSelectedListener);
     }
 
-//    private void findExercise(final int exerciseID){
-//        dbReferenceExercises.addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(DataSnapshot dataSnapshot) {
-//                for(DataSnapshot exerciseSnapshot : dataSnapshot.getChildren()){
-//                    Exercise currExercise = exerciseSnapshot.getValue(Exercise.class);
-//
-//                    if(currExercise.getExerciseID() == exerciseID){
-//                        exercise = currExercise;
-//                    }
-//                }
-//            }
-//
-//            @Override
-//            public void onCancelled(DatabaseError databaseError) {
-//
-//            }
-//        });
-//
-//    }
+    private void findExercise(final int exerciseID, final int position){
+        dbReferenceExercises.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for(DataSnapshot exerciseSnapshot : dataSnapshot.getChildren()){
+                    CustomExercise customExercise = customExerciseData.get(position);
+                    Exercise currExercise = exerciseSnapshot.getValue(Exercise.class);
+
+                    if(currExercise.getExerciseID() == exerciseID){
+                        customExercise.setExercise(currExercise);
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+    }
 
     @Override
     public int getItemCount() {

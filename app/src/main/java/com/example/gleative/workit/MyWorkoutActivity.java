@@ -1,6 +1,7 @@
 package com.example.gleative.workit;
 
 import android.content.Intent;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -17,7 +18,11 @@ public class MyWorkoutActivity extends AppCompatActivity implements WorkoutListF
 
     DatabaseReference dbReference;
 
+    // If value "1" the user wants to start a workout
+    int startWorkout = 0;
+
     Toolbar toolbar;
+    FloatingActionButton fab;
     NavigationDrawerFragment navigationDrawerFragment;
 
     @Override
@@ -27,6 +32,14 @@ public class MyWorkoutActivity extends AppCompatActivity implements WorkoutListF
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        fab = findViewById(R.id.create_workout_fab);
+
+        Bundle extras = getIntent().getExtras();
+        if(extras != null){
+            startWorkout = extras.getInt("startWorkout"); // Gives value sendt from MainActivity
+            fab.hide(); // Hides the FloatingActionButton, method only called when a user wants to start a workout.
+        }
 
         setUpDrawer();
 
@@ -47,16 +60,6 @@ public class MyWorkoutActivity extends AppCompatActivity implements WorkoutListF
 
     // FAB button in activity_workout.xml, Starts CreateWorkoutActivity
     public void createWorkout(View view) {
-//        dbReference = FirebaseDatabase.getInstance().getReference("workouts");
-//
-//        // Creates a user node, and returns a unique key value
-//        String workoutID = dbReference.push().getKey();
-//
-//        Workout workout = new Workout("untitled","empty");
-//
-//        // Adds the given values to the database
-//        dbReference.child(workoutID).setValue(workout);
-
         Intent intent = new Intent(this, CreateWorkoutActivity.class);
         startActivity(intent);
     }
@@ -64,9 +67,22 @@ public class MyWorkoutActivity extends AppCompatActivity implements WorkoutListF
     // Find the specific workout selected by the user
     @Override
     public void onWorkoutSelected(Workout workout) {
-        Intent intent = new Intent(this, MyWorkoutInfoActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-        intent.putExtra("workout", workout);
-        startActivity(intent);
+        Intent intent;
+
+        // Starts the workout
+        if(startWorkout == 1){
+            intent = new Intent(this, StartWorkoutActivity.class);
+            intent.putExtra("workout", workout);
+            startActivity(intent);
+        }
+        // Shows the info of the workout
+        else{
+            intent = new Intent(this, MyWorkoutInfoActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+            intent.putExtra("workout", workout);
+            startActivity(intent);
+        }
+
+
     }
 }

@@ -19,6 +19,7 @@ public class CustomExercise implements Parcelable{
 
     private String workoutID; // Which workout the customexercise is in
     private int exerciseID; // Which exercise is customized
+    private Exercise exercise;
     private int sets;
     private int reps;
     private int time;
@@ -27,9 +28,35 @@ public class CustomExercise implements Parcelable{
         super();
     }
 
-    public CustomExercise(String _workoutID, int _exerciseID, int _sets, int _reps){
+//    public CustomExercise(String _workoutID, int _exerciseID, int _sets, int _reps){
+//        this.workoutID = _workoutID;
+//        this.exerciseID = _exerciseID;
+//        this.sets = _sets;
+//        this.reps = _reps;
+//    }
+//
+//    public CustomExercise(Parcel parcel){
+//        this.workoutID = parcel.readString();
+//        this.exerciseID = parcel.readInt();
+//        this.sets = parcel.readInt();
+//        this.reps = parcel.readInt();
+//        this.time = parcel.readInt();
+//    }
+//
+//
+//    @Override
+//    public void writeToParcel(Parcel dest, int flags) {
+//        dest.writeString(this.workoutID);
+//        dest.writeInt(this.exerciseID);
+//        dest.writeInt(this.sets);
+//        dest.writeInt(this.reps);
+//        dest.writeInt(this.time);
+//    }
+
+    public CustomExercise(String _workoutID, int _exerciseID, Exercise _exercise, int _sets, int _reps){
         this.workoutID = _workoutID;
         this.exerciseID = _exerciseID;
+        this.exercise = _exercise;
         this.sets = _sets;
         this.reps = _reps;
     }
@@ -37,6 +64,7 @@ public class CustomExercise implements Parcelable{
     public CustomExercise(Parcel parcel){
         this.workoutID = parcel.readString();
         this.exerciseID = parcel.readInt();
+        this.exercise = parcel.readParcelable(Exercise.class.getClassLoader());
         this.sets = parcel.readInt();
         this.reps = parcel.readInt();
         this.time = parcel.readInt();
@@ -47,6 +75,7 @@ public class CustomExercise implements Parcelable{
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(this.workoutID);
         dest.writeInt(this.exerciseID);
+        dest.writeParcelable(this.exercise, flags);
         dest.writeInt(this.sets);
         dest.writeInt(this.reps);
         dest.writeInt(this.time);
@@ -77,13 +106,13 @@ public class CustomExercise implements Parcelable{
 //        this.workout = workout;
 //    }
 //
-//    public Exercise getExercise() {
-//        return exercise;
-//    }
-//
-//    public void setExercise(Exercise exercise) {
-//        this.exercise = exercise;
-//    }
+    public Exercise getExercise() {
+        return exercise;
+    }
+
+    public void setExercise(Exercise exercise) {
+        this.exercise = exercise;
+    }
 
     public String getWorkoutID(){
         return workoutID;

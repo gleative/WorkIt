@@ -61,7 +61,11 @@ public class MyWorkoutInfoActivity extends AppCompatActivity implements WorkoutC
 
     @Override
     public void onCustomExerciseSelected(CustomExercise customExercise) {
+        Exercise exercise = customExercise.getExercise();
 
+        Intent intent = new Intent(this, ExerciseInfoActivity.class);
+        intent.putExtra("exercise", exercise);
+        startActivity(intent);
     }
 
 

@@ -84,7 +84,9 @@ public class CreateCustomExerciseActivity extends AppCompatActivity {
         String customExerciseID = dbReference.push().getKey();
 
         // IF THERE ARE SOME VALUES YOU DONT WANT IN THE CHILD, REMOVE GETTER AND SETTER FOR THAT VALUE, OR ELSE IT WILL DISPLAY!
-        CustomExercise newCustomExercise = new CustomExercise(workout.getWorkoutID(), selectedExercise.getExerciseID(), sets, reps);
+//        CustomExercise newCustomExercise = new CustomExercise(workout.getWorkoutID(), selectedExercise.getExerciseID(), sets, reps);
+        CustomExercise newCustomExercise = new CustomExercise(workout.getWorkoutID(), selectedExercise.getExerciseID(), selectedExercise, sets, reps);
+
 
         // Adds the given values to the database
         dbReference.child(customExerciseID).setValue(newCustomExercise);
