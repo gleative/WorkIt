@@ -75,7 +75,7 @@ public class MyWorkoutInfoActivity extends AppCompatActivity implements WorkoutC
     public void onBackPressed() {
         super.onBackPressed();
         Intent intent = new Intent(this, MyWorkoutActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP); // So MyWorkoutActivity wont overlap on eachother when user presses back
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK); // So MyWorkoutActivity wont overlap on eachother when user presses back
         startActivity(intent);
     }
 
