@@ -3,6 +3,7 @@
 buildscript {
     repositories {
         jcenter()
+        mavenCentral() // enables able to use gifs
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:2.3.3'
@@ -16,6 +17,7 @@ buildscript {
 allprojects {
     repositories {
         jcenter()
+        mavenCentral() // enables able to use gifs
 
         maven{
             url "https://maven.google.com" // Maven repository

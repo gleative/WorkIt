@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.gleative.workit.R;
@@ -23,6 +24,8 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import pl.droidsonroids.gif.GifImageView;
 
 /**
  * Created by glenn on 17.10.2017.
@@ -41,6 +44,8 @@ public class WorkoutListFragment extends Fragment implements WorkoutRecycleAdapt
     private List<Workout> workoutsList;
     private List<CustomExercise> customExerciseList;
 
+    private GifImageView loadingIcon;
+
     public WorkoutListFragment(){}
 
     @Override
@@ -51,6 +56,9 @@ public class WorkoutListFragment extends Fragment implements WorkoutRecycleAdapt
 
         firebaseDatabase = FirebaseDatabase.getInstance();
         dbReferenceWorkouts = firebaseDatabase.getReference().child("workouts");
+
+//        loadingIcon = (GifImageView) view.findViewById(R.id.loading_icon);
+//        loadingIcon.setVisibility(View.VISIBLE); // Only setted visible here, is gone when data is finished loading!
 
         setUpRecyclerView(view);
         getData();
@@ -96,6 +104,7 @@ public class WorkoutListFragment extends Fragment implements WorkoutRecycleAdapt
 
                 // Tells the adapter to update so it has the newest data
                 adapter.updateAdapter(workoutsList);
+//                loadingIcon.setVisibility(View.GONE); // Data is loaded, remove loading icon
             }
 
             @Override

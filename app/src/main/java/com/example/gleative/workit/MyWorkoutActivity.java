@@ -15,6 +15,8 @@ import com.example.gleative.workit.model.Workout;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import pl.droidsonroids.gif.GifImageView;
+
 public class MyWorkoutActivity extends AppCompatActivity implements WorkoutListFragment.OnWorkoutFragmentInteractionListener{
 
     DatabaseReference dbReference;
