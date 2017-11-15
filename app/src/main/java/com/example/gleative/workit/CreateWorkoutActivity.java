@@ -84,7 +84,8 @@ public class CreateWorkoutActivity extends AppCompatActivity implements Exercise
         else{
             workout = createWorkout(workoutNameText.getText().toString(), workoutDescriptionText.getText().toString());
 
-            Intent intent = new Intent(this, AddExerciseToWorkoutActivity.class);
+//            Intent intent = new Intent(this, AddExerciseToWorkoutActivity.class);
+            Intent intent = new Intent(this, ExerciseActivity.class);
             intent.putExtra("workout", workout);
             startActivity(intent);
         }

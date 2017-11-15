@@ -27,11 +27,16 @@ import com.example.gleative.workit.fragments.ExerciseInfoFragment;
 import com.example.gleative.workit.fragments.ExerciseListFragment;
 import com.example.gleative.workit.fragments.NavigationDrawerFragment;
 import com.example.gleative.workit.model.Exercise;
+import com.example.gleative.workit.model.Workout;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class ExerciseActivity extends AppCompatActivity implements ExerciseListFragment.OnExerciseFragmentInteractionListener, Spinner.OnItemSelectedListener{
+
+    // If 1, the user is going to create a custom exercise
+    private int createCustomExercise = 0;
+    Workout workout;
 
     Toolbar toolbar;
     NavigationDrawerFragment navigationDrawerFragment;
@@ -59,7 +64,22 @@ public class ExerciseActivity extends AppCompatActivity implements ExerciseListF
 
         exercisesList = Exercise.getData();
 
-        setUpDrawer();
+        Bundle extras = getIntent().getExtras();
+        // If user is going to create a custom exercise
+        if(extras != null){
+            // Knows the user is adding exercise because bundle has workout object
+            createCustomExercise = 1;
+
+            // Gets the workout object
+            workout = extras.getParcelable("workout");
+        }
+        else{
+            // Knows the user is browsing exercises
+            createCustomExercise = 0;
+            setUpDrawer();
+            navigationDrawerFragment.updateCheckedItem(R.id.nav_exercises);
+        }
+
         setUpSpinner();
     }
 
@@ -84,17 +104,23 @@ public class ExerciseActivity extends AppCompatActivity implements ExerciseListF
 
     @Override
     protected void onStart(){
-        navigationDrawerFragment.updateCheckedItem(R.id.nav_exercises);
-
         super.onStart();
     }
 
     @Override
     public void onExerciseSelected(Exercise selectedExercise) {
-        Intent intent = new Intent(this, ExerciseInfoActivity.class);
-//        intent.putExtra("exercise_id", selectedExercise.getExerciseID());
-        intent.putExtra("exercise", selectedExercise);
-        startActivity(intent);
+        // If user is going to create a custom exercise
+        if(createCustomExercise == 1){
+            Intent intent = new Intent(this, CreateCustomExerciseActivity.class);
+            intent.putExtra("workout", workout);
+            intent.putExtra("exercise", selectedExercise);
+            startActivity(intent);
+        }
+        else{
+            Intent intent = new Intent(this, ExerciseInfoActivity.class);
+            intent.putExtra("exercise", selectedExercise);
+            startActivity(intent);
+        }
 
 
     }

@@ -145,6 +145,11 @@ public class MyWorkoutInfoActivity extends AppCompatActivity implements WorkoutC
     public void cancelUpdateWorkout(View view) {
         workoutNameView.setText(selectedWorkout.getWorkoutName());
         workoutDescView.setText(selectedWorkout.getWorkoutDescription());
+
+        workoutNameView.clearFocus();
+        workoutDescView.clearFocus();
+
+        hideKeyboard(view);
     }
 
     // Displays the two buttons if true, or else removes them from the view
@@ -179,7 +184,7 @@ public class MyWorkoutInfoActivity extends AppCompatActivity implements WorkoutC
 
     // When user presses the FAB button
     public void addNewCustomExerciseToWorkout(View view) {
-        Intent intent = new Intent(this, AddExerciseToWorkoutActivity.class);
+        Intent intent = new Intent(this, ExerciseActivity.class);
         intent.putExtra("workout", selectedWorkout);
         intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP); // So MyWorkoutActivity wont overlap on eachother when user presses back
         startActivity(intent);

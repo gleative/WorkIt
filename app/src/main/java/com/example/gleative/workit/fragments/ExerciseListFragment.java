@@ -92,6 +92,7 @@ public class ExerciseListFragment extends Fragment implements RecycleAdapterList
 
             @Override
             public boolean onQueryTextSubmit(String query) {
+
                 // Resets the position for the spinner, so searching and choosing between categories will be a better experience for the user
                 ((ExerciseActivity)getActivity()).resetSpinnerPosition();
                 return true;
