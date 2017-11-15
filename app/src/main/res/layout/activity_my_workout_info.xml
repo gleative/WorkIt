@@ -1,49 +1,81 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.example.gleative.workit.MyWorkoutInfoActivity">
+    tools:context="com.example.gleative.workit.MyWorkoutInfoActivity"
+    android:focusable="true"
+    android:focusableInTouchMode="true">
+    <!--line 9 and 10, makes so the edit text isnt instantly focused when entering the activity-->
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-    <TextView
+    <EditText
         android:id="@+id/selected_workout_name"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="60dp"
+        android:paddingStart="5dp"
         android:text="Workout name"
-        android:textSize="24dp"
-        android:textStyle="bold"/>
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:textColor="#ffff"
+        android:singleLine="true"
+        android:background="@color/colorRed"
+        android:textColorHighlight="#000"/>
 
     <!--Divider-->
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginTop="4dp"
-        android:layout_marginBottom="4dp"
-        android:background="@android:color/background_dark"/>
+    <!--<View-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="1dp"-->
+        <!--android:layout_marginTop="4dp"-->
+        <!--android:layout_marginBottom="4dp"-->
+        <!--android:background="@android:color/background_dark"/>-->
 
-    <TextView
+    <EditText
         android:id="@+id/selected_workout_desc"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="15dp"
+        android:textSize="15sp"
         android:text="Workout Desc"/>
 
-    <!--Divider-->
-    <View
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginTop="4dp"
-        android:layout_marginBottom="4dp"
-        android:background="@android:color/background_dark"/>
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_gravity="center">
+        <Button
+            android:id="@+id/update_workout_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/colorRed"
+            android:textColor="#ffff"
+            android:text="Update"
+            android:onClick="updateWorkout"
+            android:visibility="gone"/>
+        <Button
+            android:id="@+id/cancel_update_workout_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/colorRed"
+            android:layout_marginStart="5dp"
+            android:textColor="#ffff"
+            android:text="Cancel"
+            android:onClick="cancelUpdateWorkout"
+            android:visibility="gone"/>
+    </LinearLayout>
+
+    <!--&lt;!&ndash;Divider&ndash;&gt;-->
+    <!--<View-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="1dp"-->
+        <!--android:layout_marginTop="4dp"-->
+        <!--android:layout_marginBottom="4dp"-->
+        <!--android:background="@android:color/background_dark"/>-->
 
 
 
@@ -74,4 +106,4 @@
 
 
 
-</android.support.constraint.ConstraintLayout>
+</LinearLayout>

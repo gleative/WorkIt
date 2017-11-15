@@ -1,13 +1,22 @@
 package com.example.gleative.workit;
 
+import android.content.Context;
 import android.content.Intent;
 import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.gleative.workit.fragments.ExerciseListFragment;
 import com.example.gleative.workit.fragments.WorkoutCustomExercisesListFragment;
@@ -28,11 +37,10 @@ public class MyWorkoutInfoActivity extends AppCompatActivity implements WorkoutC
     DatabaseReference dbReference;
 
     Workout selectedWorkout;
-
-    TextView workoutName;
-    TextView workoutDesc;
-    ListView customExercisesListView;
     WorkoutCustomExercisesListFragment workoutCustomExercisesListFragment;
+
+    EditText workoutNameView, workoutDescView;
+    Button updateWorkoutButton, cancelUpdateWorkoutButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,11 +49,52 @@ public class MyWorkoutInfoActivity extends AppCompatActivity implements WorkoutC
 
         selectedWorkout = getIntent().getParcelableExtra("workout");
 
-        workoutName = findViewById(R.id.selected_workout_name);
-        workoutDesc = findViewById(R.id.selected_workout_desc);
-//        customExercisesListView = findViewById(R.id.custom_exercise_list);
+        workoutNameView = findViewById(R.id.selected_workout_name);
+        workoutDescView = findViewById(R.id.selected_workout_desc);
+        updateWorkoutButton = findViewById(R.id.update_workout_button);
+        cancelUpdateWorkoutButton = findViewById(R.id.cancel_update_workout_button);
 
-        dbReference = FirebaseDatabase.getInstance().getReference().child("customExercises");
+        // Displays the update and cancel button if their is input from the user
+        workoutNameView.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+            // Displays the update and cancel button if their is input from the user
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if(!(selectedWorkout.getWorkoutName().equals(workoutNameView.getText().toString()))){
+                    setVisibilityOnUpdateAndCancel(true);
+                }
+                else{
+                    setVisibilityOnUpdateAndCancel(false);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {}
+        });
+
+        // Displays the update and cancel button if their is input from the user
+        workoutDescView.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+            // Displays the update and cancel button if their is input from the user
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if(!(selectedWorkout.getWorkoutDescription().equals(workoutDescView.getText().toString()))){
+                    setVisibilityOnUpdateAndCancel(true);
+                }
+                else{
+                    setVisibilityOnUpdateAndCancel(false);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {}
+        });
+
+        dbReference = FirebaseDatabase.getInstance().getReference().child("workouts");
 
         // So we can access its methods
         workoutCustomExercisesListFragment = (WorkoutCustomExercisesListFragment) getSupportFragmentManager().findFragmentById(R.id.myWorkout_info_fragment);
@@ -53,12 +102,14 @@ public class MyWorkoutInfoActivity extends AppCompatActivity implements WorkoutC
         setDisplayedDetail(selectedWorkout);
     }
 
+    // Displays the information about the workout to the user
     public void setDisplayedDetail(Workout workout){
-        workoutName.setText(workout.getWorkoutName());
-        workoutDesc.setText(workout.getWorkoutDescription());
+        workoutNameView.setText(workout.getWorkoutName());
+        workoutDescView.setText(workout.getWorkoutDescription());
         workoutCustomExercisesListFragment.getCustomExercisesFromWorkout(workout); // Sends the custom exercises list to the adapter, so it can display workouts custom exercises
     }
 
+    // Displays the information about the chosen customExercise
     @Override
     public void onCustomExerciseSelected(CustomExercise customExercise) {
         Exercise exercise = customExercise.getExercise();
@@ -68,7 +119,54 @@ public class MyWorkoutInfoActivity extends AppCompatActivity implements WorkoutC
         startActivity(intent);
     }
 
+    // Updates the workout with the new info to the database
+    public void updateWorkout(View view) {
+        String workoutID = selectedWorkout.getWorkoutID();
 
+        try{
+            dbReference.child(workoutID).child("workoutName").setValue(workoutNameView.getText().toString());
+            dbReference.child(workoutID).child("workoutDescription").setValue(workoutDescView.getText().toString());
+            Toast.makeText(this, "Workout successfully updated", Toast.LENGTH_SHORT).show();
+        }
+        catch(Exception e){
+            e.printStackTrace();
+            Toast.makeText(this, "Failed to update workout!", Toast.LENGTH_SHORT).show();
+        }
+
+        workoutNameView.clearFocus();
+        workoutDescView.clearFocus();
+        setVisibilityOnUpdateAndCancel(false);
+
+        hideKeyboard(view);
+
+    }
+
+    // Reverts the input to the origin name and description of the workout
+    public void cancelUpdateWorkout(View view) {
+        workoutNameView.setText(selectedWorkout.getWorkoutName());
+        workoutDescView.setText(selectedWorkout.getWorkoutDescription());
+    }
+
+    // Displays the two buttons if true, or else removes them from the view
+    private void setVisibilityOnUpdateAndCancel(boolean value){
+        if(value == true){
+            updateWorkoutButton.setVisibility(View.VISIBLE);
+            cancelUpdateWorkoutButton.setVisibility(View.VISIBLE);
+        }
+        else{
+            updateWorkoutButton.setVisibility(View.GONE);
+            cancelUpdateWorkoutButton.setVisibility(View.GONE);
+        }
+    }
+
+    // Hides the keyboard
+    private void hideKeyboard(View view){
+        view = this.getCurrentFocus();
+        if(view != null){
+            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
+    }
 
     // When the user press back, they will be sendt to MyWorkoutsActivity, and not go through all the process they did when they created a workout
     @Override

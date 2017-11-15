@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.Toast;
 
 import com.example.gleative.workit.fragments.NavigationDrawerFragment;
 import com.example.gleative.workit.fragments.WorkoutListFragment;
@@ -71,9 +72,15 @@ public class MyWorkoutActivity extends AppCompatActivity implements WorkoutListF
 
         // Starts the workout
         if(startWorkout == 1){
-            intent = new Intent(this, StartWorkoutActivity.class);
-            intent.putExtra("workout", workout);
-            startActivity(intent);
+            // If there are no exercises in the workout, user can not start a workout
+            if(workout.getCustomExercises().size() == 0){
+                Toast.makeText(this, workout.getWorkoutName() + " contains no exercises!", Toast.LENGTH_SHORT).show();
+            }
+            else{
+                intent = new Intent(this, StartWorkoutActivity.class);
+                intent.putExtra("workout", workout);
+                startActivity(intent);
+            }
         }
         // Shows the info of the workout
         else{
