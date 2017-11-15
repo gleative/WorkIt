@@ -38,14 +38,17 @@ public class CreateCustomExerciseActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_custom_exercise);
 
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
 
-        sets = findViewById(R.id.sets);
-        reps = findViewById(R.id.reps);
+        toolbar = (Toolbar) findViewById(R.id.toolbar_execise_name);
+        setSupportActionBar(toolbar);
 
         selectedExercise = getIntent().getParcelableExtra("exercise");
         workout = getIntent().getParcelableExtra("workout");
+
+        toolbar.setTitle(selectedExercise.getExerciseName());
+
+        sets = findViewById(R.id.sets);
+        reps = findViewById(R.id.reps);
 
         FragmentManager fragmentManager = getSupportFragmentManager();
         CreateCustomExerciseFragment createCustomExerciseFragment = (CreateCustomExerciseFragment) fragmentManager.findFragmentById(R.id.create_custom_exercise_fragment);

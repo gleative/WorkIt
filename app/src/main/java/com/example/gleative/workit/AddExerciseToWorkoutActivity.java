@@ -39,32 +39,32 @@ public class AddExerciseToWorkoutActivity extends AppCompatActivity implements  
     }
 
     // Creates the search bar
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater){
-        inflater.inflate(R.menu.menu_search, menu); // The Layout file
-        MenuItem item = menu.findItem(R.id.menu_search_button);
-        SearchView searchView = (SearchView) item.getActionView();
-        searchView.setQueryHint("Exercise name, body part..."); // Adds a hint for what the user can search for
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener(){
-
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                // Resets the position for the spinner, so searching and choosing between categories will be a better experience for the user
-//                ((ExerciseActivity)getActivity()).resetSpinnerPosition();
-                return true;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String newText) {
-//                filterExercises(newText);
-
-                // Resets the position for the spinner, so searching and choosing between categories will be a better experience for the user
-//                ((ExerciseActivity)getActivity()).resetSpinnerPosition();
-
-                return true;
-            }
-        });
-
-    }
+//    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater){
+//        inflater.inflate(R.menu.menu_search, menu); // The Layout file
+//        MenuItem item = menu.findItem(R.id.menu_search_button);
+//        SearchView searchView = (SearchView) item.getActionView();
+//        searchView.setQueryHint("Exercise name, body part..."); // Adds a hint for what the user can search for
+//        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener(){
+//
+//            @Override
+//            public boolean onQueryTextSubmit(String query) {
+//                // Resets the position for the spinner, so searching and choosing between categories will be a better experience for the user
+////                ((ExerciseActivity)getActivity()).resetSpinnerPosition();
+//                return true;
+//            }
+//
+//            @Override
+//            public boolean onQueryTextChange(String newText) {
+////                filterExercises(newText);
+//
+//                // Resets the position for the spinner, so searching and choosing between categories will be a better experience for the user
+////                ((ExerciseActivity)getActivity()).resetSpinnerPosition();
+//
+//                return true;
+//            }
+//        });
+//
+//    }
 
     @Override
     public void onExerciseSelected(Exercise exercise) {

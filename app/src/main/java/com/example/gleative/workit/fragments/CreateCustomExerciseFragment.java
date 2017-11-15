@@ -34,15 +34,13 @@ public class CreateCustomExerciseFragment extends Fragment{
 
         View fragmentView = inflater.inflate(R.layout.fragment_create_custom_exercise, container, false); // Layout file
 
-        exerciseName = fragmentView.findViewById(R.id.selected_exercise_name);
+//        exerciseName = fragmentView.findViewById(R.id.selected_exercise_name);
         exerciseBodyPart = fragmentView.findViewById(R.id.selected_exercise_body_part);
 
         return fragmentView;
     }
 
     public void setDisplayedDetail(Exercise exercise){
-
-        exerciseName.setText(exercise.getExerciseName());
         exerciseBodyPart.setText(exercise.getBodyPart());
     }
 }

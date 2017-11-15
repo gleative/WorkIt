@@ -64,18 +64,18 @@ public class StartWorkoutActivity extends AppCompatActivity {
 
         setUpExercise();
 
-        setUpDrawer();
+//        setUpDrawer();
     }
 
-    private void setUpDrawer() {
-        navigationDrawerFragment = (NavigationDrawerFragment) getSupportFragmentManager().findFragmentById(R.id.navigation_drawer_fragment);
-        DrawerLayout drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        navigationDrawerFragment.setUpDrawer(drawerLayout, toolbar, R.id.nav_exercises);
-    }
+//    private void setUpDrawer() {
+//        navigationDrawerFragment = (NavigationDrawerFragment) getSupportFragmentManager().findFragmentById(R.id.navigation_drawer_fragment);
+//        DrawerLayout drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+//        navigationDrawerFragment.setUpDrawer(drawerLayout, toolbar, R.id.nav_exercises);
+//    }
 
     @Override
     protected void onStart(){
-        navigationDrawerFragment.updateCheckedItem(R.id.nav_exercises);
+//        navigationDrawerFragment.updateCheckedItem(R.id.nav_exercises);
 
         super.onStart();
     }
