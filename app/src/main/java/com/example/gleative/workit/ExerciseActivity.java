@@ -56,9 +56,7 @@ public class ExerciseActivity extends AppCompatActivity implements ExerciseListF
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_exercise);
 
-        toolbar = (Toolbar) findViewById(R.id.toolbar); // Finner toolbaren i Activity
-//        SJEKK MANIFEST OG PÅ EXERCISES, VI KAN DEFINERE NAVN PÅ ACTIONBAR DER!
-//        toolbar.setTitle("Exercises"); // Setter title på actionbar
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false); // Disables title bar text
 
