@@ -15,7 +15,8 @@
         <android.support.design.widget.AppBarLayout
             android:id="@+id/appBarLayout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toTopOf="@+id/current_exercise_name">
 
             <!--Lager en toolbar-->
             <android.support.v7.widget.Toolbar
@@ -40,7 +41,19 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/appBarLayout"
-            app:layout_constraintBottom_toTopOf="@+id/divider_1"/>
+            app:layout_constraintBottom_toTopOf="@+id/exercises_done"/>
+
+        <TextView
+            android:id="@+id/exercises_done"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:text="Exercises done: "
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/current_exercise_name"
+            />
 
         <!--Divider-->
         <View
@@ -50,19 +63,18 @@
             android:layout_marginTop="4dp"
             android:layout_marginBottom="4dp"
             android:background="@android:color/background_dark"
-            app:layout_constraintBottom_toBottomOf="@+id/current_exercise_name"
-            app:layout_constraintTop_toTopOf="@+id/current_exercise_picture"/>
+            app:layout_constraintTop_toBottomOf="@id/exercises_done"/>
+
         <ImageView
             android:id="@+id/current_exercise_picture"
             android:layout_width="match_parent"
-            android:layout_height="250dp"
+            android:layout_height="252dp"
             android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
-            android:layout_marginBottom="2dp"
             android:src="@drawable/e1_1"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/divider_1"/>
+            app:layout_constraintTop_toBottomOf="@+id/divider_1" />
 
         <View
             android:id="@+id/divider_2"
@@ -121,7 +133,7 @@
             android:textSize="50sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/sets_text" />
+            app:layout_constraintTop_toBottomOf="@+id/sets_text"/>
 
         <Button
             android:id="@+id/continue_button"

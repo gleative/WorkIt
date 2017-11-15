@@ -26,7 +26,7 @@ public class StartWorkoutActivity extends AppCompatActivity {
     private int sets, reps;
     private int position = 0; // 0 So it starts at the start of the workouts list.
 
-    TextView currentExerciseNameView, setsView, repsView;
+    TextView currentExerciseNameView, setsView, repsView, exercisesDoneView;
     ImageView currentExercisePicture;
     Button processWorkoutButton;
 
@@ -45,6 +45,7 @@ public class StartWorkoutActivity extends AppCompatActivity {
         currentExercisePicture = findViewById(R.id.current_exercise_picture);
         setsView = findViewById(R.id.current_exercise_sets);
         repsView = findViewById(R.id.current_exercise_reps);
+        exercisesDoneView = findViewById(R.id.exercises_done);
         processWorkoutButton = findViewById(R.id.continue_button);
 
         // Shows info of the current exercise when user presses on the image
@@ -55,7 +56,6 @@ public class StartWorkoutActivity extends AppCompatActivity {
                 showCurrentExerciseInfo();
             }
         });
-
 
         workout = getIntent().getParcelableExtra("workout");
         toolbar.setTitle(workout.getWorkoutName());
@@ -81,6 +81,9 @@ public class StartWorkoutActivity extends AppCompatActivity {
     }
 
     private void setUpExercise(){
+        // Shows the user how many exercises are done
+        exercisesDoneView.setText("Exercises done: " + position + "/" + workout.getAmountExercises());
+
         // When position is the same as the amount of exercises, it means the workout is done.
         if(position == exercisesList.size()){
             Intent intent = new Intent(this, MainActivity.class);

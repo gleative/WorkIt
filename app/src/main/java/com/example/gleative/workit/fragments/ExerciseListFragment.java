@@ -49,8 +49,6 @@ public class ExerciseListFragment extends Fragment implements RecycleAdapterList
     private FirebaseDatabase firebaseDatabase;
     private DatabaseReference dbReference;
 
-    private ChildEventListener childEventListener;
-
     private RecyclerView recyclerView;
     private OnExerciseFragmentInteractionListener listener;
     ExercisesRecyclerAdapter adapter;
