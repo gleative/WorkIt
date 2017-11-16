@@ -21,7 +21,9 @@ public class Exercise implements Parcelable{
     private String bodyPart;
     private boolean timeBased;
     private int videoID;
-    private int imageID; // Bildet som kommer til å være på høyre siden
+    private String imageThumb1;
+    private String imageThumb2;
+    private String gifImage;
 
     public Exercise(){
         super();
@@ -32,6 +34,9 @@ public class Exercise implements Parcelable{
         this.exerciseName = parcel.readString();
         this.exerciseDescription = parcel.readString();
         this.bodyPart = parcel.readString();
+        this.imageThumb1 = parcel.readString();
+        this.imageThumb2 = parcel.readString();
+        this.gifImage = parcel.readString();
     }
 
     @Override
@@ -45,6 +50,9 @@ public class Exercise implements Parcelable{
         dest.writeString(this.exerciseName);
         dest.writeString(this.exerciseDescription);
         dest.writeString(this.bodyPart);
+        dest.writeString(this.imageThumb1);
+        dest.writeString(this.imageThumb2);
+        dest.writeString(this.gifImage);
     }
 
     public static final Creator<Exercise> CREATOR = new Creator<Exercise>() {
@@ -107,12 +115,28 @@ public class Exercise implements Parcelable{
         this.videoID = videoID;
     }
 
-    public int getImageID() {
-        return imageID;
+    public String getImageThumb1() {
+        return imageThumb1;
     }
 
-    public void setImageID(int imageID) {
-        this.imageID = imageID;
+    public void setImageThumb1(String imageThumb1) {
+        this.imageThumb1 = imageThumb1;
+    }
+
+    public String getImageThumb2() {
+        return imageThumb2;
+    }
+
+    public void setImageThumb2(String imageThumb2) {
+        this.imageThumb2 = imageThumb2;
+    }
+
+    public String getGifImage(){
+        return gifImage;
+    }
+
+    public void setGifImage(String gifImage){
+        this.gifImage = gifImage;
     }
 
     // Legger til data sånn at det kan bli lagt inn i recycler view

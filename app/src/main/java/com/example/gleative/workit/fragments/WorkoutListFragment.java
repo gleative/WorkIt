@@ -132,8 +132,6 @@ public class WorkoutListFragment extends Fragment implements WorkoutRecycleAdapt
                     CustomExercise customExercise = customExerciseSnapshot.getValue(CustomExercise.class);
 
                     if(customExercise.getWorkoutID().equals(workout.getWorkoutID())){
-
-
                         workout.getCustomExercises().add(customExercise);
                     }
 

@@ -13,8 +13,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.example.gleative.workit.fragments.NavigationDrawerFragment;
 import com.example.gleative.workit.model.Exercise;
 import com.google.firebase.database.DataSnapshot;
@@ -31,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
     NavigationDrawerFragment navigationDrawerFragment;
 
     TextView textView;
+    ImageView imageView;
 
     DatabaseReference dbReference;
 
@@ -43,6 +46,7 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         textView = (TextView) findViewById(R.id.text);
+        imageView = findViewById(R.id.test_picture);
 
         dbReference = FirebaseDatabase.getInstance().getReference().child("text"); // Gets reference of the the child "text"
 

@@ -14,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.example.gleative.workit.R;
 import com.example.gleative.workit.adapter.ExercisePicturesAdapter;
 import com.example.gleative.workit.model.Exercise;
@@ -44,6 +45,7 @@ public class ExerciseInfoFragment extends Fragment{
     private Toolbar exerciseNameToolbar;
     private TextView exerciseNameView;
     private TextView exerciseDescView;
+    private ImageView exercisePicture;
     private int exerciseIndex;
     private ViewPager exerciseViewPager; // Holds the pictures
 
@@ -65,33 +67,13 @@ public class ExerciseInfoFragment extends Fragment{
 
         // Finds referance to the diffrent views in "fragment_exercise_info" layout
         exerciseNameToolbar = fragmentView.findViewById(R.id.exercise_name); // Couldnt have toolbar as ID or else it wouldnt change name on toolbar for some reason....
-//        exerciseNameView = fragmentView.findViewById(R.id.exercise_title);
+        exercisePicture = fragmentView.findViewById(R.id.exercise_picture);
         exerciseDescView = fragmentView.findViewById(R.id.exercise_description);
 
 //        setDisplayedDetail(exerciseIndex);
 
         return fragmentView;
     }
-
-//    private void getData(int exerciseIndex){
-//        eList = new ArrayList<>();
-//
-//        dbReference = FirebaseDatabase.getInstance().getReference().child("exercises");
-//
-//        dbReference.addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(DataSnapshot dataSnapshot) {
-//                if(dataSnapshot.getKey() == exerciseIndex){
-//
-//                }
-//            }
-//
-//            @Override
-//            public void onCancelled(DatabaseError databaseError) {
-//
-//            }
-//        });
-//    }
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
@@ -104,6 +86,8 @@ public class ExerciseInfoFragment extends Fragment{
 //        Exercise exercise = exerciseList.get(exerciseIndex);
 
         exerciseNameToolbar.setTitle(exercise.getExerciseName());
+        Glide.with(getActivity()).load(exercise.getImageThumb1()).into(exercisePicture);
+
         exerciseDescView.setText(exercise.getExerciseDescription());
     }
 }

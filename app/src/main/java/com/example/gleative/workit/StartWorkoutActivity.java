@@ -10,12 +10,15 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.example.gleative.workit.fragments.NavigationDrawerFragment;
 import com.example.gleative.workit.model.CustomExercise;
 import com.example.gleative.workit.model.Exercise;
 import com.example.gleative.workit.model.Workout;
 
 import java.util.List;
+
+import pl.droidsonroids.gif.GifImageView;
 
 public class StartWorkoutActivity extends AppCompatActivity {
 
@@ -28,6 +31,7 @@ public class StartWorkoutActivity extends AppCompatActivity {
 
     TextView currentExerciseNameView, setsView, repsView, exercisesDoneView;
     ImageView currentExercisePicture;
+    GifImageView currentExerciseGif;
     Button processWorkoutButton;
 
     Toolbar toolbar;
@@ -42,15 +46,15 @@ public class StartWorkoutActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         currentExerciseNameView = findViewById(R.id.current_exercise_name);
-        currentExercisePicture = findViewById(R.id.current_exercise_picture);
+        currentExerciseGif = findViewById(R.id.current_exercise_gif);
         setsView = findViewById(R.id.current_exercise_sets);
         repsView = findViewById(R.id.current_exercise_reps);
         exercisesDoneView = findViewById(R.id.exercises_done);
         processWorkoutButton = findViewById(R.id.continue_button);
 
         // Shows info of the current exercise when user presses on the image
-        currentExercisePicture.setClickable(true);
-        currentExercisePicture.setOnClickListener(new View.OnClickListener() {
+        currentExerciseGif.setClickable(true);
+        currentExerciseGif.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 showCurrentExerciseInfo();
@@ -64,19 +68,10 @@ public class StartWorkoutActivity extends AppCompatActivity {
 
         setUpExercise();
 
-//        setUpDrawer();
     }
-
-//    private void setUpDrawer() {
-//        navigationDrawerFragment = (NavigationDrawerFragment) getSupportFragmentManager().findFragmentById(R.id.navigation_drawer_fragment);
-//        DrawerLayout drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-//        navigationDrawerFragment.setUpDrawer(drawerLayout, toolbar, R.id.nav_exercises);
-//    }
 
     @Override
     protected void onStart(){
-//        navigationDrawerFragment.updateCheckedItem(R.id.nav_exercises);
-
         super.onStart();
     }
 
@@ -101,7 +96,10 @@ public class StartWorkoutActivity extends AppCompatActivity {
     private void displayExercise(CustomExercise customExercise){
         Exercise exercise = customExercise.getExercise();
         currentExerciseNameView.setText(exercise.getExerciseName());
-//        currentExercisePicture
+
+        // Sets the gif image of the exercise
+        Glide.with(this).load(exercise.getGifImage()).into(currentExerciseGif);
+
         repsView.setText(Integer.toString(customExercise.getReps()));
         setsView.setText(currentSet + "/" + customExercise.getSets());
     }

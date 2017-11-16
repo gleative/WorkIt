@@ -121,36 +121,6 @@ public class ExerciseListFragment extends Fragment implements RecycleAdapterList
         }
     }
 
-//    // Gets the exercises data from the database
-//    private void getData(){
-//        eList = new ArrayList<>();
-//
-//        // Gets a reference to the child "exercises" in the database
-//        dbReference = FirebaseDatabase.getInstance().getReference().child("exercises");
-//
-//        dbReference.addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(DataSnapshot dataSnapshot) {
-//                for(DataSnapshot exerciseSnapshot : dataSnapshot.getChildren()){
-//                    Exercise exercise = new Exercise();
-//                    System.out.println(exerciseSnapshot.getKey());
-//                    exercise.setExerciseID(Integer.parseInt(exerciseSnapshot.getKey())); // Gets the Key Value, which is the exerciseID in this case
-//                    exercise.setExerciseName(exerciseSnapshot.child("exerciseName").getValue().toString());
-//                    exercise.setExerciseDescription(exerciseSnapshot.child("exerciseDescription").getValue().toString());
-//                    exercise.setBodyPart(exerciseSnapshot.child("bodyPart").getValue().toString());
-//                    eList.add(exercise);
-//                }
-//
-//            }
-//
-//            @Override
-//            public void onCancelled(DatabaseError databaseError) {
-//
-//            }
-//        });
-//
-//    }
-
     // Retrieves the exercises data from the database and adds the data to the recycler view
     private void getData(int selectedLayout){
 //        layout = selectedLayout;
@@ -170,6 +140,9 @@ public class ExerciseListFragment extends Fragment implements RecycleAdapterList
                     exercise.setExerciseName(exerciseSnapshot.child("exerciseName").getValue().toString());
                     exercise.setExerciseDescription(exerciseSnapshot.child("exerciseDescription").getValue().toString());
                     exercise.setBodyPart(exerciseSnapshot.child("bodyPart").getValue().toString());
+                    exercise.setImageThumb1(exerciseSnapshot.child("imageThumb1").getValue().toString());
+                    exercise.setImageThumb2(exerciseSnapshot.child("imageThumb2").getValue().toString());
+                    exercise.setGifImage(exerciseSnapshot.child("gifImage").getValue().toString());
                     eList.add(exercise);
 
                 }
@@ -186,56 +159,6 @@ public class ExerciseListFragment extends Fragment implements RecycleAdapterList
 
             }
         });
-
-
-//        childEventListener = new ChildEventListener() {
-//            @Override
-//            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-//                Log.d("Hello", "Exercise added -------------------------------");
-//                Exercise exercise = dataSnapshot.getValue(Exercise.class);
-//                exercise.setExerciseID(Integer.parseInt(dataSnapshot.getKey()));
-//                if(!eList.contains(exercise)){
-//                    eList.add(exercise);
-//                    adapter.notifyItemInserted(eList.size()-1);
-//                }
-//            }
-//
-//            @Override
-//            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-//                Exercise exercise = dataSnapshot.getValue(Exercise.class);
-//                exercise.setExerciseID(Integer.parseInt(dataSnapshot.getKey()));
-//
-//                int position = eList.indexOf(exercise);
-//
-//                eList.set(position,exercise);
-//                adapter.notifyItemChanged(position);
-//
-//            }
-//
-//            @Override
-//            public void onChildRemoved(DataSnapshot dataSnapshot) {
-//                Log.d("Hello", "Exercise removed -------------------------------");
-//
-//                Exercise removedExercise = dataSnapshot.getValue(Exercise.class);
-//                removedExercise.setExerciseID(Integer.parseInt(dataSnapshot.getKey()));
-//
-//                int position = eList.indexOf(removedExercise);
-//                adapter.notifyItemRemoved(position);
-//
-//            }
-//
-//            @Override
-//            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-//
-//            }
-//
-//            @Override
-//            public void onCancelled(DatabaseError databaseError) {
-//
-//            }
-//        };
-//
-//        dbReference.addChildEventListener(childEventListener);
 
     }
 
@@ -338,17 +261,4 @@ public class ExerciseListFragment extends Fragment implements RecycleAdapterList
     public interface OnExerciseFragmentInteractionListener{
         void onExerciseSelected(Exercise exercise);
     }
-
-//    @Override
-//    public void onPause() {
-//        super.onPause();
-//        eList.clear();
-//        adapter.notifyDataSetChanged();
-//    }
-//
-//    @Override
-//    public void onResume() {
-//        super.onResume();
-//        adapter.notifyDataSetChanged();
-//    }
 }
