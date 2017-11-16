@@ -42,7 +42,7 @@ public class StartWorkoutActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start_workout);
 
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar = (Toolbar) findViewById(R.id.currently_playing_workout_name);
         setSupportActionBar(toolbar);
 
         currentExerciseNameView = findViewById(R.id.current_exercise_name);
@@ -62,10 +62,11 @@ public class StartWorkoutActivity extends AppCompatActivity {
         });
 
         workout = getIntent().getParcelableExtra("workout");
-        toolbar.setTitle(workout.getWorkoutName());
 
         exercisesList = workout.getCustomExercises();
 
+        // For some reason regular
+        getSupportActionBar().setTitle(workout.getWorkoutName());
         setUpExercise();
 
     }
@@ -95,11 +96,11 @@ public class StartWorkoutActivity extends AppCompatActivity {
 
     private void displayExercise(CustomExercise customExercise){
         Exercise exercise = customExercise.getExercise();
-        currentExerciseNameView.setText(exercise.getExerciseName());
 
         // Sets the gif image of the exercise
         Glide.with(this).load(exercise.getGifImage()).into(currentExerciseGif);
 
+        currentExerciseNameView.setText(exercise.getExerciseName());
         repsView.setText(Integer.toString(customExercise.getReps()));
         setsView.setText(currentSet + "/" + customExercise.getSets());
     }

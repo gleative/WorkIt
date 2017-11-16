@@ -33,7 +33,6 @@ public class MainActivity extends AppCompatActivity {
     NavigationDrawerFragment navigationDrawerFragment;
 
     TextView textView;
-    ImageView imageView;
 
     DatabaseReference dbReference;
 
@@ -42,11 +41,10 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         toolbar = (Toolbar) findViewById(R.id.toolbar); // Finner toolbaren i Activity
-        toolbar.setTitle("Home"); // Må sette title her av en eller annen grunn. Går ikke i manifest, ellers blir navn på appen Home
+        toolbar.setTitle("Home");
         setSupportActionBar(toolbar);
 
         textView = (TextView) findViewById(R.id.text);
-        imageView = findViewById(R.id.test_picture);
 
         dbReference = FirebaseDatabase.getInstance().getReference().child("text"); // Gets reference of the the child "text"
 
