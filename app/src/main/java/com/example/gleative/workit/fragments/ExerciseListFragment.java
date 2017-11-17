@@ -1,5 +1,6 @@
 package com.example.gleative.workit.fragments;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.support.v4.app.Fragment;
@@ -57,6 +58,8 @@ public class ExerciseListFragment extends Fragment implements RecycleAdapterList
     private List<Exercise> exercisesList;
     private List<Exercise> eList;
 
+    private ProgressDialog loadingSpinner;
+
     private int layout;
 
     // Empty constructor required
@@ -75,8 +78,11 @@ public class ExerciseListFragment extends Fragment implements RecycleAdapterList
 
         // Tells host activity that this fragment has menu options it wants to add, or else search bar wont show up
         setHasOptionsMenu(true);
+
+        setUpProgressDialog();
+
         setUpRecyclerView(view);
-        getData(0);
+        getData();
 
         return view;
     }
@@ -122,58 +128,42 @@ public class ExerciseListFragment extends Fragment implements RecycleAdapterList
     }
 
     // Retrieves the exercises data from the database and adds the data to the recycler view
-    private void getData(int selectedLayout){
-//        layout = selectedLayout;
-//
-//        eList = new ArrayList<>();
+    private void getData(){
+        try{
+            dbReference.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    eList.clear(); // Clears the list before filling the list with data again, or else it will have duplicates
+                    for(DataSnapshot exerciseSnapshot : dataSnapshot.getChildren()){
+                        Exercise exercise = new Exercise();
+                        exercise.setExerciseID(Integer.parseInt(exerciseSnapshot.getKey())); // Gets the Key Value, which is the exerciseID in this case
+                        exercise.setExerciseName(exerciseSnapshot.child("exerciseName").getValue().toString());
+                        exercise.setExerciseDescription(exerciseSnapshot.child("exerciseDescription").getValue().toString());
+                        exercise.setBodyPart(exerciseSnapshot.child("bodyPart").getValue().toString());
+                        exercise.setImageThumb1(exerciseSnapshot.child("imageThumb1").getValue().toString());
+                        exercise.setImageThumb2(exerciseSnapshot.child("imageThumb2").getValue().toString());
+                        exercise.setGifImage(exerciseSnapshot.child("gifImage").getValue().toString());
+                        eList.add(exercise);
 
-        // Gets a reference to the child "exercises" in the database
-//        dbReference = FirebaseDatabase.getInstance().getReference().child("exercises");
-
-        dbReference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                eList.clear(); // Clears the list before filling the list with data again, or else it will have duplicates
-                for(DataSnapshot exerciseSnapshot : dataSnapshot.getChildren()){
-                    Exercise exercise = new Exercise();
-                    exercise.setExerciseID(Integer.parseInt(exerciseSnapshot.getKey())); // Gets the Key Value, which is the exerciseID in this case
-                    exercise.setExerciseName(exerciseSnapshot.child("exerciseName").getValue().toString());
-                    exercise.setExerciseDescription(exerciseSnapshot.child("exerciseDescription").getValue().toString());
-                    exercise.setBodyPart(exerciseSnapshot.child("bodyPart").getValue().toString());
-                    exercise.setImageThumb1(exerciseSnapshot.child("imageThumb1").getValue().toString());
-                    exercise.setImageThumb2(exerciseSnapshot.child("imageThumb2").getValue().toString());
-                    exercise.setGifImage(exerciseSnapshot.child("gifImage").getValue().toString());
-                    eList.add(exercise);
-
+                    }
+                    adapter.updateAdapter(eList); // Tells the adapter to update so it has the newest data
+                    loadingSpinner.hide(); // Hides the loading spinner because the data is loaded
                 }
 
-                adapter.updateAdapter(eList); // Tells the adapter to update so it has the newest data
-                // Adds the exercises to the recycler view
-//                createAdapter(eList, layout);
-//                adapter = new ExercisesRecyclerAdapter(getContext(), eList, recycleAdapterListener);
-//                recyclerView.setAdapter(adapter);
-            }
+                @Override
+                public void onCancelled(DatabaseError databaseError) {}
+            });
+        } catch (Exception e){
+            e.printStackTrace();
+            Toast.makeText(getActivity(), "Failed to load exercise data.", Toast.LENGTH_SHORT).show();
+        }
 
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
 
-            }
-        });
 
     }
 
     // Finds the recycler view and sets it up with the type of linear layout
     private void setUpRecyclerView(View view){
-        // Finds the recycler_view from the layout file "fragment_exercise_list"
-//        recyclerView = view.findViewById(R.id.exercise_recycler_view);
-//
-//        // Sets up the list in a new layout
-//        LinearLayoutManager linearLayoutManagerVertical = new LinearLayoutManager(getContext());
-//        linearLayoutManagerVertical.setOrientation(LinearLayoutManager.VERTICAL);
-//        recyclerView.setLayoutManager(linearLayoutManagerVertical);
-
-        //NEW
-
         recyclerView = view.findViewById(R.id.exercise_recycler_view);
         adapter = new ExercisesRecyclerAdapter(getContext(), eList, this);
         recyclerView.setAdapter(adapter);
@@ -184,23 +174,12 @@ public class ExerciseListFragment extends Fragment implements RecycleAdapterList
 
     }
 
-    // Initiates a new ExerciseRecyclerAdapter, and adds the exercise data to the recycler view
-    private void createAdapter(List<Exercise> exerciseData, int layout){
-        if(layout == 1){
-            recyclerView.setAdapter(null);
-            addExerciseAdapter = new AddExerciseAdapter(getContext(), exerciseData, this);
-            recyclerView.setAdapter(addExerciseAdapter);
-        }
-        else{
-            adapter = new ExercisesRecyclerAdapter(getContext(), exerciseData, this);
-            recyclerView.setAdapter(adapter);
-        }
-
-
-    }
-
-    public void useAddExerciseLayout(int selectedLayout){
-        getData(selectedLayout);
+    // Displays a progress dialog with style spinner
+    private void setUpProgressDialog(){
+        loadingSpinner = new ProgressDialog(getActivity());
+        loadingSpinner.setMessage("Loading...");
+        loadingSpinner.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        loadingSpinner.show();
     }
 
     // Filters the exercises depentend on what catergory on the spinner is selected
@@ -216,7 +195,6 @@ public class ExerciseListFragment extends Fragment implements RecycleAdapterList
                     newList.add(exercise);
                 }
             }
-
             adapter.setFilter(newList);
         }
 
@@ -248,15 +226,11 @@ public class ExerciseListFragment extends Fragment implements RecycleAdapterList
 
     @Override
     public void exerciseSelected(Exercise exercise) {
-        Toast.makeText(getContext(), exercise.getExerciseName() + " Selected", Toast.LENGTH_SHORT).show();
-
         listener.onExerciseSelected(exercise);
     }
 
     @Override
-    public void customExerciseSelected(CustomExercise selectedCustomExercise) {
-
-    }
+    public void customExerciseSelected(CustomExercise selectedCustomExercise) {}
 
     public interface OnExerciseFragmentInteractionListener{
         void onExerciseSelected(Exercise exercise);

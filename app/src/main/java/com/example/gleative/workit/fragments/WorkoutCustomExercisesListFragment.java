@@ -52,7 +52,6 @@ public class WorkoutCustomExercisesListFragment extends Fragment implements Recy
         dbReference = firebaseDatabase.getReference().child("customExercises");
 
         setUpRecyclerView(view);
-        getData();
 
         return view;
     }
@@ -65,31 +64,6 @@ public class WorkoutCustomExercisesListFragment extends Fragment implements Recy
         } catch (ClassCastException e){
             throw new ClassCastException(getActivity().toString() + "must implement OnFragmentInteractionListener");
         }
-    }
-
-    public void getData(){
-
-//        dbReference.addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(DataSnapshot dataSnapshot) {
-//                customExerciseList.clear(); // Clear list before getting the data, if data already exist it will be duplicates
-//                for(DataSnapshot customExerciseSnapshot : dataSnapshot.getChildren()){
-//                    CustomExercise customExercise = new CustomExercise();
-//                    customExercise.setWorkoutID(customExerciseSnapshot.child("workoutID").getValue().toString());
-//                    customExercise.setExerciseID(Integer.parseInt(customExerciseSnapshot.child("exerciseID").getValue().toString()));
-//                    customExercise.setSets(Integer.parseInt(customExerciseSnapshot.child("sets").getValue().toString()));
-//                    customExercise.setReps(Integer.parseInt(customExerciseSnapshot.child("reps").getValue().toString()));
-//                    customExerciseList.add(customExercise);
-//                }
-//
-//                adapter.updateAdapter(customExerciseList);
-//            }
-//
-//            @Override
-//            public void onCancelled(DatabaseError databaseError) {
-//
-//            }
-//        });
     }
 
     // Gets the custom exercises the workout has, and updates the adapter that is displayed in MyWorkoutInfo
@@ -110,11 +84,6 @@ public class WorkoutCustomExercisesListFragment extends Fragment implements Recy
         linearLayoutManagerVertical.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(linearLayoutManagerVertical);
 
-    }
-
-    private void createAdapter(List<CustomExercise> customExerciseData){
-        adapter = new CustomExerciseRecyclerAdapter(getContext(), customExerciseData, this);
-        recyclerView.setAdapter(adapter);
     }
 
     @Override

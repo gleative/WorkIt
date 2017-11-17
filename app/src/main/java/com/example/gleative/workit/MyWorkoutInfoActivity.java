@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.KeyEvent;
@@ -39,6 +40,7 @@ public class MyWorkoutInfoActivity extends AppCompatActivity implements WorkoutC
     Workout selectedWorkout;
     WorkoutCustomExercisesListFragment workoutCustomExercisesListFragment;
 
+    Toolbar toolbar;
     EditText workoutNameView, workoutDescView;
     Button updateWorkoutButton, cancelUpdateWorkoutButton;
 
@@ -48,6 +50,9 @@ public class MyWorkoutInfoActivity extends AppCompatActivity implements WorkoutC
         setContentView(R.layout.activity_my_workout_info);
 
         selectedWorkout = getIntent().getParcelableExtra("workout");
+
+        toolbar = findViewById(R.id.toolbar_workout_name);
+        setSupportActionBar(toolbar);
 
         workoutNameView = findViewById(R.id.selected_workout_name);
         workoutDescView = findViewById(R.id.selected_workout_desc);
@@ -127,8 +132,7 @@ public class MyWorkoutInfoActivity extends AppCompatActivity implements WorkoutC
             dbReference.child(workoutID).child("workoutName").setValue(workoutNameView.getText().toString());
             dbReference.child(workoutID).child("workoutDescription").setValue(workoutDescView.getText().toString());
             Toast.makeText(this, "Workout successfully updated", Toast.LENGTH_SHORT).show();
-        }
-        catch(Exception e){
+        } catch(Exception e){
             e.printStackTrace();
             Toast.makeText(this, "Failed to update workout!", Toast.LENGTH_SHORT).show();
         }

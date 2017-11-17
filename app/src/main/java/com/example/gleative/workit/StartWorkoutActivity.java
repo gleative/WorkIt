@@ -65,8 +65,8 @@ public class StartWorkoutActivity extends AppCompatActivity {
 
         exercisesList = workout.getCustomExercises();
 
-        // For some reason regular
-        getSupportActionBar().setTitle(workout.getWorkoutName());
+        // For some reason have to set title like this, or else it wouldnt apply the value
+        getSupportActionBar().setTitle("Playing: " + workout.getWorkoutName());
         setUpExercise();
 
     }

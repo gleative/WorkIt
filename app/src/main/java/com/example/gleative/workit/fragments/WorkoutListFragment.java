@@ -1,5 +1,6 @@
 package com.example.gleative.workit.fragments;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.support.v4.app.Fragment;
@@ -44,7 +45,8 @@ public class WorkoutListFragment extends Fragment implements WorkoutRecycleAdapt
     private List<Workout> workoutsList;
     private List<CustomExercise> customExerciseList;
 
-    private GifImageView loadingIcon;
+    private ProgressDialog loadingSpinner;
+
 
     public WorkoutListFragment(){}
 
@@ -57,9 +59,7 @@ public class WorkoutListFragment extends Fragment implements WorkoutRecycleAdapt
         firebaseDatabase = FirebaseDatabase.getInstance();
         dbReferenceWorkouts = firebaseDatabase.getReference().child("workouts");
 
-//        loadingIcon = (GifImageView) view.findViewById(R.id.loading_icon);
-//        loadingIcon.setVisibility(View.VISIBLE); // Only setted visible here, is gone when data is finished loading!
-
+        setUpProgressDialog();
         setUpRecyclerView(view);
         getData();
 
@@ -88,23 +88,14 @@ public class WorkoutListFragment extends Fragment implements WorkoutRecycleAdapt
                     workout.setWorkoutID(workoutSnapshot.getKey().toString());
                     workout.setWorkoutName(workoutSnapshot.child("workoutName").getValue().toString());
                     workout.setWorkoutDescription(workoutSnapshot.child("workoutDescription").getValue().toString());
-
-//                    workout.setCustomExercises(getCustomExercises(workout.getWorkoutID())); // Gets the custom exercises
-
                     workoutsList.add(workout);
 
                     getCustomExercises(workoutsList.size()-1); // The current workout is the one that is last on the list.
-
-//                    workoutsList.add(workout);
                 }
-
-//                for(Workout workout : workoutsList){
-//                    workout.setCustomExercises(getCustomExercises(workout.getWorkoutID()));
-//                }
 
                 // Tells the adapter to update so it has the newest data
                 adapter.updateAdapter(workoutsList);
-//                loadingIcon.setVisibility(View.GONE); // Data is loaded, remove loading icon
+                loadingSpinner.hide(); // Hides the loading spinner because the data is loaded
             }
 
             @Override
@@ -135,35 +126,26 @@ public class WorkoutListFragment extends Fragment implements WorkoutRecycleAdapt
                         workout.getCustomExercises().add(customExercise);
                     }
 
-//                    // WorkoutID had to be final, check that if it cause trouble
-//                    if(customExercise.getWorkoutID().equals(workoutID)){
-//                        customExerciseList.add(customExercise);
-//                    }
                 }
             }
 
             @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
+            public void onCancelled(DatabaseError databaseError) {}
         });
 
-//        return customExerciseList;
     }
 
-    private void getExercise(){
-
+    // Displays a progress dialog with style spinner
+    private void setUpProgressDialog(){
+        loadingSpinner = new ProgressDialog(getActivity());
+        loadingSpinner.setMessage("Loading...");
+        loadingSpinner.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        loadingSpinner.show();
     }
+
 
     // Finds the recycler view and sets it up with the type of linear layout
     private void setUpRecyclerView(View view){
-//        // Finds the recycler_view from the layout file "fragment_exercise_list"
-//        recyclerView = view.findViewById(R.id.workout_recycler_view);
-//
-//        // Sets up the list in a new layout
-//        LinearLayoutManager linearLayoutManagerVertical = new LinearLayoutManager(getContext());
-//        linearLayoutManagerVertical.setOrientation(LinearLayoutManager.VERTICAL);
-//        recyclerView.setLayoutManager(linearLayoutManagerVertical);
 
         // Finds the recycler_view from the layout file "fragment_exercise_list"
         recyclerView = view.findViewById(R.id.workout_recycler_view);
@@ -178,19 +160,8 @@ public class WorkoutListFragment extends Fragment implements WorkoutRecycleAdapt
 
     }
 
-    private void createAdapter(List<Workout> workoutData){
-        if(getActivity() != null){
-            adapter = new WorkoutsRecyclerAdapter(getContext(), workoutData, this);
-            recyclerView.setAdapter(adapter);
-        }
-//        adapter = new WorkoutsRecyclerAdapter(getContext(), workoutData, this);
-//        recyclerView.setAdapter(adapter);
-    }
-
     @Override
     public void workoutSelected(Workout workout) {
-        Toast.makeText(getContext(), workout.getWorkoutName() + " Selected", Toast.LENGTH_SHORT).show();
-
         listener.onWorkoutSelected(workout);
     }
 
