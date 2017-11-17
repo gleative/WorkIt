@@ -79,7 +79,7 @@ public class ExerciseListFragment extends Fragment implements RecycleAdapterList
         // Tells host activity that this fragment has menu options it wants to add, or else search bar wont show up
         setHasOptionsMenu(true);
 
-        setUpProgressDialog();
+//        setUpProgressDialog();
 
         setUpRecyclerView(view);
         getData();
@@ -147,7 +147,7 @@ public class ExerciseListFragment extends Fragment implements RecycleAdapterList
 
                     }
                     adapter.updateAdapter(eList); // Tells the adapter to update so it has the newest data
-                    loadingSpinner.hide(); // Hides the loading spinner because the data is loaded
+//                    loadingSpinner.hide(); // Hides the loading spinner because the data is loaded
                 }
 
                 @Override

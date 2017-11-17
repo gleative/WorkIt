@@ -55,18 +55,29 @@
 
         </LinearLayout>
 
-        <!--<ImageView-->
-            <!--android:layout_width="70dp"-->
-            <!--android:layout_height="70dp"-->
-            <!--android:layout_gravity="end"-->
-            <!--android:src="@drawable/e12_1"-->
-            <!--/>-->
-        <!--<ImageView-->
-            <!--android:layout_width="70dp"-->
-            <!--android:layout_height="70dp"-->
-            <!--android:layout_marginStart="3dp"-->
-            <!--android:layout_gravity="end"-->
-            <!--android:src="@drawable/e12_2"/>-->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/custom_exercise_thumb1"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_gravity="end"
+                android:src="@drawable/e12_1"
+                />
+            <ImageView
+                android:id="@+id/custom_exercise_thumb2"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_marginStart="3dp"
+                android:layout_gravity="end"
+                android:src="@drawable/e12_2"/>
+
+        </LinearLayout>
+
+
 
     </LinearLayout>
 

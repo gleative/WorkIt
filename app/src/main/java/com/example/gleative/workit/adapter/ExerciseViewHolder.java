@@ -46,7 +46,6 @@ public class ExerciseViewHolder extends RecyclerView.ViewHolder implements View.
         Glide.with(context).load(exercise.getImageThumb1()).into(exerciseThumb1);
         Glide.with(context).load(exercise.getImageThumb2()).into(exerciseThumb2);
 
-
         this.onExerciseSelectedListener = listener;
     }
 

@@ -56,7 +56,13 @@ public class MyWorkoutActivity extends AppCompatActivity implements WorkoutListF
 
     @Override
     protected void onStart(){
-        navigationDrawerFragment.updateCheckedItem(R.id.nav_myWorkouts);
+        // If user is starting a workout, we want the nav home to be checked instead of my workouts
+        if(startWorkout == 1){
+            navigationDrawerFragment.updateCheckedItem(R.id.nav_home);
+        }
+        else{
+            navigationDrawerFragment.updateCheckedItem(R.id.nav_myWorkouts);
+        }
 
         super.onStart();
     }

@@ -103,7 +103,7 @@ public class CreateCustomExerciseFragment extends Fragment{
             String customExerciseID = dbReference.push().getKey();
 
             // IF THERE ARE SOME VALUES YOU DONT WANT IN THE CHILD, REMOVE GETTER AND SETTER FOR THAT VALUE, OR ELSE IT WILL DISPLAY!
-            CustomExercise newCustomExercise = new CustomExercise(workout.getWorkoutID(), exercise.getExerciseID(), exercise, sets, reps);
+            CustomExercise newCustomExercise = new CustomExercise(customExerciseID, workout.getWorkoutID(), exercise.getExerciseID(), exercise, sets, reps);
 
             // Adds the given values to the database
             dbReference.child(customExerciseID).setValue(newCustomExercise);

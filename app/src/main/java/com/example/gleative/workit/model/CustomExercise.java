@@ -17,6 +17,7 @@ import java.util.Random;
 
 public class CustomExercise implements Parcelable{
 
+    private String customExerciseID;
     private String workoutID; // Which workout the customexercise is in
     private int exerciseID; // Which exercise is customized
     private Exercise exercise;
@@ -53,7 +54,8 @@ public class CustomExercise implements Parcelable{
 //        dest.writeInt(this.time);
 //    }
 
-    public CustomExercise(String _workoutID, int _exerciseID, Exercise _exercise, int _sets, int _reps){
+    public CustomExercise(String _customExerciseID, String _workoutID, int _exerciseID, Exercise _exercise, int _sets, int _reps){
+        this.customExerciseID = _customExerciseID;
         this.workoutID = _workoutID;
         this.exerciseID = _exerciseID;
         this.exercise = _exercise;
@@ -62,6 +64,7 @@ public class CustomExercise implements Parcelable{
     }
 
     public CustomExercise(Parcel parcel){
+        this.customExerciseID = parcel.readString();
         this.workoutID = parcel.readString();
         this.exerciseID = parcel.readInt();
         this.exercise = parcel.readParcelable(Exercise.class.getClassLoader());
@@ -73,6 +76,7 @@ public class CustomExercise implements Parcelable{
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.customExerciseID);
         dest.writeString(this.workoutID);
         dest.writeInt(this.exerciseID);
         dest.writeParcelable(this.exercise, flags);
@@ -98,14 +102,14 @@ public class CustomExercise implements Parcelable{
         }
     };
 
-    //    public Workout getWorkout(){
-//        return workout;
-//    }
-//
-//    public void setWorkout(Workout workout){
-//        this.workout = workout;
-//    }
-//
+    public String getCustomExerciseID(){
+        return this.customExerciseID;
+    }
+
+    public void setCustomExerciseID(String customExerciseID){
+        this.customExerciseID = customExerciseID;
+    }
+
     public Exercise getExercise() {
         return exercise;
     }

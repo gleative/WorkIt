@@ -3,6 +3,9 @@ package com.example.gleative.workit;
 import android.content.Context;
 import android.content.Intent;
 import android.provider.ContactsContract;
+import android.support.design.widget.BaseTransientBottomBar;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -15,10 +18,13 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.gleative.workit.adapter.CustomExerciseRecyclerAdapter;
+import com.example.gleative.workit.adapter.WorkoutsRecyclerAdapter;
 import com.example.gleative.workit.fragments.ExerciseListFragment;
 import com.example.gleative.workit.fragments.WorkoutCustomExercisesListFragment;
 import com.example.gleative.workit.model.CustomExercise;
@@ -35,7 +41,8 @@ import java.util.List;
 
 public class MyWorkoutInfoActivity extends AppCompatActivity implements WorkoutCustomExercisesListFragment.OnCustomExerciseFragmentInteractionListener{
 
-    DatabaseReference dbReference;
+    DatabaseReference dbReferenceWorkout;
+    DatabaseReference dbReferenceCustomExercise;
 
     Workout selectedWorkout;
     WorkoutCustomExercisesListFragment workoutCustomExercisesListFragment;
@@ -43,6 +50,13 @@ public class MyWorkoutInfoActivity extends AppCompatActivity implements WorkoutC
     Toolbar toolbar;
     EditText workoutNameView, workoutDescView;
     Button updateWorkoutButton, cancelUpdateWorkoutButton;
+    FloatingActionButton fabEdit, fabAdd, fabDelete;
+    Snackbar snackbar;
+
+
+    boolean fabButtonIsOpen = false; // True if edit fab button is pressed
+    boolean deleteExercise = false; // True when user wants to delete a exercise
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,9 +69,14 @@ public class MyWorkoutInfoActivity extends AppCompatActivity implements WorkoutC
         setSupportActionBar(toolbar);
 
         workoutNameView = findViewById(R.id.selected_workout_name);
+        workoutNameView.setSelected(true);
         workoutDescView = findViewById(R.id.selected_workout_desc);
         updateWorkoutButton = findViewById(R.id.update_workout_button);
         cancelUpdateWorkoutButton = findViewById(R.id.cancel_update_workout_button);
+        fabEdit = findViewById(R.id.fab_edit_workout);
+        fabAdd = findViewById(R.id.fab_add_exercise_to_workout);
+        fabDelete = findViewById(R.id.fab_delete_exercise_from_workout);
+
 
         // Displays the update and cancel button if their is input from the user
         workoutNameView.addTextChangedListener(new TextWatcher() {
@@ -99,7 +118,8 @@ public class MyWorkoutInfoActivity extends AppCompatActivity implements WorkoutC
             public void afterTextChanged(Editable s) {}
         });
 
-        dbReference = FirebaseDatabase.getInstance().getReference().child("workouts");
+        dbReferenceWorkout = FirebaseDatabase.getInstance().getReference().child("workouts");
+        dbReferenceCustomExercise = FirebaseDatabase.getInstance().getReference().child("customExercises");
 
         // So we can access its methods
         workoutCustomExercisesListFragment = (WorkoutCustomExercisesListFragment) getSupportFragmentManager().findFragmentById(R.id.myWorkout_info_fragment);
@@ -114,14 +134,42 @@ public class MyWorkoutInfoActivity extends AppCompatActivity implements WorkoutC
         workoutCustomExercisesListFragment.getCustomExercisesFromWorkout(workout); // Sends the custom exercises list to the adapter, so it can display workouts custom exercises
     }
 
-    // Displays the information about the chosen customExercise
+    // Displays the information about the chosen customExercise, or deletes it dependent on the value of "deleteExercise"
     @Override
     public void onCustomExerciseSelected(CustomExercise customExercise) {
         Exercise exercise = customExercise.getExercise();
 
-        Intent intent = new Intent(this, ExerciseInfoActivity.class);
-        intent.putExtra("exercise", exercise);
-        startActivity(intent);
+        // See info about the chosen exercise
+        if(!deleteExercise){
+            Intent intent = new Intent(this, ExerciseInfoActivity.class);
+            intent.putExtra("exercise", exercise);
+            intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP); // Added because if you press fast two times, it goes into the activity twice
+            startActivity(intent);
+        }
+        // Delete exercise
+        else{
+            try{
+                deleteExercise(customExercise);
+//                Toast.makeText(this, "Successfully deleted", Toast.LENGTH_SHORT).show();
+                Snackbar.make(findViewById(R.id.coord), "Exercise successfully deleted", Snackbar.LENGTH_SHORT).show();
+
+            }catch(Exception e){
+                e.printStackTrace();
+                Toast.makeText(this, "Failed to delete exercise!", Toast.LENGTH_SHORT).show();
+            }
+
+            // User no longer in delete exercise state
+            deleteExercise = false;
+            fabDelete.setImageResource(R.drawable.ic_delete);
+        }
+    }
+
+    private void deleteExercise(CustomExercise customExercise){
+        dbReferenceCustomExercise.child(customExercise.getCustomExerciseID()).removeValue();
+        selectedWorkout.getCustomExercises().remove(customExercise);
+
+        // Updates the recycler view so it displays for the user it is gone
+        workoutCustomExercisesListFragment.getCustomExercisesFromWorkout(selectedWorkout);
     }
 
     // Updates the workout with the new info to the database
@@ -129,8 +177,8 @@ public class MyWorkoutInfoActivity extends AppCompatActivity implements WorkoutC
         String workoutID = selectedWorkout.getWorkoutID();
 
         try{
-            dbReference.child(workoutID).child("workoutName").setValue(workoutNameView.getText().toString());
-            dbReference.child(workoutID).child("workoutDescription").setValue(workoutDescView.getText().toString());
+            dbReferenceWorkout.child(workoutID).child("workoutName").setValue(workoutNameView.getText().toString());
+            dbReferenceWorkout.child(workoutID).child("workoutDescription").setValue(workoutDescView.getText().toString());
             Toast.makeText(this, "Workout successfully updated", Toast.LENGTH_SHORT).show();
         } catch(Exception e){
             e.printStackTrace();
@@ -158,13 +206,14 @@ public class MyWorkoutInfoActivity extends AppCompatActivity implements WorkoutC
 
     // Displays the two buttons if true, or else removes them from the view
     private void setVisibilityOnUpdateAndCancel(boolean value){
-        if(value == true){
-            updateWorkoutButton.setVisibility(View.VISIBLE);
-            cancelUpdateWorkoutButton.setVisibility(View.VISIBLE);
-        }
-        else{
+        if(!value){
             updateWorkoutButton.setVisibility(View.GONE);
             cancelUpdateWorkoutButton.setVisibility(View.GONE);
+
+        }
+        else{
+            updateWorkoutButton.setVisibility(View.VISIBLE);
+            cancelUpdateWorkoutButton.setVisibility(View.VISIBLE);
         }
     }
 
@@ -186,11 +235,48 @@ public class MyWorkoutInfoActivity extends AppCompatActivity implements WorkoutC
         startActivity(intent);
     }
 
+    public void selectExerciseToRemoveFromWorkout(View view){
+        if(!deleteExercise){
+            deleteExercise = true;
+            fabDelete.setImageResource(R.drawable.ic_delete_white);
+        }
+        else{
+            deleteExercise = false;
+            fabDelete.setImageResource(R.drawable.ic_delete);
+        }
+
+    }
+
     // When user presses the FAB button
     public void addNewCustomExerciseToWorkout(View view) {
         Intent intent = new Intent(this, ExerciseActivity.class);
         intent.putExtra("workout", selectedWorkout);
         intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP); // So MyWorkoutActivity wont overlap on eachother when user presses back
         startActivity(intent);
+    }
+
+    public void displayOtherFabButtons(View view){
+        if(!fabButtonIsOpen){
+            hideFabButtons(false);
+        }
+        else{
+            hideFabButtons(true);
+        }
+    }
+
+    private void hideFabButtons(boolean value){
+        // If they dont want to hide fab buttons
+        if(!value){
+            fabButtonIsOpen = true;
+            fabEdit.setImageResource(R.drawable.ic_close);
+            fabAdd.setVisibility(View.VISIBLE);
+            fabDelete.setVisibility(View.VISIBLE);
+        }
+        else{
+            fabButtonIsOpen = false;
+            fabEdit.setImageResource(R.drawable.ic_edit);
+            fabAdd.setVisibility(View.INVISIBLE);
+            fabDelete.setVisibility(View.INVISIBLE);
+        }
     }
 }

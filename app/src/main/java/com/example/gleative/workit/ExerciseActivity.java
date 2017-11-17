@@ -112,11 +112,13 @@ public class ExerciseActivity extends AppCompatActivity implements ExerciseListF
             Intent intent = new Intent(this, CreateCustomExerciseActivity.class);
             intent.putExtra("workout", workout);
             intent.putExtra("exercise", selectedExercise);
+            intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP); // Added because if you press fast two times, it goes into the activity twice
             startActivity(intent);
         }
         else{
             Intent intent = new Intent(this, ExerciseInfoActivity.class);
             intent.putExtra("exercise", selectedExercise);
+            intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP); // Added because if you press fast two times, it goes into the activity twice
             startActivity(intent);
         }
 
@@ -139,23 +141,18 @@ public class ExerciseActivity extends AppCompatActivity implements ExerciseListF
                 break;
             case "Arms":
                 exerciseListFragment.spinnerFilterExercises(selectedItem);
-                Toast.makeText(this, selectedItem + " Selected", Toast.LENGTH_SHORT).show();
                 break;
             case "Back":
                 exerciseListFragment.spinnerFilterExercises(selectedItem);
-                Toast.makeText(this, selectedItem + " Selected", Toast.LENGTH_SHORT).show();
                 break;
             case "Chest":
                 exerciseListFragment.spinnerFilterExercises(selectedItem);
-                Toast.makeText(this, selectedItem + " Selected", Toast.LENGTH_SHORT).show();
                 break;
             case "Legs":
                 exerciseListFragment.spinnerFilterExercises(selectedItem);
-                Toast.makeText(this, selectedItem + " Selected", Toast.LENGTH_SHORT).show();
                 break;
             case "Shoulders":
                 exerciseListFragment.spinnerFilterExercises(selectedItem);
-                Toast.makeText(this, selectedItem + " Selected", Toast.LENGTH_SHORT).show();
                 break;
         }
     }

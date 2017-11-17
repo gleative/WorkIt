@@ -64,7 +64,8 @@ public class NavigationDrawerFragment extends Fragment implements NavigationView
                 break;
             case R.id.nav_profile:
                 intent = new Intent(getActivity(), ProfileActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP); // Hvis bruker går inn på denne to ganger på rad, så vil den ikke gå tilbake på denne activitien igjen
+                // If user goes to this two times, user wont have to press back two times. Only once.
+                intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 startActivity(intent);
                 break;
             case R.id.nav_exercises:
