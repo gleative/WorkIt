@@ -59,7 +59,7 @@ public class WorkoutListFragment extends Fragment implements WorkoutRecycleAdapt
         firebaseDatabase = FirebaseDatabase.getInstance();
         dbReferenceWorkouts = firebaseDatabase.getReference().child("workouts");
 
-        setUpProgressDialog();
+//        setUpProgressDialog();
         setUpRecyclerView(view);
         getData();
 
@@ -95,7 +95,7 @@ public class WorkoutListFragment extends Fragment implements WorkoutRecycleAdapt
 
                 // Tells the adapter to update so it has the newest data
                 adapter.updateAdapter(workoutsList);
-                loadingSpinner.hide(); // Hides the loading spinner because the data is loaded
+//                loadingSpinner.hide(); // Hides the loading spinner because the data is loaded
             }
 
             @Override
@@ -160,9 +160,28 @@ public class WorkoutListFragment extends Fragment implements WorkoutRecycleAdapt
 
     }
 
+    private void deleteWorkout(Workout workout){
+        dbReferenceWorkouts.child(workout.getWorkoutID()).removeValue();
+        workoutsList.remove(workout);
+
+        // Updates the recycler view so it displays for the user it is gone
+        adapter.updateAdapter(workoutsList);
+    }
+
     @Override
     public void workoutSelected(Workout workout) {
-        listener.onWorkoutSelected(workout);
+//        listener.onWorkoutSelected(workout);
+    }
+
+    // If user clicks on the delete img that listener will only get triggered, or else it will delete workout and check workout info.
+    @Override
+    public void workoutDeleteImageSelected(View v, Workout workout) {
+        if(v.getId() == R.id.img_delete_workout){
+            deleteWorkout(workout);
+        }
+        else{
+            listener.onWorkoutSelected(workout);
+        }
     }
 
     public interface OnWorkoutFragmentInteractionListener{

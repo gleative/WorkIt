@@ -35,6 +35,12 @@ public class WorkoutsRecyclerAdapter extends RecyclerView.Adapter<WorkoutViewHol
                 Workout workout = workoutData.get(position);
                 workoutRecycleAdapterListener.workoutSelected(workout);
             }
+
+            @Override
+            public void workoutDeleteImageSelected(View v, int position) {
+                Workout workout = workoutData.get(position);
+                workoutRecycleAdapterListener.workoutDeleteImageSelected(v, workout);
+            }
         };
     }
 

@@ -1,5 +1,7 @@
 package com.example.gleative.workit.adapter;
 
+import android.view.View;
+
 import com.example.gleative.workit.model.Workout;
 
 /**
@@ -8,4 +10,5 @@ import com.example.gleative.workit.model.Workout;
 
 public interface WorkoutRecycleAdapterListener {
     void workoutSelected(Workout workout);
+    void workoutDeleteImageSelected(View v, Workout workout);
 }

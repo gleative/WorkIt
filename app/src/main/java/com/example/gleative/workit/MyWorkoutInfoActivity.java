@@ -150,7 +150,6 @@ public class MyWorkoutInfoActivity extends AppCompatActivity implements WorkoutC
         else{
             try{
                 deleteExercise(customExercise);
-//                Toast.makeText(this, "Successfully deleted", Toast.LENGTH_SHORT).show();
                 Snackbar.make(findViewById(R.id.coord), "Exercise successfully deleted", Snackbar.LENGTH_SHORT).show();
 
             }catch(Exception e){
