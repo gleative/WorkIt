@@ -60,6 +60,7 @@ public class AddExerciseToWorkoutActivity extends AppCompatActivity implements  
 
     }
 
+    // Sends the user to another activity where he/she can create a custom exercise of the selected exercise
     @Override
     public void onExerciseSelected(Exercise exercise) {
         Intent intent = new Intent(this, CreateCustomExerciseActivity.class);

@@ -63,8 +63,15 @@ public class CreateCustomExerciseFragment extends Fragment{
     public void setDisplayedDetail(Exercise exercise){
         selectedExercise = exercise;
 
-        Glide.with(getActivity()).load(exercise.getImageThumb1()).into(exercisePicture1);
-        Glide.with(getActivity()).load(exercise.getImageThumb2()).into(exercisePicture2);
+        try{
+            Glide.with(getActivity()).load(exercise.getImageThumb1()).into(exercisePicture1);
+            Glide.with(getActivity()).load(exercise.getImageThumb2()).into(exercisePicture2);
+        } catch(Exception e){
+            e.printStackTrace();
+            Toast.makeText(getActivity(), "Unable to load the pictures", Toast.LENGTH_SHORT).show();
+        }
+
+        // Displays what body part the exercise trains
         exerciseBodyPart.setText(exercise.getBodyPart());
     }
 
@@ -114,6 +121,6 @@ public class CreateCustomExerciseFragment extends Fragment{
             Toast.makeText(getActivity(), "Error creating a custom exercise", Toast.LENGTH_SHORT).show();
         }
 
-        return null;
+        return null; // Return nothing, this means it failed to create a custom exercise
     }
 }

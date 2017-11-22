@@ -38,12 +38,9 @@ public class CreateWorkoutActivity extends AppCompatActivity implements Exercise
         setSupportActionBar(toolbar);
 
         FragmentManager fragmentManager = getSupportFragmentManager();
-//        CreateWorkoutFragment createWorkoutFragment = (CreateWorkoutFragment) fragmentManager.findFragmentById(R.id.create_workout_fragment);
+
         // So we can access its methods
         ExerciseListFragment exerciseListFragment = (ExerciseListFragment) getSupportFragmentManager().findFragmentById(R.id.exercise_list_fragment);
-
-        // Send with parameter 1 so it uses the exercise layout where the user can add a exercise
-//        exerciseListFragment.useAddExerciseLayout(1);
 
         // Finds the EditText views
         workoutNameText = findViewById(R.id.workout_name);
@@ -69,7 +66,6 @@ public class CreateWorkoutActivity extends AppCompatActivity implements Exercise
 
     @Override
     public void onExerciseSelected(Exercise selectedExercise) {
-        // Her kan du ha at den går til vinduet hvor du kan definere hvor mange sets og reps du skal ha
         Intent intent = new Intent(this, CreateCustomExerciseActivity.class);
         intent.putExtra("exercise", selectedExercise);
         startActivity(intent);
@@ -84,7 +80,6 @@ public class CreateWorkoutActivity extends AppCompatActivity implements Exercise
         else{
             workout = createWorkout(workoutNameText.getText().toString(), workoutDescriptionText.getText().toString());
 
-//            Intent intent = new Intent(this, AddExerciseToWorkoutActivity.class);
             Intent intent = new Intent(this, ExerciseActivity.class);
             intent.putExtra("workout", workout);
             startActivity(intent);
@@ -94,18 +89,25 @@ public class CreateWorkoutActivity extends AppCompatActivity implements Exercise
 
     // Creates the workout with name and desc, sends to database, and returns the created object
     private Workout createWorkout(String workoutName, String workoutDescription){
-        dbReference = FirebaseDatabase.getInstance().getReference("workouts");
+        try{
+            dbReference = FirebaseDatabase.getInstance().getReference("workouts");
 
-        // Creates a user node, and returns a unique key value
-        String workoutID = dbReference.push().getKey();
+            // Creates a user node, and returns a unique key value
+            String workoutID = dbReference.push().getKey();
 
-        Workout newWorkout = new Workout(workoutName,workoutDescription);
-        newWorkout.setWorkoutID(workoutID); // Adds the unique ID genereated by firebase to the workout object so can find it here
+            Workout newWorkout = new Workout(workoutName,workoutDescription);
+            newWorkout.setWorkoutID(workoutID); // Adds the unique ID genereated by firebase to the workout object so can find it here
 
-        // Adds the given values to the database
-        dbReference.child(workoutID).setValue(newWorkout);
+            // Adds the given values to the database
+            dbReference.child(workoutID).setValue(newWorkout);
 
-        return newWorkout;
+            return newWorkout;
+        } catch(Exception e){
+            Toast.makeText(this, "Failed to create workout.", Toast.LENGTH_SHORT).show();
+        }
+
+        return null; // Return nothing, this means it failed to create a custom exercise
+
     }
 
 }

@@ -1,5 +1,6 @@
 package com.example.gleative.workit.fragments;
 
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.provider.ContactsContract;
@@ -9,7 +10,9 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.gleative.workit.R;
@@ -46,6 +49,8 @@ public class WorkoutListFragment extends Fragment implements WorkoutRecycleAdapt
     private List<CustomExercise> customExerciseList;
 
     private ProgressDialog loadingSpinner;
+    private Button dialogYesBtn, dialogNoBtn;
+    private TextView dialogTitleView, dialogMessageView, dialogItemNameView;
 
 
     public WorkoutListFragment(){}
@@ -59,9 +64,15 @@ public class WorkoutListFragment extends Fragment implements WorkoutRecycleAdapt
         firebaseDatabase = FirebaseDatabase.getInstance();
         dbReferenceWorkouts = firebaseDatabase.getReference().child("workouts");
 
-//        setUpProgressDialog();
+        setUpProgressDialog();
         setUpRecyclerView(view);
-        getData();
+
+        try{
+            getData();
+        } catch(Exception e){
+            e.printStackTrace();
+            Toast.makeText(getActivity(), "Failed to retrieve workouts.", Toast.LENGTH_SHORT).show();
+        }
 
         return view;
     }
@@ -78,10 +89,10 @@ public class WorkoutListFragment extends Fragment implements WorkoutRecycleAdapt
 
     // Retrieves the workouts data from the database and adds the data to the recycler view
     private void getData(){
-
         dbReferenceWorkouts.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+                loadingSpinner.show();
                 workoutsList.clear(); // Clear list before getting the data, if data already exist it will be duplicates
                 for(DataSnapshot workoutSnapshot : dataSnapshot.getChildren()){
                     Workout workout = new Workout();
@@ -90,18 +101,22 @@ public class WorkoutListFragment extends Fragment implements WorkoutRecycleAdapt
                     workout.setWorkoutDescription(workoutSnapshot.child("workoutDescription").getValue().toString());
                     workoutsList.add(workout);
 
-                    getCustomExercises(workoutsList.size()-1); // The current workout is the one that is last on the list.
+                    try{
+                        getCustomExercises(workoutsList.size()-1); // The current workout is the one that is last on the list.
+                    } catch(Exception e){
+                        e.printStackTrace();
+                        Toast.makeText(getActivity(), "Failed to retrieve custom exercises.", Toast.LENGTH_SHORT).show();
+                    }
+
                 }
 
                 // Tells the adapter to update so it has the newest data
                 adapter.updateAdapter(workoutsList);
-//                loadingSpinner.hide(); // Hides the loading spinner because the data is loaded
+                loadingSpinner.hide(); // Hides the loading spinner because the data is loaded
             }
 
             @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
+            public void onCancelled(DatabaseError databaseError) {}
         });
 
 
@@ -132,7 +147,6 @@ public class WorkoutListFragment extends Fragment implements WorkoutRecycleAdapt
             @Override
             public void onCancelled(DatabaseError databaseError) {}
         });
-
     }
 
     // Displays a progress dialog with style spinner
@@ -140,7 +154,7 @@ public class WorkoutListFragment extends Fragment implements WorkoutRecycleAdapt
         loadingSpinner = new ProgressDialog(getActivity());
         loadingSpinner.setMessage("Loading...");
         loadingSpinner.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-        loadingSpinner.show();
+//        loadingSpinner.show();
     }
 
 
@@ -160,9 +174,50 @@ public class WorkoutListFragment extends Fragment implements WorkoutRecycleAdapt
 
     }
 
+    // Shows a dialog for the user when delete button on a workout is clicked, if yes, it deletes the workout, no is cancel
+    private void showDialog(final Workout workout){
+        final Dialog dialog = new Dialog(getActivity());
+        dialog.setContentView(R.layout.dialog_message_layout);
+
+        // Finds the elements in the dialog layout, and sets text
+        dialogYesBtn = dialog.findViewById(R.id.dialog_button_yes);
+        dialogNoBtn = dialog.findViewById(R.id.dialog_button_no);
+        dialogTitleView = dialog.findViewById(R.id.dialog_title);
+        dialogMessageView = dialog.findViewById(R.id.dialog_message);
+        dialogItemNameView = dialog.findViewById(R.id.dialog_item_name);
+        dialogTitleView.setText("Delete Workout");
+        dialogMessageView.setText("Are you sure you want to delete ");
+        dialogItemNameView.setText(workout.getWorkoutName() + "?");
+
+        dialog.show();
+
+        // Deletes workout and exits the dialog
+        dialogYesBtn.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                deleteWorkout(workout);
+                dialog.cancel();
+            }
+        });
+
+        // Exits the dialog
+        dialogNoBtn.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                dialog.cancel();
+            }
+        });
+    }
+
+    // Deletes the workout from the database and list. Also updates the adapter so the user can see the changes
     private void deleteWorkout(Workout workout){
-        dbReferenceWorkouts.child(workout.getWorkoutID()).removeValue();
-        workoutsList.remove(workout);
+        try{
+            dbReferenceWorkouts.child(workout.getWorkoutID()).removeValue();
+            workoutsList.remove(workout);
+        } catch (Exception e){
+            e.printStackTrace();
+            Toast.makeText(getActivity(), "Failed to delete workout.", Toast.LENGTH_SHORT).show();
+        }
 
         // Updates the recycler view so it displays for the user it is gone
         adapter.updateAdapter(workoutsList);
@@ -177,7 +232,7 @@ public class WorkoutListFragment extends Fragment implements WorkoutRecycleAdapt
     @Override
     public void workoutDeleteImageSelected(View v, Workout workout) {
         if(v.getId() == R.id.img_delete_workout){
-            deleteWorkout(workout);
+            showDialog(workout);
         }
         else{
             listener.onWorkoutSelected(workout);

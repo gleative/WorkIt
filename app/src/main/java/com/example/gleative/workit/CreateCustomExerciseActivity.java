@@ -46,8 +46,8 @@ public class CreateCustomExerciseActivity extends AppCompatActivity {
         toolbar = (Toolbar) findViewById(R.id.toolbar_execise_name);
         setSupportActionBar(toolbar);
 
-        selectedExercise = getIntent().getParcelableExtra("exercise");
-        workout = getIntent().getParcelableExtra("workout");
+        selectedExercise = getIntent().getParcelableExtra("exercise"); // Exercise object
+        workout = getIntent().getParcelableExtra("workout"); // Workout object
 
         // Had to use this method for it to change title on toolbar
         getSupportActionBar().setTitle(selectedExercise.getExerciseName());
@@ -60,8 +60,6 @@ public class CreateCustomExerciseActivity extends AppCompatActivity {
         FragmentManager fragmentManager = getSupportFragmentManager();
         createCustomExerciseFragment = (CreateCustomExerciseFragment) fragmentManager.findFragmentById(R.id.create_custom_exercise_fragment);
 
-//        Toast.makeText(this, "Add " + selectedExercise.getExerciseName() + " to: " + workout.getWorkoutName() + workout.getWorkoutID(), Toast.LENGTH_SHORT).show();
-
         // Displays the exercise information on the layout
         createCustomExerciseFragment.setDisplayedDetail(selectedExercise);
 
@@ -70,39 +68,5 @@ public class CreateCustomExerciseActivity extends AppCompatActivity {
     // Adds the custome exercise to the created workout, unless the fields are empty.
     public void addCustomExerciseToWorkout(View view) {
         createCustomExerciseFragment.addCustomExerciseToWorkout(workout);
-
-        // If any of the edit text's are empty
-//        if(sets.getText().toString().isEmpty() || reps.getText().toString().isEmpty()){
-//            Toast.makeText(this, "You have to fill out both fields!", Toast.LENGTH_SHORT).show();
-//        }
-//        else {
-//            customExercise = createCustomExercise(Integer.parseInt(sets.getText().toString()), Integer.parseInt(reps.getText().toString()));
-//
-//            // Adds the custom exercise just created to the workouts list, so when the user is sendt to MyWorkoutInfoActivity, the custom exercise is displayed
-//            workout.addCustomExerciseToWorkout(customExercise);
-//
-//            // This is where the user is sendt after adding a custom exercise to the workout
-//            Intent intent = new Intent(this, MyWorkoutInfoActivity.class);
-//            intent.putExtra("workout", workout);
-//            startActivity(intent);
-//        }
     }
-
-    // Creates the custom exercise and sends to database, and returns the created object
-//    private CustomExercise createCustomExercise(int sets, int reps){
-//        dbReference = FirebaseDatabase.getInstance().getReference("customExercises");
-//
-//        // Creates a user node with random generated ID, and returns a unique key value (ID)
-//        String customExerciseID = dbReference.push().getKey();
-//
-//        // IF THERE ARE SOME VALUES YOU DONT WANT IN THE CHILD, REMOVE GETTER AND SETTER FOR THAT VALUE, OR ELSE IT WILL DISPLAY!
-////        CustomExercise newCustomExercise = new CustomExercise(workout.getWorkoutID(), selectedExercise.getExerciseID(), sets, reps);
-//        CustomExercise newCustomExercise = new CustomExercise(workout.getWorkoutID(), selectedExercise.getExerciseID(), selectedExercise, sets, reps);
-//
-//
-//        // Adds the given values to the database
-//        dbReference.child(customExerciseID).setValue(newCustomExercise);
-//
-//        return newCustomExercise;
-//    }
 }
