@@ -97,8 +97,12 @@ public class StartWorkoutActivity extends AppCompatActivity {
     private void displayExercise(CustomExercise customExercise){
         Exercise exercise = customExercise.getExercise();
 
+        // Finds the path to the gif in drawable
+        int resID = getResources().getIdentifier(exercise.getGifImage(), "drawable", getPackageName());
+
         // Sets the gif image of the exercise
-        Glide.with(this).load(exercise.getGifImage()).into(currentExerciseGif);
+        currentExerciseGif.setImageResource(resID);
+
 
         currentExerciseNameView.setText(exercise.getExerciseName());
         repsView.setText(Integer.toString(customExercise.getReps()));

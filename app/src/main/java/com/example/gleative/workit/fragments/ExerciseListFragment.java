@@ -18,6 +18,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -58,7 +59,7 @@ public class ExerciseListFragment extends Fragment implements RecycleAdapterList
     private List<Exercise> exercisesList;
     private List<Exercise> eList;
 
-    private ProgressDialog loadingSpinner;
+    private ProgressBar loadingSpinner;
 
     private int layout;
 
@@ -69,6 +70,7 @@ public class ExerciseListFragment extends Fragment implements RecycleAdapterList
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_exercise_list, container, false);
 
+        loadingSpinner = view.findViewById(R.id.progress_bar_exercises);
 
         eList = new ArrayList<>();
 
@@ -78,8 +80,6 @@ public class ExerciseListFragment extends Fragment implements RecycleAdapterList
 
         // Tells host activity that this fragment has menu options it wants to add, or else search bar wont show up
         setHasOptionsMenu(true);
-
-//        setUpProgressDialog();
 
         setUpRecyclerView(view);
         getData();
@@ -129,6 +129,8 @@ public class ExerciseListFragment extends Fragment implements RecycleAdapterList
 
     // Retrieves the exercises data from the database and adds the data to the recycler view
     private void getData(){
+        loadingSpinner.setVisibility(View.VISIBLE);
+
         try{
             dbReference.addValueEventListener(new ValueEventListener() {
                 @Override
@@ -147,7 +149,7 @@ public class ExerciseListFragment extends Fragment implements RecycleAdapterList
 
                     }
                     adapter.updateAdapter(eList); // Tells the adapter to update so it has the newest data
-//                    loadingSpinner.hide(); // Hides the loading spinner because the data is loaded
+                    loadingSpinner.setVisibility(View.GONE); // Hides the loading spinner because the data is loaded
                 }
 
                 @Override
@@ -156,6 +158,8 @@ public class ExerciseListFragment extends Fragment implements RecycleAdapterList
         } catch (Exception e){
             e.printStackTrace();
             Toast.makeText(getActivity(), "Failed to load exercise data.", Toast.LENGTH_SHORT).show();
+            loadingSpinner.setVisibility(View.GONE); // Hides the loading spinner because it failed loading the data
+
         }
 
 
@@ -172,14 +176,6 @@ public class ExerciseListFragment extends Fragment implements RecycleAdapterList
         linearLayoutManagerVertical.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(linearLayoutManagerVertical);
 
-    }
-
-    // Displays a progress dialog with style spinner
-    private void setUpProgressDialog(){
-        loadingSpinner = new ProgressDialog(getActivity());
-        loadingSpinner.setMessage("Loading...");
-        loadingSpinner.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-        loadingSpinner.show();
     }
 
     // Filters the exercises depentend on what catergory on the spinner is selected

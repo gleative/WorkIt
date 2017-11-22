@@ -36,6 +36,8 @@ import org.w3c.dom.Text;
 
 import java.util.Arrays;
 
+import pl.droidsonroids.gif.GifImageView;
+
 
 public class MainActivity extends AppCompatActivity {
     public static final int RC_SIGN_IN = 1;
@@ -52,6 +54,8 @@ public class MainActivity extends AppCompatActivity {
     FirebaseAuth firebaseAuth;
     FirebaseAuth.AuthStateListener firebaseAuthStateListener;
 
+    GifImageView icon;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,6 +65,9 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         textView = (TextView) findViewById(R.id.text);
+        icon = (GifImageView) findViewById(R.id.loading_icon);
+        int resID = getResources().getIdentifier("egif_deficitdeadlift_gif", "drawable", getPackageName());
+        icon.setImageResource(resID);
 
         dbReference = FirebaseDatabase.getInstance().getReference().child("text"); // Gets reference of the the child "text"
         dbReferenceUsers = FirebaseDatabase.getInstance().getReference().child("users");

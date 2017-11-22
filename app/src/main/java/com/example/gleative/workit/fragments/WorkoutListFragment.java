@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -49,9 +50,9 @@ public class WorkoutListFragment extends Fragment implements WorkoutRecycleAdapt
     private List<Workout> workoutsList;
     private List<CustomExercise> customExerciseList;
 
-    private ProgressDialog loadingSpinner;
     private Button dialogYesBtn, dialogNoBtn;
     private TextView dialogTitleView, dialogMessageView, dialogItemNameView;
+    private ProgressBar loadingSpinner;
 
 
     public WorkoutListFragment(){}
@@ -60,13 +61,14 @@ public class WorkoutListFragment extends Fragment implements WorkoutRecycleAdapt
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_workout_list, container, false);
 
+        loadingSpinner = view.findViewById(R.id.progress_bar_workouts);
+
         workoutsList = new ArrayList<>();
 
         firebaseDatabase = FirebaseDatabase.getInstance();
         dbReferenceWorkouts = firebaseDatabase.getReference().child("workouts");
         dbReferenceCustomExercises = firebaseDatabase.getReference().child("customExercises");
 
-        setUpProgressDialog();
         setUpRecyclerView(view);
 
         try{
@@ -74,6 +76,8 @@ public class WorkoutListFragment extends Fragment implements WorkoutRecycleAdapt
         } catch(Exception e){
             e.printStackTrace();
             Toast.makeText(getActivity(), "Failed to retrieve workouts.", Toast.LENGTH_SHORT).show();
+            loadingSpinner.setVisibility(View.GONE); // Hides the loading spinner because it failed loading the data
+
         }
 
         return view;
@@ -91,10 +95,10 @@ public class WorkoutListFragment extends Fragment implements WorkoutRecycleAdapt
 
     // Retrieves the workouts data from the database and adds the data to the recycler view
     private void getData(){
+        loadingSpinner.setVisibility(View.VISIBLE);
         dbReferenceWorkouts.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                loadingSpinner.show();
                 workoutsList.clear(); // Clear list before getting the data, if data already exist it will be duplicates
                 for(DataSnapshot workoutSnapshot : dataSnapshot.getChildren()){
                     Workout workout = new Workout();
@@ -108,13 +112,14 @@ public class WorkoutListFragment extends Fragment implements WorkoutRecycleAdapt
                     } catch(Exception e){
                         e.printStackTrace();
                         Toast.makeText(getActivity(), "Failed to retrieve custom exercises.", Toast.LENGTH_SHORT).show();
+                        loadingSpinner.setVisibility(View.GONE); // Hides the loading spinner because it failed loading the data
                     }
 
                 }
 
                 // Tells the adapter to update so it has the newest data
                 adapter.updateAdapter(workoutsList);
-                loadingSpinner.hide(); // Hides the loading spinner because the data is loaded
+                loadingSpinner.setVisibility(View.GONE); // Hides the loading spinner because the data is loaded
             }
 
             @Override
@@ -149,15 +154,6 @@ public class WorkoutListFragment extends Fragment implements WorkoutRecycleAdapt
             public void onCancelled(DatabaseError databaseError) {}
         });
     }
-
-    // Displays a progress dialog with style spinner
-    private void setUpProgressDialog(){
-        loadingSpinner = new ProgressDialog(getActivity());
-        loadingSpinner.setMessage("Loading...");
-        loadingSpinner.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-//        loadingSpinner.show();
-    }
-
 
     // Finds the recycler view and sets it up with the type of linear layout
     private void setUpRecyclerView(View view){

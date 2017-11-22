@@ -42,9 +42,7 @@ public class ExerciseInfoFragment extends Fragment{
     public final static String EXERCISE_INDEX = "exerciseIndex";
     private static final int DEFAULT_EXERCISE_INDEX = 1;
 
-    private Toolbar exerciseNameToolbar;
-    private TextView exerciseNameView;
-    private TextView exerciseDescView;
+    private TextView exerciseNameView, exerciseBodyPartView, exerciseDescView;
     private ImageView exercisePicture;
     private int exerciseIndex;
     private ViewPager exerciseViewPager; // Holds the pictures
@@ -60,17 +58,13 @@ public class ExerciseInfoFragment extends Fragment{
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-//        getData(exerciseIndex);
-//        exerciseList = Exercise.getData();
-
         View fragmentView = inflater.inflate(R.layout.fragment_exercise_info, container, false); // Layout file
 
         // Finds referance to the diffrent views in "fragment_exercise_info" layout
-        exerciseNameToolbar = fragmentView.findViewById(R.id.exercise_name); // Couldnt have toolbar as ID or else it wouldnt change name on toolbar for some reason....
+        exerciseNameView = fragmentView.findViewById(R.id.exercise_name_info);
+        exerciseBodyPartView = fragmentView.findViewById(R.id.exercise_body_part_info);
         exercisePicture = fragmentView.findViewById(R.id.exercise_picture);
         exerciseDescView = fragmentView.findViewById(R.id.exercise_description);
-
-//        setDisplayedDetail(exerciseIndex);
 
         return fragmentView;
     }
@@ -81,13 +75,10 @@ public class ExerciseInfoFragment extends Fragment{
     }
 
     public void setDisplayedDetail(Exercise exercise){
-//        exerciseIndex = exerciseDescIndex;
-
-//        Exercise exercise = exerciseList.get(exerciseIndex);
-
-        exerciseNameToolbar.setTitle(exercise.getExerciseName());
         Glide.with(getActivity()).load(exercise.getImageThumb1()).into(exercisePicture);
 
+        exerciseNameView.setText(exercise.getExerciseName());
+        exerciseBodyPartView.setText("Body Part: " + exercise.getBodyPart());
         exerciseDescView.setText(exercise.getExerciseDescription());
     }
 }
