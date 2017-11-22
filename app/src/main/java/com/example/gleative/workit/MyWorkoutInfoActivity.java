@@ -1,5 +1,6 @@
 package com.example.gleative.workit;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.provider.ContactsContract;
@@ -49,10 +50,10 @@ public class MyWorkoutInfoActivity extends AppCompatActivity implements WorkoutC
 
     Toolbar toolbar;
     EditText workoutNameView, workoutDescView;
-    Button updateWorkoutButton, cancelUpdateWorkoutButton;
+    TextView dialogTitleView, dialogMessageView, dialogItemNameView;
+    Button updateWorkoutButton, cancelUpdateWorkoutButton, dialogYesBtn, dialogNoBtn;
     FloatingActionButton fabEdit, fabAdd, fabDelete;
     Snackbar snackbar;
-
 
     boolean fabButtonIsOpen = false; // True if edit fab button is pressed
     boolean deleteExercise = false; // True when user wants to delete a exercise
@@ -149,12 +150,11 @@ public class MyWorkoutInfoActivity extends AppCompatActivity implements WorkoutC
         // Delete exercise
         else{
             try{
-                deleteExercise(customExercise);
-                Snackbar.make(findViewById(R.id.coord), "Exercise successfully deleted", Snackbar.LENGTH_SHORT).show();
+                showDialog(customExercise);
 
             }catch(Exception e){
                 e.printStackTrace();
-                Toast.makeText(this, "Failed to delete exercise!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Failed to delete exercise.", Toast.LENGTH_SHORT).show();
             }
 
             // User no longer in delete exercise state
@@ -163,9 +163,53 @@ public class MyWorkoutInfoActivity extends AppCompatActivity implements WorkoutC
         }
     }
 
+    // Shows a dialog for the user when delete button on a workout is clicked, if yes, it deletes the workout, no is cancel
+    private void showDialog(final CustomExercise customExercise){
+        final Dialog dialog = new Dialog(this);
+        dialog.setContentView(R.layout.dialog_message_layout);
+
+        // Finds the elements in the dialog layout, and sets text
+        dialogYesBtn = dialog.findViewById(R.id.dialog_button_yes);
+        dialogNoBtn = dialog.findViewById(R.id.dialog_button_no);
+        dialogTitleView = dialog.findViewById(R.id.dialog_title);
+        dialogMessageView = dialog.findViewById(R.id.dialog_message);
+        dialogItemNameView = dialog.findViewById(R.id.dialog_item_name);
+        dialogTitleView.setText("Delete Exercise");
+        dialogMessageView.setText("Are you sure you want to delete ");
+        dialogItemNameView.setText(customExercise.getExercise().getExerciseName() + "?");
+
+        dialog.show();
+
+        // Deletes workout and exits the dialog
+        dialogYesBtn.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                deleteExercise(customExercise);
+                dialog.cancel();
+            }
+        });
+
+        // Exits the dialog
+        dialogNoBtn.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                dialog.cancel();
+            }
+        });
+    }
+
+    // Deletes the exercise chosen, removes from list and database
     private void deleteExercise(CustomExercise customExercise){
-        dbReferenceCustomExercise.child(customExercise.getCustomExerciseID()).removeValue();
-        selectedWorkout.getCustomExercises().remove(customExercise);
+        try{
+            dbReferenceCustomExercise.child(customExercise.getCustomExerciseID()).removeValue();
+            selectedWorkout.getCustomExercises().remove(customExercise);
+
+            // Displays message to user showing it got deleted successfully
+            Snackbar.make(findViewById(R.id.coord), "Exercise successfully deleted", Snackbar.LENGTH_SHORT).show();
+        } catch(Exception e){
+            e.printStackTrace();
+            Toast.makeText(this, "Failed to delete exercise", Toast.LENGTH_SHORT).show();
+        }
 
         // Updates the recycler view so it displays for the user it is gone
         workoutCustomExercisesListFragment.getCustomExercisesFromWorkout(selectedWorkout);
@@ -184,8 +228,11 @@ public class MyWorkoutInfoActivity extends AppCompatActivity implements WorkoutC
             Toast.makeText(this, "Failed to update workout!", Toast.LENGTH_SHORT).show();
         }
 
+        // Hides the keyboard
         workoutNameView.clearFocus();
         workoutDescView.clearFocus();
+
+        // Hides the update and cancel buttons
         setVisibilityOnUpdateAndCancel(false);
 
         hideKeyboard(view);
@@ -225,7 +272,7 @@ public class MyWorkoutInfoActivity extends AppCompatActivity implements WorkoutC
         }
     }
 
-    // When the user press back, they will be sendt to MyWorkoutsActivity, and not go through all the process they did when they created a workout
+    // When the user press back, they will be sent to MyWorkoutsActivity, and not go through all the process they did when they created a workout
     @Override
     public void onBackPressed() {
         super.onBackPressed();
@@ -234,6 +281,7 @@ public class MyWorkoutInfoActivity extends AppCompatActivity implements WorkoutC
         startActivity(intent);
     }
 
+    // Delete icon is white if it is in delete state (everything clicked gets deleted) icon is black otherwise.
     public void selectExerciseToRemoveFromWorkout(View view){
         if(!deleteExercise){
             deleteExercise = true;
@@ -243,7 +291,6 @@ public class MyWorkoutInfoActivity extends AppCompatActivity implements WorkoutC
             deleteExercise = false;
             fabDelete.setImageResource(R.drawable.ic_delete);
         }
-
     }
 
     // When user presses the FAB button
@@ -263,6 +310,7 @@ public class MyWorkoutInfoActivity extends AppCompatActivity implements WorkoutC
         }
     }
 
+    // Hides the two fab buttons, dependent on boolean value
     private void hideFabButtons(boolean value){
         // If they dont want to hide fab buttons
         if(!value){

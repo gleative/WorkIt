@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.provider.ContactsContract;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -63,6 +64,7 @@ public class WorkoutListFragment extends Fragment implements WorkoutRecycleAdapt
 
         firebaseDatabase = FirebaseDatabase.getInstance();
         dbReferenceWorkouts = firebaseDatabase.getReference().child("workouts");
+        dbReferenceCustomExercises = firebaseDatabase.getReference().child("customExercises");
 
         setUpProgressDialog();
         setUpRecyclerView(view);
@@ -127,7 +129,6 @@ public class WorkoutListFragment extends Fragment implements WorkoutRecycleAdapt
 
         customExerciseList = new ArrayList<>();
 
-        dbReferenceCustomExercises = FirebaseDatabase.getInstance().getReference().child("customExercises");
 
         dbReferenceCustomExercises.addValueEventListener(new ValueEventListener() {
             @Override
@@ -212,8 +213,12 @@ public class WorkoutListFragment extends Fragment implements WorkoutRecycleAdapt
     // Deletes the workout from the database and list. Also updates the adapter so the user can see the changes
     private void deleteWorkout(Workout workout){
         try{
+//            deleteExercisesInWorkout(workout);
             dbReferenceWorkouts.child(workout.getWorkoutID()).removeValue();
+
             workoutsList.remove(workout);
+            Snackbar.make(getActivity().findViewById(R.id.coordinator_layout_my_workouts), "Workout successfully deleted", Snackbar.LENGTH_SHORT).show();
+
         } catch (Exception e){
             e.printStackTrace();
             Toast.makeText(getActivity(), "Failed to delete workout.", Toast.LENGTH_SHORT).show();
@@ -221,6 +226,12 @@ public class WorkoutListFragment extends Fragment implements WorkoutRecycleAdapt
 
         // Updates the recycler view so it displays for the user it is gone
         adapter.updateAdapter(workoutsList);
+    }
+
+    private void deleteExercisesInWorkout(Workout workout){
+        for(CustomExercise customExercise : workout.getCustomExercises()){
+            dbReferenceCustomExercises.child(customExercise.getCustomExerciseID()).removeValue();
+        }
     }
 
     @Override
