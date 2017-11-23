@@ -27,7 +27,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by gleative on 12.10.2017.
@@ -39,17 +41,12 @@ public class ExerciseInfoFragment extends Fragment{
     DatabaseReference dbReferenceExercise;
     DatabaseReference dbReferenceStarred;
 
-    private List<Exercise> exerciseList;
-    private List<Exercise> eList;
-
-    public final static String EXERCISE_INDEX = "exerciseIndex";
-    private static final int DEFAULT_EXERCISE_INDEX = 1;
-
     private TextView exerciseNameView, exerciseBodyPartView, exerciseDescView;
-    private ImageView exercisePicture;
     private FloatingActionButton starredFab;
-    private int exerciseIndex;
+
     private ViewPager exerciseViewPager; // Holds the pictures
+    ExercisePicturesAdapter exercisePicturesAdapter;
+    private ArrayList<String> images;
 
     public ExerciseInfoFragment(){}
 
@@ -60,7 +57,8 @@ public class ExerciseInfoFragment extends Fragment{
         dbReferenceExercise = FirebaseDatabase.getInstance().getReference().child("exercises");
         dbReferenceStarred = FirebaseDatabase.getInstance().getReference().child("starred");
 
-        exerciseIndex = savedInstanceState == null? DEFAULT_EXERCISE_INDEX : savedInstanceState.getInt(EXERCISE_INDEX, DEFAULT_EXERCISE_INDEX);
+        images = new ArrayList<>();
+
     }
 
     @Override
@@ -70,20 +68,17 @@ public class ExerciseInfoFragment extends Fragment{
         // Finds referance to the diffrent views in "fragment_exercise_info" layout
         exerciseNameView = fragmentView.findViewById(R.id.exercise_name_info);
         exerciseBodyPartView = fragmentView.findViewById(R.id.exercise_body_part_info);
-        exercisePicture = fragmentView.findViewById(R.id.exercise_picture);
         exerciseDescView = fragmentView.findViewById(R.id.exercise_description);
         starredFab = fragmentView.findViewById(R.id.fab_exercise_starred);
+
+        exerciseViewPager = fragmentView.findViewById(R.id.view_pager);
+
 
         return fragmentView;
     }
 
-    @Override
-    public void onSaveInstanceState(Bundle outState) {
-        outState.putInt(EXERCISE_INDEX, exerciseIndex);
-    }
-
     public void setDisplayedDetail(Exercise exercise){
-        Glide.with(getActivity()).load(exercise.getImageThumb1()).into(exercisePicture);
+        setUpViewPager(exercise);
 
         exerciseNameView.setText(exercise.getExerciseName());
         exerciseBodyPartView.setText("Body Part: " + exercise.getBodyPart());
@@ -92,6 +87,20 @@ public class ExerciseInfoFragment extends Fragment{
         setImageFabButton(exercise.getStarred());
     }
 
+    private void setUpViewPager(Exercise exercise){
+        int gifPath = getResources().getIdentifier(exercise.getGifImage(), "drawable", getActivity().getPackageName());
+
+        images.add(exercise.getImageThumb1());
+        images.add(exercise.getImageThumb2());
+        images.add(String.valueOf(gifPath)); // Convert to string because the list contains String values
+
+        // Creates a new adapter, and sends the images
+        exercisePicturesAdapter = new ExercisePicturesAdapter(getActivity(), images);
+        exerciseViewPager.setAdapter(exercisePicturesAdapter);
+
+    }
+
+    // Gives a visual presentation for the user if the exercise is starred or not, dependent on the value
     private void setImageFabButton(String starredValued){
         if(starredValued.equals("1")){
             starredFab.setImageResource(R.drawable.star);
@@ -101,9 +110,14 @@ public class ExerciseInfoFragment extends Fragment{
         }
     }
 
+    // Updates the current exercise if it is starred or unstarred
     public void starrExercise(String exerciseID, String starredValue){
-        dbReferenceExercise.child(exerciseID).child("starred").setValue(starredValue);
-        dbReferenceStarred.child(exerciseID).setValue(starredValue);
+        try{
+            dbReferenceExercise.child(exerciseID).child("starred").setValue(starredValue);
+        } catch(Exception e){
+            e.printStackTrace();
+            Toast.makeText(getActivity(), "Failed to star the exercise.", Toast.LENGTH_SHORT).show();
+        }
         setImageFabButton(starredValue);
     }
 

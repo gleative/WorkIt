@@ -52,11 +52,11 @@ public class ExerciseInfoActivity extends AppCompatActivity {
         super.onStart();
     }
 
+    // If exercise already starred, unstar it, else star it
     public void starrExercise(View view) {
         // Converted to string because to find the child it has to be string value
         String exerciseID = String.valueOf(selectedExercise.getExerciseID());
 
-        // If exercise already starred, unstar it, else star it
         if(selectedExercise.getStarred().equals("1")){
             selectedExercise.setStarred("0"); // So object created in app is also updated
             exerciseInfoFragment.starrExercise(exerciseID, "0");

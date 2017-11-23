@@ -21,19 +21,19 @@
                 app:layout_scrollFlags="scroll|exitUntilCollapsed"
                 app:contentScrim="?attr/colorPrimary">
 
-                <!--<android.support.v4.view.ViewPager-->
-                    <!--android:id="@+id/viewPager"-->
-                    <!--android:layout_width="match_parent"-->
-                    <!--android:layout_height="256dp">-->
+                <android.support.v4.view.ViewPager
+                    android:id="@+id/view_pager"
+                    android:layout_width="match_parent"
+                    android:layout_height="256dp"/>
                     <!--ImageView må være før toolbar, ellers kan du ikke se hamburger icon!-->
-                    <ImageView
-                        android:id="@+id/exercise_picture"
-                        android:layout_width="match_parent"
-                        android:layout_height="256dp"
-                        android:scaleType="fitXY"
-                        app:layout_collapseMode="parallax"
-                        app:layout_collapseParallaxMultiplier="0.9"
-                        android:src="@drawable/testpicture"/>
+                    <!--<ImageView-->
+                        <!--android:id="@+id/exercise_picture"-->
+                        <!--android:layout_width="match_parent"-->
+                        <!--android:layout_height="256dp"-->
+                        <!--android:scaleType="fitXY"-->
+                        <!--app:layout_collapseMode="parallax"-->
+                        <!--app:layout_collapseParallaxMultiplier="0.9"-->
+                        <!--android:src="@drawable/testpicture"/>-->
                 <!--</android.support.v4.view.ViewPager>-->
 
             </android.support.design.widget.CollapsingToolbarLayout>

@@ -46,15 +46,11 @@ public class MainActivity extends AppCompatActivity {
     Toolbar toolbar;
     NavigationDrawerFragment navigationDrawerFragment;
 
-    TextView textView;
-
     DatabaseReference dbReference;
     DatabaseReference dbReferenceUsers;
 
     FirebaseAuth firebaseAuth;
     FirebaseAuth.AuthStateListener firebaseAuthStateListener;
-
-    GifImageView icon;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,28 +60,7 @@ public class MainActivity extends AppCompatActivity {
         toolbar.setTitle("Home");
         setSupportActionBar(toolbar);
 
-        textView = (TextView) findViewById(R.id.text);
-        icon = (GifImageView) findViewById(R.id.loading_icon);
-        int resID = getResources().getIdentifier("egif_deficitdeadlift_gif", "drawable", getPackageName());
-        icon.setImageResource(resID);
-
-        dbReference = FirebaseDatabase.getInstance().getReference().child("text"); // Gets reference of the the child "text"
         dbReferenceUsers = FirebaseDatabase.getInstance().getReference().child("users");
-
-        // Reads from the database
-        dbReference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                String e = dataSnapshot.getValue().toString();
-
-                textView.setText(e);
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
 
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseAuthStateListener = new FirebaseAuth.AuthStateListener() {

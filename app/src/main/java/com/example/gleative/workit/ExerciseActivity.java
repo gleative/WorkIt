@@ -47,7 +47,7 @@ public class ExerciseActivity extends AppCompatActivity implements ExerciseListF
 
     private List<Exercise> exercisesList;
 
-    private String[] categories = {"All", "Arms", "Back", "Chest", "Legs", "Shoulders"};
+    private String[] categories = {"All", "Arms", "Back", "Chest", "Legs", "Shoulders", "Starred"};
     ArrayAdapter<String> categoryAdapter;
     Spinner categorySpinner;
 
@@ -154,6 +154,8 @@ public class ExerciseActivity extends AppCompatActivity implements ExerciseListF
             case "Shoulders":
                 exerciseListFragment.spinnerFilterExercises(selectedItem);
                 break;
+            case "Starred":
+                exerciseListFragment.spinnerFilterExercises(selectedItem);
         }
     }
 

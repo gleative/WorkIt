@@ -186,10 +186,19 @@ public class ExerciseListFragment extends Fragment implements RecycleAdapterList
             exercisesList = eList;
             List<Exercise> newList = new ArrayList<>();
 
-            for(Exercise exercise: exercisesList){
-                String exerciseBodyPart = exercise.getBodyPart();
-                if(exerciseBodyPart.contains(selectedCategory)){
-                    newList.add(exercise);
+            if(selectedCategory.equals("Starred")){
+                for(Exercise exercise: exercisesList){
+                    if(exercise.getStarred().equals("1")){
+                        newList.add(exercise);
+                    }
+                }
+            }
+            else{
+                for(Exercise exercise: exercisesList){
+                    String exerciseBodyPart = exercise.getBodyPart();
+                    if(exerciseBodyPart.contains(selectedCategory)){
+                        newList.add(exercise);
+                    }
                 }
             }
             adapter.setFilter(newList);
