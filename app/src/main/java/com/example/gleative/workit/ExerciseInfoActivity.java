@@ -24,8 +24,6 @@ public class ExerciseInfoActivity extends AppCompatActivity {
     ExercisePicturesAdapter exercisePicturesAdapter;
     ExerciseInfoFragment exerciseInfoFragment;
 
-//    ViewPager viewPager;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
