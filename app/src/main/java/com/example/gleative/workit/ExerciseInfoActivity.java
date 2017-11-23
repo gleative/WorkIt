@@ -22,6 +22,7 @@ public class ExerciseInfoActivity extends AppCompatActivity {
     NavigationDrawerFragment navigationDrawerFragment;
 
     ExercisePicturesAdapter exercisePicturesAdapter;
+    ExerciseInfoFragment exerciseInfoFragment;
 
 //    ViewPager viewPager;
 
@@ -39,24 +40,30 @@ public class ExerciseInfoActivity extends AppCompatActivity {
         selectedExercise = getIntent().getParcelableExtra("exercise");
 
         FragmentManager fragmentManager = getSupportFragmentManager();
-        ExerciseInfoFragment exerciseInfoFragment = (ExerciseInfoFragment) fragmentManager.findFragmentById(R.id.exercise_info_fragment);
+        exerciseInfoFragment = (ExerciseInfoFragment) fragmentManager.findFragmentById(R.id.exercise_info_fragment);
 
         // Displays the exercise information on the layout
         exerciseInfoFragment.setDisplayedDetail(selectedExercise);
 
     }
 
-    // Denne type vindu har ikke navigasjon drawer!
-
-//
-//    private void setUpViewPager(){
-//        ExercisePicturesAdapter adapter = new ExercisePicturesAdapter(this);
-//        adapter
-//    }
-
     @Override
     protected void onStart(){
         super.onStart();
     }
 
+    public void starrExercise(View view) {
+        // Converted to string because to find the child it has to be string value
+        String exerciseID = String.valueOf(selectedExercise.getExerciseID());
+
+        // If exercise already starred, unstar it, else star it
+        if(selectedExercise.getStarred().equals("1")){
+            selectedExercise.setStarred("0"); // So object created in app is also updated
+            exerciseInfoFragment.starrExercise(exerciseID, "0");
+        }
+        else{
+            selectedExercise.setStarred("1"); // So object created in app is also updated
+            exerciseInfoFragment.starrExercise(exerciseID, "1");
+        }
+    }
 }

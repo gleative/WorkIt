@@ -145,6 +145,7 @@ public class ExerciseListFragment extends Fragment implements RecycleAdapterList
                         exercise.setImageThumb1(exerciseSnapshot.child("imageThumb1").getValue().toString());
                         exercise.setImageThumb2(exerciseSnapshot.child("imageThumb2").getValue().toString());
                         exercise.setGifImage(exerciseSnapshot.child("gifImage").getValue().toString());
+                        exercise.setStarred(exerciseSnapshot.child("starred").getValue().toString());
                         eList.add(exercise);
 
                     }

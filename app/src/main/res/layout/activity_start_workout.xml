@@ -13,7 +13,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <!--Lager en toolbar-->
         <android.support.v7.widget.Toolbar
             android:id="@+id/currently_playing_workout_name"
             android:layout_width="match_parent"

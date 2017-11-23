@@ -82,7 +82,7 @@ public class StartWorkoutActivity extends AppCompatActivity {
 
         // When position is the same as the amount of exercises, it means the workout is done.
         if(position == exercisesList.size()){
-            Intent intent = new Intent(this, MainActivity.class);
+            Intent intent = new Intent(this, WorkoutDoneActivity.class);
             startActivity(intent);
         }
         else{

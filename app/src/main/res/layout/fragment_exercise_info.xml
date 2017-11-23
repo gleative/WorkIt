@@ -36,25 +36,18 @@
                         android:src="@drawable/testpicture"/>
                 <!--</android.support.v4.view.ViewPager>-->
 
-                <!--<android.support.v7.widget.Toolbar-->
-                    <!--android:id="@+id/exercise_name"-->
-                    <!--android:layout_width="match_parent"-->
-                    <!--android:layout_height="?attr/actionBarSize"-->
-                    <!--app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"-->
-                    <!--app:popupTheme="@style/ThemeOverlay.AppCompat.Light"-->
-                    <!--app:layout_scrollFlags="scroll|enterAlways">-->
-                <!--</android.support.v7.widget.Toolbar>-->
-
             </android.support.design.widget.CollapsingToolbarLayout>
             <!--EVERYTHING AFTER THIS WILL BE PINNED, (Inside AppBarLayout)-->
 
         </android.support.design.widget.AppBarLayout>
 
         <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fab_exercise_starred"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="40dp"
-            android:src="@drawable/ic_favorite"
+            android:onClick="starrExercise"
+            android:src="@drawable/ic_star_border"
             app:layout_anchor="@id/appBarLayout"
             app:layout_anchorGravity="bottom|right|end"
             />

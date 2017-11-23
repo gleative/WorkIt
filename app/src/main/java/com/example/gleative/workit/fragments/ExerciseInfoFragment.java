@@ -2,7 +2,9 @@ package com.example.gleative.workit.fragments;
 
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
@@ -34,7 +36,8 @@ import java.util.List;
  */
 
 public class ExerciseInfoFragment extends Fragment{
-    DatabaseReference dbReference;
+    DatabaseReference dbReferenceExercise;
+    DatabaseReference dbReferenceStarred;
 
     private List<Exercise> exerciseList;
     private List<Exercise> eList;
@@ -44,6 +47,7 @@ public class ExerciseInfoFragment extends Fragment{
 
     private TextView exerciseNameView, exerciseBodyPartView, exerciseDescView;
     private ImageView exercisePicture;
+    private FloatingActionButton starredFab;
     private int exerciseIndex;
     private ViewPager exerciseViewPager; // Holds the pictures
 
@@ -52,6 +56,9 @@ public class ExerciseInfoFragment extends Fragment{
     @Override
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
+
+        dbReferenceExercise = FirebaseDatabase.getInstance().getReference().child("exercises");
+        dbReferenceStarred = FirebaseDatabase.getInstance().getReference().child("starred");
 
         exerciseIndex = savedInstanceState == null? DEFAULT_EXERCISE_INDEX : savedInstanceState.getInt(EXERCISE_INDEX, DEFAULT_EXERCISE_INDEX);
     }
@@ -65,6 +72,7 @@ public class ExerciseInfoFragment extends Fragment{
         exerciseBodyPartView = fragmentView.findViewById(R.id.exercise_body_part_info);
         exercisePicture = fragmentView.findViewById(R.id.exercise_picture);
         exerciseDescView = fragmentView.findViewById(R.id.exercise_description);
+        starredFab = fragmentView.findViewById(R.id.fab_exercise_starred);
 
         return fragmentView;
     }
@@ -80,5 +88,24 @@ public class ExerciseInfoFragment extends Fragment{
         exerciseNameView.setText(exercise.getExerciseName());
         exerciseBodyPartView.setText("Body Part: " + exercise.getBodyPart());
         exerciseDescView.setText(exercise.getExerciseDescription());
+
+        setImageFabButton(exercise.getStarred());
     }
+
+    private void setImageFabButton(String starredValued){
+        if(starredValued.equals("1")){
+            starredFab.setImageResource(R.drawable.star);
+        }
+        else{
+            starredFab.setImageResource(R.drawable.star_outline);
+        }
+    }
+
+    public void starrExercise(String exerciseID, String starredValue){
+        dbReferenceExercise.child(exerciseID).child("starred").setValue(starredValue);
+        dbReferenceStarred.child(exerciseID).setValue(starredValue);
+        setImageFabButton(starredValue);
+    }
+
+
 }

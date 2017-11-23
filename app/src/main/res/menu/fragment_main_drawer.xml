@@ -18,16 +18,6 @@
             android:id="@+id/nav_exercises"
             android:icon="@drawable/ic_dumbbell"
             android:title="Exercises" />
-        <item
-            android:id="@+id/nav_manage"
-            android:icon="@drawable/ic_menu_manage"
-            android:title="Tools" />
     </group>
-
-    <!--<item>-->
-        <!--<menu>-->
-
-        <!--</menu>-->
-    <!--</item>-->
 
 </menu>
