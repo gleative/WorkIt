@@ -17,6 +17,7 @@ import com.example.gleative.workit.model.Exercise;
 import com.example.gleative.workit.model.Workout;
 
 import java.util.List;
+import java.util.Timer;
 
 import pl.droidsonroids.gif.GifImageView;
 
@@ -33,6 +34,8 @@ public class StartWorkoutActivity extends AppCompatActivity {
     ImageView currentExercisePicture;
     GifImageView currentExerciseGif;
     Button processWorkoutButton;
+
+    Timer timer;
 
     Toolbar toolbar;
     NavigationDrawerFragment navigationDrawerFragment;
@@ -68,6 +71,8 @@ public class StartWorkoutActivity extends AppCompatActivity {
         // For some reason have to set title like this, or else it wouldnt apply the value
         getSupportActionBar().setTitle("Playing: " + workout.getWorkoutName());
         setUpExercise();
+
+        timer = new Timer();
 
     }
 
@@ -105,6 +110,8 @@ public class StartWorkoutActivity extends AppCompatActivity {
 
         // When position is the same as the amount of exercises, it means the workout is done.
         if(position == exercisesList.size()){
+            timer.cancel();
+
             Intent intent = new Intent(this, WorkoutDoneActivity.class);
             startActivity(intent);
         }
