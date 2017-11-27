@@ -38,34 +38,12 @@
             android:text="Exercises done: "
             android:layout_gravity="center"/>
 
-        <!--Divider-->
-        <View
-            android:id="@+id/divider_1"
-            android:layout_width="match_parent"
-            android:layout_height="2dp"
-            android:layout_marginTop="4dp"
-            android:background="@android:color/background_dark" />
-
-        <!--<ImageView-->
-            <!--android:id="@+id/current_exercise_picture"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="250dp"-->
-            <!--android:src="@drawable/e1_1"-->
-            <!--android:layout_gravity="center"/>-->
-
         <pl.droidsonroids.gif.GifImageView
             android:id="@+id/current_exercise_gif"
             android:layout_width="match_parent"
             android:layout_height="250dp"
             android:layout_gravity="center"
             android:src="@drawable/loading_training"/>
-
-        <!--Divider-->
-        <View
-            android:id="@+id/divider_2"
-            android:layout_width="match_parent"
-            android:layout_height="2dp"
-            android:background="@android:color/background_dark" />
 
         <TextView
             android:id="@+id/reps_text"

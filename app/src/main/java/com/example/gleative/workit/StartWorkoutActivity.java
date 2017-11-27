@@ -76,6 +76,29 @@ public class StartWorkoutActivity extends AppCompatActivity {
         super.onStart();
     }
 
+    // Saves the needed values so the user can continue the work out from where he/she left off, after changing orientationW
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        outState.putParcelable("exercise", customExercise);
+        outState.putInt("sets", currentSet);
+        outState.putInt("exercisesDone", position);
+    }
+
+    // Gets the values from the bundle saved before terminating the activity, and adds the correct values so the user can start from where they left off
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+
+        customExercise = savedInstanceState.getParcelable("exercise");
+        currentSet = savedInstanceState.getInt("sets");
+        position = savedInstanceState.getInt("exercisesDone");
+
+        // So it displays the correct exercise for the user
+        setUpExercise();
+    }
+
     private void setUpExercise(){
         // Shows the user how many exercises are done
         exercisesDoneView.setText("Exercises done: " + position + "/" + workout.getAmountExercises());
@@ -100,12 +123,9 @@ public class StartWorkoutActivity extends AppCompatActivity {
         // Finds the path to the gif in drawable
         int resID = getResources().getIdentifier(exercise.getGifImage(), "drawable", getPackageName());
 
-        // Sets the gif image of the exercise
-        currentExerciseGif.setImageResource(resID);
-
-
+        currentExerciseGif.setImageResource(resID); // Sets the gif image of the exercise
         currentExerciseNameView.setText(exercise.getExerciseName());
-        repsView.setText(Integer.toString(customExercise.getReps()));
+        repsView.setText(Integer.toString(customExercise.getReps())); // Get error if it isnt converted to string
         setsView.setText(currentSet + "/" + customExercise.getSets());
     }
 

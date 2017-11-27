@@ -44,6 +44,10 @@ public class WorkoutsRecyclerAdapter extends RecyclerView.Adapter<WorkoutViewHol
         };
     }
 
+    @Override
+    public int getItemViewType(int position) {
+        return position;
+    }
 
     @Override
     public WorkoutViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {

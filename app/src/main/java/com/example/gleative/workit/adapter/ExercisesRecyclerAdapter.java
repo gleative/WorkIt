@@ -42,8 +42,6 @@ public class ExercisesRecyclerAdapter extends RecyclerView.Adapter<ExerciseViewH
         };
     }
 
-    // Måtte ha disse pga extend RecyclerView
-
     // Gets the layout file
     @Override
     public ExerciseViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
