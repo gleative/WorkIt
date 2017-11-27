@@ -2,6 +2,7 @@ package com.example.gleative.workit.fragments;
 
 import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.support.design.widget.Snackbar;
@@ -54,12 +55,23 @@ public class WorkoutListFragment extends Fragment implements WorkoutRecycleAdapt
     private TextView dialogTitleView, dialogMessageView, dialogItemNameView;
     private ProgressBar loadingSpinner;
 
+    private int layoutType;
+
 
     public WorkoutListFragment(){}
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_workout_list, container, false);
+
+        // If intent contain any extras, it means the user wants to start a workout. Sets the correct layout
+        Bundle extras = getActivity().getIntent().getExtras();
+        if(extras != null){
+            layoutType = 1;
+        }
+        else{
+            layoutType = 0;
+        }
 
         loadingSpinner = view.findViewById(R.id.progress_bar_workouts);
 
@@ -91,6 +103,10 @@ public class WorkoutListFragment extends Fragment implements WorkoutRecycleAdapt
         } catch (ClassCastException e){
             throw new ClassCastException(getActivity().toString() + "must implement OnFragmentInteractionListener");
         }
+    }
+
+    public void setLayoutType(int typeValue){
+        layoutType = typeValue;
     }
 
     // Retrieves the workouts data from the database and adds the data to the recycler view
@@ -160,7 +176,7 @@ public class WorkoutListFragment extends Fragment implements WorkoutRecycleAdapt
 
         // Finds the recycler_view from the layout file "fragment_exercise_list"
         recyclerView = view.findViewById(R.id.workout_recycler_view);
-        adapter = new WorkoutsRecyclerAdapter(getContext(), workoutsList, this);
+        adapter = new WorkoutsRecyclerAdapter(getContext(), workoutsList, layoutType, this);
         recyclerView.setAdapter(adapter);
 
         // Sets up the list in a new layout

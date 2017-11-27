@@ -22,10 +22,14 @@ public class WorkoutsRecyclerAdapter extends RecyclerView.Adapter<WorkoutViewHol
     private OnWorkoutSelectedListener workoutSelectedListener;
     private WorkoutRecycleAdapterListener workoutRecycleAdapterListener;
 
-    public WorkoutsRecyclerAdapter(Context context, List<Workout> data,
+    // 0 is with delete icon and 1 is without the delete icon, we dont want to user be able to delete a workout when they are going to start it
+    private int layoutType;
+
+    public WorkoutsRecyclerAdapter(Context context, List<Workout> data, int layoutType,
                                    WorkoutRecycleAdapterListener _workoutRecycleAdapterListener){
         this.workoutData = data;
         this.inflater = LayoutInflater.from(context);
+        this.layoutType = layoutType;
 
         this.workoutRecycleAdapterListener = _workoutRecycleAdapterListener;
 
@@ -55,7 +59,7 @@ public class WorkoutsRecyclerAdapter extends RecyclerView.Adapter<WorkoutViewHol
         WorkoutViewHolder holder = new WorkoutViewHolder(view);
 
         view.setOnClickListener(holder);
-        holder.setListenersToImages(); // Adds listeners to the icons delete and edit
+        holder.setListenersToImages(); // Adds listeners to delete icon
 
         return holder;
     }
@@ -63,7 +67,8 @@ public class WorkoutsRecyclerAdapter extends RecyclerView.Adapter<WorkoutViewHol
     @Override
     public void onBindViewHolder(WorkoutViewHolder holder, int position) {
         Workout currObj = workoutData.get(position);
-        holder.bind(currObj, workoutSelectedListener);
+
+        holder.bind(currObj, workoutSelectedListener, layoutType);
     }
 
     @Override

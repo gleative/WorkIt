@@ -35,10 +35,15 @@ public class WorkoutViewHolder extends RecyclerView.ViewHolder implements View.O
         imgDelete.setOnClickListener(WorkoutViewHolder.this);
     }
 
-    public void bind(Workout workout, OnWorkoutSelectedListener listener){
+    public void bind(Workout workout, OnWorkoutSelectedListener listener, int layoutType){
         this.workoutName.setText(workout.getWorkoutName());
         this.workoutAmountExercises.setText("Exercises: " + workout.getAmountExercises());
         this.onWorkoutSelectedListener = listener;
+
+        // Hides the imageview if user is going to start a workout
+        if(layoutType == 1){
+            imgDelete.setVisibility(View.GONE);
+        }
     }
 
     @Override
