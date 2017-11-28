@@ -15,6 +15,7 @@ public class WorkoutDoneActivity extends AppCompatActivity {
     Toolbar toolbar;
     TextView workoutTimeView, fastestExerciseView, longestExerciseView;
 
+    String fastestExerciseName, longestExerciseName;
     long hours, minutes, seconds, fastestExercise, longestExercise, workoutTime;
 
     @Override
@@ -30,12 +31,11 @@ public class WorkoutDoneActivity extends AppCompatActivity {
         longestExerciseView = findViewById(R.id.longest_exercise);
 
         Bundle extras = getIntent().getExtras();
-//        hours = extras.getLong("hours");
-//        minutes = extras.getLong("minutes");
-//        seconds = extras.getLong("seconds");
         workoutTime = extras.getLong("workoutTime");
         fastestExercise = extras.getLong("fastestExercise");
         longestExercise = extras.getLong("longestExercise");
+        fastestExerciseName = extras.getString("fastestExerciseName");
+        longestExerciseName = extras.getString("longestExerciseName");
 
         NumberFormat displayTime = new DecimalFormat("00");
 
@@ -43,10 +43,10 @@ public class WorkoutDoneActivity extends AppCompatActivity {
         workoutTimeView.setText(displayTime.format(hours) + ":" + displayTime.format(minutes) + ":" + displayTime.format(seconds));
 
         calculateTime(fastestExercise);
-        fastestExerciseView.setText(displayTime.format(hours) + ":" + displayTime.format(minutes) + ":" + displayTime.format(seconds));
+        fastestExerciseView.setText(fastestExerciseName + " time: " + displayTime.format(hours) + ":" + displayTime.format(minutes) + ":" + displayTime.format(seconds));
 
         calculateTime(longestExercise);
-        longestExerciseView.setText(displayTime.format(hours) + ":" + displayTime.format(minutes) + ":" + displayTime.format(seconds));
+        longestExerciseView.setText(longestExerciseName + " time: " +displayTime.format(hours) + ":" + displayTime.format(minutes) + ":" + displayTime.format(seconds));
 
     }
 

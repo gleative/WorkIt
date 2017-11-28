@@ -95,14 +95,4 @@
         android:layout_height="wrap_content"
         android:text="swag"/>
 
-
-    <!--Gjør at vi får navigation drawer i denne aktivitien-->
-    <!--<fragment-->
-        <!--android:id="@+id/navigation_drawer_fragment"-->
-        <!--android:name="com.example.gleative.workit.fragments.NavigationDrawerFragment"-->
-        <!--android:layout_width="@dimen/navigation_drawer_width"-->
-        <!--android:layout_height="match_parent"-->
-        <!--android:layout_gravity="start"-->
-        <!--tools:layout="@layout/fragment_navigation_drawer"/>-->
-
 </LinearLayout>

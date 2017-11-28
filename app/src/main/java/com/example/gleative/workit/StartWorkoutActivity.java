@@ -51,11 +51,12 @@ public class StartWorkoutActivity extends AppCompatActivity {
     private long fastestExercise; // So it gets a value when user does a exercise
     private String longestExerciseName;
     private long longestExercise;
-    private long exerciseHours;
-    private long exerciseMinutes;
-    private long exerciseSeconds;
     private long exerciseTime;
     private long workoutTime;
+
+    private long savedWorkoutTime;
+    private long savedExerciseTime;
+    private long savedFastestExerciseTime, savedLongestExerciseTime;
 
 
     TextView currentExerciseNameView, setsView, repsView, exercisesDoneView, timerView;
@@ -155,6 +156,10 @@ public class StartWorkoutActivity extends AppCompatActivity {
         outState.putParcelable("exercise", customExercise);
         outState.putInt("sets", currentSet);
         outState.putInt("exercisesDone", position);
+        outState.putLong("workoutTime", workoutTime);
+        outState.putLong("exerciseTime", exerciseTime);
+        outState.putLong("longestExercise", longestExercise);
+        outState.putLong("fastestExercise", fastestExercise);
     }
 
     // Gets the values from the bundle saved before terminating the activity, and adds the correct values so the user can start from where they left off
@@ -165,6 +170,16 @@ public class StartWorkoutActivity extends AppCompatActivity {
         customExercise = savedInstanceState.getParcelable("exercise");
         currentSet = savedInstanceState.getInt("sets");
         position = savedInstanceState.getInt("exercisesDone");
+        longestExercise = savedInstanceState.getLong("longestExercise");
+        fastestExercise = savedInstanceState.getLong("fastestExercise");
+
+        // Append it, incase user changes orientaiton multiple times
+        workoutTime = savedInstanceState.getLong("workoutTime");
+        savedWorkoutTime += workoutTime;
+
+        // Appends the exercise time, so it doesnt reset
+        savedExerciseTime = savedInstanceState.getLong("exerciseTime");
+        exerciseTime += savedExerciseTime;
 
         // So it displays the correct exercise for the user
         setUpExercise();
@@ -178,9 +193,15 @@ public class StartWorkoutActivity extends AppCompatActivity {
         if(position == exercisesList.size()){
             timer.cancel(); // Stops the timer
             Intent intent = new Intent(this, WorkoutDoneActivity.class);
+
+            // Adds the extra milliseconds lost when user changes orientation
+            workoutTime += savedWorkoutTime;
+
             intent.putExtra("workoutTime", workoutTime);
             intent.putExtra("longestExercise", longestExercise);
             intent.putExtra("fastestExercise", fastestExercise);
+            intent.putExtra("longestExerciseName", longestExerciseName);
+            intent.putExtra("fastestExerciseName", fastestExerciseName);
             startActivity(intent);
         }
         else{
@@ -213,9 +234,16 @@ public class StartWorkoutActivity extends AppCompatActivity {
         if(currentSet > sets){
             timerExercise.cancel(); // Stops the timer for current exercise
 
+            // If they have no value
             if(fastestExercise == 0 && longestExercise == 0){
                 fastestExercise = exerciseTime;
                 longestExercise = exerciseTime;
+
+                String exerciseName = customExercise.getExercise().getExerciseName();
+
+                // Gets rid of the chance of the exercise name to become null, by giving it value of the first exercise
+                fastestExerciseName = exerciseName;
+                longestExerciseName = exerciseName;
             }
             else{
                 // Check if this exercise was faster or slower than any of the other
