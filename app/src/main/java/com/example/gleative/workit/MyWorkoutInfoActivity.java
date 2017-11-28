@@ -218,10 +218,17 @@ public class MyWorkoutInfoActivity extends AppCompatActivity implements WorkoutC
     // Updates the workout with the new info to the database
     public void updateWorkout(View view) {
         String workoutID = selectedWorkout.getWorkoutID();
+        String newWorkoutName = workoutNameView.getText().toString();
+        String newWorkoutDesc = workoutDescView.getText().toString();
 
         try{
-            dbReferenceWorkout.child(workoutID).child("workoutName").setValue(workoutNameView.getText().toString());
-            dbReferenceWorkout.child(workoutID).child("workoutDescription").setValue(workoutDescView.getText().toString());
+            dbReferenceWorkout.child(workoutID).child("workoutName").setValue(newWorkoutName);
+            dbReferenceWorkout.child(workoutID).child("workoutDescription").setValue(newWorkoutDesc);
+
+            // Update the objects values aswell. Fixes a bug if user updates value, and wants to update again and they press cancel.
+            selectedWorkout.setWorkoutName(newWorkoutName);
+            selectedWorkout.setWorkoutDescription(newWorkoutDesc);
+
             Toast.makeText(this, "Workout successfully updated", Toast.LENGTH_SHORT).show();
         } catch(Exception e){
             e.printStackTrace();

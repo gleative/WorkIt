@@ -26,19 +26,48 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Exercises skipped: "
+        android:layout_gravity="center"
+        android:text="Workout completed!"
+        android:textSize="35sp"
+        android:textStyle="bold"
+        android:layout_marginTop="100dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="Time used: "
+        android:textSize="20sp"/>
+
+    <TextView
+        android:id="@+id/workout_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Time"
         android:layout_gravity="center"
         />
 
-    <!--<TextView-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:text="swag"/>-->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Fastest exercise: "/>
 
-    <!--<TextView-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:text="swag"/>-->
+    <TextView
+        android:id="@+id/fastest_exercise"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="time"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Slowest exercise: "/>
+
+    <TextView
+        android:id="@+id/longest_exercise"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="time"/>
 
     <Button
         android:id="@+id/continue_button"

@@ -1,12 +1,16 @@
 package com.example.gleative.workit;
 
 import android.content.Intent;
+import android.os.CountDownTimer;
+import android.os.SystemClock;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v4.widget.ViewDragHelper;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Chronometer;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -16,8 +20,13 @@ import com.example.gleative.workit.model.CustomExercise;
 import com.example.gleative.workit.model.Exercise;
 import com.example.gleative.workit.model.Workout;
 
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.List;
 import java.util.Timer;
+import java.util.TimerTask;
+import java.util.logging.Handler;
+import java.util.logging.LogRecord;
 
 import pl.droidsonroids.gif.GifImageView;
 
@@ -30,12 +39,29 @@ public class StartWorkoutActivity extends AppCompatActivity {
     private int sets, reps;
     private int position = 0; // 0 So it starts at the start of the workouts list.
 
-    TextView currentExerciseNameView, setsView, repsView, exercisesDoneView;
+    private CountDownTimer timer;
+    private int counter = 0;
+    private long seconds = 0;
+    private long minutes = 0;
+    private long hours = 0;
+    private long milliseconds = 0;
+
+    private CountDownTimer timerExercise;
+    private String fastestExerciseName;
+    private long fastestExercise; // So it gets a value when user does a exercise
+    private String longestExerciseName;
+    private long longestExercise;
+    private long exerciseHours;
+    private long exerciseMinutes;
+    private long exerciseSeconds;
+    private long exerciseTime;
+    private long workoutTime;
+
+
+    TextView currentExerciseNameView, setsView, repsView, exercisesDoneView, timerView;
     ImageView currentExercisePicture;
     GifImageView currentExerciseGif;
     Button processWorkoutButton;
-
-    Timer timer;
 
     Toolbar toolbar;
     NavigationDrawerFragment navigationDrawerFragment;
@@ -55,6 +81,8 @@ public class StartWorkoutActivity extends AppCompatActivity {
         exercisesDoneView = findViewById(R.id.exercises_done);
         processWorkoutButton = findViewById(R.id.continue_button);
 
+        timerView = findViewById(R.id.timer);
+
         // Shows info of the current exercise when user presses on the image
         currentExerciseGif.setClickable(true);
         currentExerciseGif.setOnClickListener(new View.OnClickListener() {
@@ -72,8 +100,46 @@ public class StartWorkoutActivity extends AppCompatActivity {
         getSupportActionBar().setTitle("Playing: " + workout.getWorkoutName());
         setUpExercise();
 
-        timer = new Timer();
+        startWorkoutTimer();
+    }
 
+    // Starts the timer for the workout
+    private void startWorkoutTimer(){
+        timer = new CountDownTimer(3600000, 1000){
+
+            @Override
+            public void onTick(long millisecondsLeft) {
+                counter++;
+
+                // Holds the amount of milliseconds
+                workoutTime = 3600000 - millisecondsLeft;
+
+                NumberFormat displayTime = new DecimalFormat("00");
+                hours = (workoutTime / 3600000) % 24;
+                minutes = (workoutTime / 60000) % 60;
+                seconds = (workoutTime / 1000) % 60;
+
+                timerView.setText(displayTime.format(hours) + ":" + displayTime.format(minutes) + ":" + displayTime.format(seconds) + ":" + counter);
+
+            }
+
+            @Override
+            public void onFinish() {
+            }
+        }.start();
+
+    }
+
+    private void startExerciseTimer(){
+        timerExercise = new CountDownTimer(3600000, 1000) {
+            @Override
+            public void onTick(long millisecondsLeft) {
+                exerciseTime = 3600000 - millisecondsLeft;
+            }
+
+            @Override
+            public void onFinish() {}
+        }.start();
     }
 
     @Override
@@ -110,9 +176,11 @@ public class StartWorkoutActivity extends AppCompatActivity {
 
         // When position is the same as the amount of exercises, it means the workout is done.
         if(position == exercisesList.size()){
-            timer.cancel();
-
+            timer.cancel(); // Stops the timer
             Intent intent = new Intent(this, WorkoutDoneActivity.class);
+            intent.putExtra("workoutTime", workoutTime);
+            intent.putExtra("longestExercise", longestExercise);
+            intent.putExtra("fastestExercise", fastestExercise);
             startActivity(intent);
         }
         else{
@@ -120,6 +188,7 @@ public class StartWorkoutActivity extends AppCompatActivity {
             customExercise = exercisesList.get(position);
             sets = customExercise.getSets(); // Gets the amount of sets. This holds the sets needed to be done to go to next exercise
             displayExercise(customExercise);
+            startExerciseTimer(); // Starts timer for current exercise
         }
 
     }
@@ -140,8 +209,29 @@ public class StartWorkoutActivity extends AppCompatActivity {
     public void proceedInWorkout(View view) {
         currentSet++; // Next set
 
-        // If last set is done, go to next exercise
+        // If last set of current exercise is done, go to next exercise
         if(currentSet > sets){
+            timerExercise.cancel(); // Stops the timer for current exercise
+
+            if(fastestExercise == 0 && longestExercise == 0){
+                fastestExercise = exerciseTime;
+                longestExercise = exerciseTime;
+            }
+            else{
+                // Check if this exercise was faster or slower than any of the other
+                if(exerciseTime < fastestExercise){
+                    fastestExercise = exerciseTime;
+                    fastestExerciseName = customExercise.getExercise().getExerciseName();
+                }
+                else if(exerciseTime > longestExercise){
+                    longestExercise = exerciseTime;
+                    longestExerciseName = customExercise.getExercise().getExerciseName();
+                }
+            }
+
+            exerciseTime = 0; // Resets the exercise time so it starts from 0 on next exercise
+
+
             // Increase position so it goes to next exercise in the workouts list
             position++;
             currentSet = 1; // Reset current set

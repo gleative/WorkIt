@@ -89,6 +89,12 @@
             android:textColor="#ffffff"
             android:layout_gravity="bottom|center"/>
 
+    <TextView
+        android:id="@+id/timer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="swag"/>
+
 
     <!--Gjør at vi får navigation drawer i denne aktivitien-->
     <!--<fragment-->
