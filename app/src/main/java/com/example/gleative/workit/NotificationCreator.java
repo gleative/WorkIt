@@ -14,11 +14,8 @@ import android.support.v4.app.NotificationCompat;
  */
 
 public class NotificationCreator extends ContextWrapper{
-    public static final String channel1ID = "channel1ID";
+    public static final String channelID = "channelID";
     public static final String channel1Name = "Channel 1";
-
-    public static final String channel2ID = "channel2ID";
-    public static final String channel2Name = "Channel 2";
 
     private NotificationManager manager;
 
@@ -33,18 +30,12 @@ public class NotificationCreator extends ContextWrapper{
 
     @TargetApi(Build.VERSION_CODES.O)
     public void createChannels(){
-        NotificationChannel channel1 = new NotificationChannel(channel1ID, channel1Name, NotificationManager.IMPORTANCE_DEFAULT);
-        channel1.enableLights(true);
-        channel1.setLightColor(R.color.colorPrimary);
-        channel1.setLockscreenVisibility(Notification.VISIBILITY_PRIVATE);
+        NotificationChannel channel = new NotificationChannel(channelID, channel1Name, NotificationManager.IMPORTANCE_DEFAULT);
+        channel.enableLights(true);
+        channel.setLightColor(R.color.colorPrimary);
+        channel.setLockscreenVisibility(Notification.VISIBILITY_PRIVATE);
 
-        getManager().createNotificationChannel(channel1);
-
-        NotificationChannel channel2 = new NotificationChannel(channel2ID, channel2Name, NotificationManager.IMPORTANCE_DEFAULT);
-        channel2.enableLights(true);
-        channel2.enableVibration(true);
-        channel2.setLightColor(R.color.colorPrimary);
-        channel2.setLockscreenVisibility(Notification.VISIBILITY_PRIVATE);
+        getManager().createNotificationChannel(channel);
     }
 
     public NotificationManager getManager(){
@@ -56,16 +47,10 @@ public class NotificationCreator extends ContextWrapper{
     }
 
     public NotificationCompat.Builder getChannel1Notification(String title, String message){
-        return new NotificationCompat.Builder(getApplicationContext(), channel1ID)
+        return new NotificationCompat.Builder(getApplicationContext(), channelID)
                     .setContentTitle(title)
                     .setContentText(message)
                     .setSmallIcon(R.drawable.ic_dumbbell);
     }
 
-    public NotificationCompat.Builder getChannel2Notification(String title, String message){
-        return new NotificationCompat.Builder(getApplicationContext(), channel2ID)
-                .setContentTitle(title)
-                .setContentText(message)
-                .setSmallIcon(R.drawable.workit_logo);
-    }
 }

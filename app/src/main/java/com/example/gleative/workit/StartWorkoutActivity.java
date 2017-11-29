@@ -14,6 +14,7 @@ import android.widget.Button;
 import android.widget.Chronometer;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.gleative.workit.fragments.NavigationDrawerFragment;
@@ -37,7 +38,7 @@ public class StartWorkoutActivity extends AppCompatActivity {
     private List<CustomExercise> exercisesList;
     private CustomExercise customExercise;
     private int currentSet = 1; // 1 because you always start at set number 1
-    private int sets, reps;
+    private int sets;
     private int position = 0; // 0 So it starts at the start of the workouts list.
 
     private CountDownTimer timer;
@@ -45,7 +46,6 @@ public class StartWorkoutActivity extends AppCompatActivity {
     private long seconds = 0;
     private long minutes = 0;
     private long hours = 0;
-    private long milliseconds = 0;
 
     private CountDownTimer timerExercise;
     private String fastestExerciseName, longestExerciseName;
@@ -55,17 +55,14 @@ public class StartWorkoutActivity extends AppCompatActivity {
 
     private long savedWorkoutTime, savedExerciseTime;
 
-
     TextView currentExerciseNameView, setsView, repsView, exercisesDoneView, timerView;
-    ImageView currentExercisePicture;
     GifImageView currentExerciseGif;
     Button processWorkoutButton;
-
     Toolbar toolbar;
-    NavigationDrawerFragment navigationDrawerFragment;
 
     private NotificationCreator notificationCreator;
-    private long userInteractionTime;
+
+    // True if workout is done, or when we dont want the notification to display
     private boolean workoutDone = false;
 
     @Override
@@ -73,7 +70,7 @@ public class StartWorkoutActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start_workout);
 
-        toolbar = (Toolbar) findViewById(R.id.currently_playing_workout_name);
+        toolbar = findViewById(R.id.currently_playing_workout_name);
         setSupportActionBar(toolbar);
 
         currentExerciseNameView = findViewById(R.id.current_exercise_name);
@@ -156,15 +153,20 @@ public class StartWorkoutActivity extends AppCompatActivity {
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
 
-        outState.putParcelable("exercise", customExercise);
-        outState.putInt("sets", currentSet);
-        outState.putInt("exercisesDone", position);
-        outState.putLong("workoutTime", workoutTime);
-        outState.putLong("exerciseTime", exerciseTime);
-        outState.putLong("longestExercise", longestExercise);
-        outState.putLong("fastestExercise", fastestExercise);
-        outState.putString("longestExerciseName", longestExerciseName);
-        outState.putString("fastestExerciseName", fastestExerciseName);
+        try{
+            outState.putParcelable("exercise", customExercise);
+            outState.putInt("sets", currentSet);
+            outState.putInt("exercisesDone", position);
+            outState.putLong("workoutTime", workoutTime);
+            outState.putLong("exerciseTime", exerciseTime);
+            outState.putLong("longestExercise", longestExercise);
+            outState.putLong("fastestExercise", fastestExercise);
+            outState.putString("longestExerciseName", longestExerciseName);
+            outState.putString("fastestExerciseName", fastestExerciseName);
+        } catch (Exception e){
+            Toast.makeText(this, "Unable to save the data!", Toast.LENGTH_SHORT).show();
+        }
+
     }
 
     // Gets the values from the bundle saved before terminating the activity, and adds the correct values so the user can start from where they left off
@@ -172,15 +174,20 @@ public class StartWorkoutActivity extends AppCompatActivity {
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
 
-        customExercise = savedInstanceState.getParcelable("exercise");
-        currentSet = savedInstanceState.getInt("sets");
-        position = savedInstanceState.getInt("exercisesDone");
-        longestExercise = savedInstanceState.getLong("longestExercise");
-        fastestExercise = savedInstanceState.getLong("fastestExercise");
-        longestExerciseName = savedInstanceState.getString("longestExerciseName");
-        fastestExerciseName = savedInstanceState.getString("fastestExerciseName");
+        try{
+            customExercise = savedInstanceState.getParcelable("exercise");
+            currentSet = savedInstanceState.getInt("sets");
+            position = savedInstanceState.getInt("exercisesDone");
+            longestExercise = savedInstanceState.getLong("longestExercise");
+            fastestExercise = savedInstanceState.getLong("fastestExercise");
+            longestExerciseName = savedInstanceState.getString("longestExerciseName");
+            fastestExerciseName = savedInstanceState.getString("fastestExerciseName");
+        } catch (Exception e){
+            Toast.makeText(this, "Unable to retrieve the saved values!", Toast.LENGTH_SHORT).show();
+        }
 
-        // Append it, incase user changes orientaiton multiple times
+
+        // Append it, in case user changes orientation multiple times
         workoutTime = savedInstanceState.getLong("workoutTime");
         savedWorkoutTime += workoutTime;
 
@@ -198,7 +205,7 @@ public class StartWorkoutActivity extends AppCompatActivity {
 
         // When position is the same as the amount of exercises, it means the workout is done.
         if(position == exercisesList.size()){
-            workoutDone = true;
+            workoutDone = true; // Sets it to true, so notification dont show up
             timer.cancel(); // Stops the timer
             Intent intent = new Intent(this, WorkoutDoneActivity.class);
 
@@ -280,7 +287,7 @@ public class StartWorkoutActivity extends AppCompatActivity {
     }
 
     private void showCurrentExerciseInfo(){
-        workoutDone = true;
+        workoutDone = true; // Sets it to true, so notification dont show up
 
         Intent intent = new Intent(this, ExerciseInfoActivity.class);
         intent.putExtra("exercise", customExercise.getExercise());
@@ -301,7 +308,7 @@ public class StartWorkoutActivity extends AppCompatActivity {
     protected void onResume(){
         super.onResume();
 
-        workoutDone = false;
+        workoutDone = false; // Set to false so the notification can come back again
         // Deletes the notification, when the user is back on the activity
         notificationCreator.getManager().cancelAll();
     }

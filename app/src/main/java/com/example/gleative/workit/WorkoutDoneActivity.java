@@ -40,6 +40,7 @@ public class WorkoutDoneActivity extends AppCompatActivity {
         fastestExerciseName = extras.getString("fastestExerciseName");
         longestExerciseName = extras.getString("longestExerciseName");
 
+        // Creates format so it always displays two decimals
         NumberFormat displayTime = new DecimalFormat("00");
 
         calculateTime(workoutTime);
@@ -62,7 +63,7 @@ public class WorkoutDoneActivity extends AppCompatActivity {
         seconds = (time / 1000) % 60;
     }
 
-
+    //
     public void finishWorkout(View view) {
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
