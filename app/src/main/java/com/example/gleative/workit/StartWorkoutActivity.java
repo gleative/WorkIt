@@ -3,6 +3,7 @@ package com.example.gleative.workit;
 import android.content.Intent;
 import android.os.CountDownTimer;
 import android.os.SystemClock;
+import android.support.v4.app.NotificationCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.ViewDragHelper;
 import android.support.v7.app.AppCompatActivity;
@@ -47,16 +48,12 @@ public class StartWorkoutActivity extends AppCompatActivity {
     private long milliseconds = 0;
 
     private CountDownTimer timerExercise;
-    private String fastestExerciseName;
-    private long fastestExercise; // So it gets a value when user does a exercise
-    private String longestExerciseName;
-    private long longestExercise;
-    private long exerciseTime;
-    private long workoutTime;
+    private String fastestExerciseName, longestExerciseName;
+    private long fastestExercise = 0;
+    private long longestExercise = 0;
+    private long workoutTime, exerciseTime;
 
-    private long savedWorkoutTime;
-    private long savedExerciseTime;
-    private long savedFastestExerciseTime, savedLongestExerciseTime;
+    private long savedWorkoutTime, savedExerciseTime;
 
 
     TextView currentExerciseNameView, setsView, repsView, exercisesDoneView, timerView;
@@ -66,6 +63,10 @@ public class StartWorkoutActivity extends AppCompatActivity {
 
     Toolbar toolbar;
     NavigationDrawerFragment navigationDrawerFragment;
+
+    private NotificationCreator notificationCreator;
+    private long userInteractionTime;
+    private boolean workoutDone = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,6 +93,8 @@ public class StartWorkoutActivity extends AppCompatActivity {
                 showCurrentExerciseInfo();
             }
         });
+
+        notificationCreator = new NotificationCreator(this);
 
         workout = getIntent().getParcelableExtra("workout");
 
@@ -160,6 +163,8 @@ public class StartWorkoutActivity extends AppCompatActivity {
         outState.putLong("exerciseTime", exerciseTime);
         outState.putLong("longestExercise", longestExercise);
         outState.putLong("fastestExercise", fastestExercise);
+        outState.putString("longestExerciseName", longestExerciseName);
+        outState.putString("fastestExerciseName", fastestExerciseName);
     }
 
     // Gets the values from the bundle saved before terminating the activity, and adds the correct values so the user can start from where they left off
@@ -172,6 +177,8 @@ public class StartWorkoutActivity extends AppCompatActivity {
         position = savedInstanceState.getInt("exercisesDone");
         longestExercise = savedInstanceState.getLong("longestExercise");
         fastestExercise = savedInstanceState.getLong("fastestExercise");
+        longestExerciseName = savedInstanceState.getString("longestExerciseName");
+        fastestExerciseName = savedInstanceState.getString("fastestExerciseName");
 
         // Append it, incase user changes orientaiton multiple times
         workoutTime = savedInstanceState.getLong("workoutTime");
@@ -191,6 +198,7 @@ public class StartWorkoutActivity extends AppCompatActivity {
 
         // When position is the same as the amount of exercises, it means the workout is done.
         if(position == exercisesList.size()){
+            workoutDone = true;
             timer.cancel(); // Stops the timer
             Intent intent = new Intent(this, WorkoutDoneActivity.class);
 
@@ -272,8 +280,36 @@ public class StartWorkoutActivity extends AppCompatActivity {
     }
 
     private void showCurrentExerciseInfo(){
+        workoutDone = true;
+
         Intent intent = new Intent(this, ExerciseInfoActivity.class);
         intent.putExtra("exercise", customExercise.getExercise());
         startActivity(intent);
+    }
+
+    // Called when user go out of app
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if(!workoutDone){
+            NotificationCompat.Builder notificationBuilder = notificationCreator.getChannel1Notification("Current exercise: " + customExercise.getExercise().getExerciseName(), "LOOOL");
+            notificationCreator.getManager().notify(1, notificationBuilder.build());
+        }
+    }
+
+    @Override
+    protected void onResume(){
+        super.onResume();
+
+        workoutDone = false;
+        // Deletes the notification, when the user is back on the activity
+        notificationCreator.getManager().cancelAll();
+    }
+
+    // When user presses back, the workout is canceled. Sets workout done to true. So notification doesnt show up
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        workoutDone = true;
     }
 }

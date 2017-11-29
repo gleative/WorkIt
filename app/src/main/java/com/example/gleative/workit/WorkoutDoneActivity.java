@@ -13,7 +13,7 @@ import java.text.NumberFormat;
 public class WorkoutDoneActivity extends AppCompatActivity {
 
     Toolbar toolbar;
-    TextView workoutTimeView, fastestExerciseView, longestExerciseView;
+    TextView workoutTimeView, fastestExerciseTimeView, longestExerciseTimeView, fastestExerciseNameView, longestExerciseNameView;
 
     String fastestExerciseName, longestExerciseName;
     long hours, minutes, seconds, fastestExercise, longestExercise, workoutTime;
@@ -27,8 +27,11 @@ public class WorkoutDoneActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         workoutTimeView = findViewById(R.id.workout_time);
-        fastestExerciseView = findViewById(R.id.fastest_exercise);
-        longestExerciseView = findViewById(R.id.longest_exercise);
+        fastestExerciseTimeView = findViewById(R.id.fastest_exercise_time);
+        longestExerciseTimeView = findViewById(R.id.longest_exercise_time);
+        fastestExerciseNameView = findViewById(R.id.fastest_exercise_name);
+        longestExerciseNameView = findViewById(R.id.longest_exercise_name);
+
 
         Bundle extras = getIntent().getExtras();
         workoutTime = extras.getLong("workoutTime");
@@ -43,10 +46,12 @@ public class WorkoutDoneActivity extends AppCompatActivity {
         workoutTimeView.setText(displayTime.format(hours) + ":" + displayTime.format(minutes) + ":" + displayTime.format(seconds));
 
         calculateTime(fastestExercise);
-        fastestExerciseView.setText(fastestExerciseName + " time: " + displayTime.format(hours) + ":" + displayTime.format(minutes) + ":" + displayTime.format(seconds));
+        fastestExerciseNameView.setText(fastestExerciseName);
+        fastestExerciseTimeView.setText(displayTime.format(hours) + ":" + displayTime.format(minutes) + ":" + displayTime.format(seconds));
 
         calculateTime(longestExercise);
-        longestExerciseView.setText(longestExerciseName + " time: " +displayTime.format(hours) + ":" + displayTime.format(minutes) + ":" + displayTime.format(seconds));
+        longestExerciseNameView.setText(longestExerciseName);
+        longestExerciseTimeView.setText(displayTime.format(hours) + ":" + displayTime.format(minutes) + ":" + displayTime.format(seconds));
 
     }
 
