@@ -29,6 +29,7 @@
             android:text="Exercise Name"
             android:textSize="20sp"
             android:textStyle="bold"
+            android:textColor="@color/colorPrimaryText"
             android:layout_gravity="center"/>
 
         <TextView
@@ -36,6 +37,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Exercises done: "
+            android:textColor="@color/colorSecondaryText"
             android:layout_gravity="center"/>
 
         <pl.droidsonroids.gif.GifImageView
@@ -51,6 +53,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:text="Reps:"
+            android:textColor="@color/colorSecondaryText"
             android:layout_gravity="center"/>
 
         <TextView
@@ -60,6 +63,7 @@
             android:layout_marginTop="-2dp"
             android:textSize="40sp"
             android:text="XX"
+            android:textColor="@color/colorPrimaryText"
             android:layout_gravity="center"/>
 
         <TextView
@@ -67,6 +71,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Sets:"
+            android:textColor="@color/colorSecondaryText"
             android:layout_gravity="center"/>
 
         <TextView
@@ -76,6 +81,7 @@
             android:layout_marginTop="-2dp"
             android:text="XX/XX"
             android:textSize="45sp"
+            android:textColor="@color/colorPrimaryText"
             android:layout_gravity="center"/>
 
         <Button
@@ -83,16 +89,16 @@
             android:layout_width="200dp"
             android:layout_height="40dp"
             android:layout_marginTop="5dp"
-            android:background="@color/colorRed"
+            android:background="@color/colorAccent"
             android:text="proceed"
             android:onClick="proceedInWorkout"
-            android:textColor="#ffffff"
+            android:textColor="@color/colorTextIcons"
             android:layout_gravity="bottom|center"/>
 
     <TextView
         android:id="@+id/timer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="swag"/>
+        android:text="timer"/>
 
 </LinearLayout>

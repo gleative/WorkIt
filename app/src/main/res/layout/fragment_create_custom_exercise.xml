@@ -49,6 +49,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
         android:layout_gravity="center"
+        android:textColor="@color/colorSecondaryText"
         android:text="Body Part:"/>
 
     <TextView
@@ -56,7 +57,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
-        android:textStyle="bold"
+        android:textColor="@color/colorPrimaryText"
         android:layout_gravity="center"
         android:text="Body Part" />
 
@@ -81,8 +82,8 @@
         android:layout_width="200dp"
         android:layout_height="60dp"
         android:layout_marginTop="50dp"
-        android:background="@color/colorRed"
-        android:textColor="#ffffff"
+        android:background="@color/colorAccent"
+        android:textColor="@color/colorTextIcons"
         android:text="add exercise"
         android:onClick="addCustomExerciseToWorkout"
         android:layout_gravity="bottom|center"/>

@@ -17,6 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.example.gleative.workit.ExerciseActivity;
 import com.example.gleative.workit.R;
 import com.example.gleative.workit.adapter.ExercisePicturesAdapter;
 import com.example.gleative.workit.model.Exercise;

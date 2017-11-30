@@ -22,7 +22,7 @@ public class NotificationCreator extends ContextWrapper{
     public NotificationCreator(Context context){
         super(context);
 
-        // If SDK is higher or equal to Oreo, create channels
+        // If SDK is higher or equal to Oreo, create channels, because Notification channel is for api oreo and higher
         if(android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
             createChannels();
         }
@@ -30,15 +30,18 @@ public class NotificationCreator extends ContextWrapper{
 
     @TargetApi(Build.VERSION_CODES.O)
     public void createChannels(){
+        // Makes a channel, IMPORTANCE DEFAULT means that the notification will just show up, not interrupt and pop down to the user
         NotificationChannel channel = new NotificationChannel(channelID, channel1Name, NotificationManager.IMPORTANCE_DEFAULT);
-        channel.enableLights(true);
+        channel.enableLights(true); // Activates LED light for the phones that support it
         channel.setLightColor(R.color.colorPrimary);
-        channel.setLockscreenVisibility(Notification.VISIBILITY_PRIVATE);
+        channel.setLockscreenVisibility(Notification.VISIBILITY_PUBLIC); // Shows the complete notification on lockscreen
 
         getManager().createNotificationChannel(channel);
     }
 
+    // So we can create a notification on the device
     public NotificationManager getManager(){
+        // Create manager if it doesnt exist
         if(manager == null){
             manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         }
@@ -46,11 +49,13 @@ public class NotificationCreator extends ContextWrapper{
         return manager;
     }
 
+
+    // Builds a notification, and define content
     public NotificationCompat.Builder getChannel1Notification(String title, String message){
         return new NotificationCompat.Builder(getApplicationContext(), channelID)
                     .setContentTitle(title)
                     .setContentText(message)
-                    .setSmallIcon(R.drawable.ic_dumbbell);
+                    .setSmallIcon(R.drawable.ic_dumbbell); // Wanted the logo, but was just a circle, so used this instead
     }
 
 }

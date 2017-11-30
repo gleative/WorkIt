@@ -33,19 +33,21 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="18sp"
-                android:textStyle="bold"
+                android:textColor="@color/colorPrimaryText"
                 android:text="Title"/>
 
             <TextView
                 android:id="@+id/workout_exercise_amount"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:textColor="@color/colorSecondaryText"
                 android:text="Exercises: "/>
 
             <TextView
                 android:id="@+id/workout_targeted_muscle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:textColor="@color/colorSecondaryText"
                 android:text="Main muscle"/>
 
             </LinearLayout>

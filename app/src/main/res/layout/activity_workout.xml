@@ -33,7 +33,7 @@
             android:layout_gravity="bottom|end"
             android:layout_margin="20dp"
             android:onClick="createWorkout"
-            android:src="@drawable/ic_action_add"/>
+            android:src="@drawable/ic_action_add_white"/>
 
         <fragment
             android:id="@+id/workout_list_fragment"

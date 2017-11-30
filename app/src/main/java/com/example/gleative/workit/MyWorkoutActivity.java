@@ -12,14 +12,8 @@ import android.widget.Toast;
 import com.example.gleative.workit.fragments.NavigationDrawerFragment;
 import com.example.gleative.workit.fragments.WorkoutListFragment;
 import com.example.gleative.workit.model.Workout;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-
-import pl.droidsonroids.gif.GifImageView;
 
 public class MyWorkoutActivity extends AppCompatActivity implements WorkoutListFragment.OnWorkoutFragmentInteractionListener{
-
-    DatabaseReference dbReference;
 
     // If value "1" the user wants to start a workout
     int startWorkout = 0;
@@ -33,7 +27,7 @@ public class MyWorkoutActivity extends AppCompatActivity implements WorkoutListF
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_workout);
 
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         fab = findViewById(R.id.create_workout_fab);
@@ -50,13 +44,13 @@ public class MyWorkoutActivity extends AppCompatActivity implements WorkoutListF
 
     private void setUpDrawer() {
         navigationDrawerFragment = (NavigationDrawerFragment) getSupportFragmentManager().findFragmentById(R.id.navigation_drawer_fragment);
-        DrawerLayout drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawerLayout = findViewById(R.id.drawer_layout);
         navigationDrawerFragment.setUpDrawer(drawerLayout, toolbar, R.id.nav_exercises);
     }
 
     @Override
     protected void onStart(){
-        // If user is starting a workout, we want the nav home to be checked instead of my workouts
+        // If user is starting a workout, we want the nav "home" to be checked instead of "my workouts"
         if(startWorkout == 1){
             navigationDrawerFragment.updateCheckedItem(R.id.nav_home);
         }

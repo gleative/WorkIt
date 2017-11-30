@@ -20,26 +20,23 @@ import com.example.gleative.workit.model.Workout;
 
 public class AddExerciseToWorkoutActivity extends AppCompatActivity implements  ExerciseListFragment.OnExerciseFragmentInteractionListener, Spinner.OnItemSelectedListener{
 
-    ExerciseListFragment exerciseListFragment;
-
-    Workout workout;
-    Toolbar toolbar;
+    private ExerciseListFragment exerciseListFragment;
+    private Workout workout;
+    private Toolbar toolbar;
 
     private String[] categories = {"All", "Arms", "Back", "Chest", "Legs", "Shoulders"};
-    ArrayAdapter<String> categoryAdapter;
-    Spinner categorySpinner;
+    private ArrayAdapter<String> categoryAdapter;
+    private Spinner categorySpinner;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_exercise);
 
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false); // Disables title bar text
 
-
-        // Tells host activity that this fragment has menu options it wants to add, or else search bar wont show up
 
         // Gets the workout object
         workout = getIntent().getParcelableExtra("workout");
@@ -49,8 +46,7 @@ public class AddExerciseToWorkoutActivity extends AppCompatActivity implements  
 
     // Sets up a spinner
     private void setUpSpinner(){
-        // Spinner element
-        categorySpinner = (Spinner) findViewById(R.id.category_spinner);
+        categorySpinner = findViewById(R.id.category_spinner);
 
         // Adds on click listener on the spinner
         categorySpinner.setOnItemSelectedListener(this);

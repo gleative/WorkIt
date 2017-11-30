@@ -14,15 +14,3 @@
 
 
 <!-- Line 10 is where the header is, this is the layout file, that you can configure -->
-
-
-
-
-
-
-
-
-
-    <!--app:itemIconTint="@color/drawer_item"-->
-    <!--app:itemTextColor="@color/drawer_text"-->
-    <!--app:headerLayout="@layout/navigation_header_main"-->

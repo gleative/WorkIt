@@ -13,12 +13,10 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.example.gleative.workit.ExerciseActivity;
 import com.example.gleative.workit.MainActivity;
 import com.example.gleative.workit.MyWorkoutActivity;
-import com.example.gleative.workit.ProfileActivity;
 import com.example.gleative.workit.R;
 
 public class NavigationDrawerFragment extends Fragment implements NavigationView.OnNavigationItemSelectedListener {
@@ -62,14 +60,9 @@ public class NavigationDrawerFragment extends Fragment implements NavigationView
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_SINGLE_TOP); // Gjør at den går ut av applikasjonen når brukeren trykker tilbake. Måtte være før "startActivity" for å fungere!
                 startActivity(intent);
                 break;
-            case R.id.nav_profile:
-                intent = new Intent(getActivity(), ProfileActivity.class);
-                // If user goes to this two times, user wont have to press back two times. Only once.
-                intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                startActivity(intent);
-                break;
             case R.id.nav_exercises:
                 intent = new Intent(getActivity(), ExerciseActivity.class);
+                // If user goes to this two times, user wont have to press back two times. Only once.
                 intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 startActivity(intent);
                 break;

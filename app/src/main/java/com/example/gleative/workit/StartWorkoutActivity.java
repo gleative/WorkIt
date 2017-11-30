@@ -2,22 +2,15 @@ package com.example.gleative.workit;
 
 import android.content.Intent;
 import android.os.CountDownTimer;
-import android.os.SystemClock;
 import android.support.v4.app.NotificationCompat;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v4.widget.ViewDragHelper;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Chronometer;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
-import com.example.gleative.workit.fragments.NavigationDrawerFragment;
 import com.example.gleative.workit.model.CustomExercise;
 import com.example.gleative.workit.model.Exercise;
 import com.example.gleative.workit.model.Workout;
@@ -25,10 +18,6 @@ import com.example.gleative.workit.model.Workout;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
-import java.util.logging.Handler;
-import java.util.logging.LogRecord;
 
 import pl.droidsonroids.gif.GifImageView;
 
@@ -241,7 +230,7 @@ public class StartWorkoutActivity extends AppCompatActivity {
         setsView.setText(currentSet + "/" + customExercise.getSets());
     }
 
-    // When user presses continue button
+    // When user presses proceed button
     public void proceedInWorkout(View view) {
         currentSet++; // Next set
 
@@ -299,7 +288,8 @@ public class StartWorkoutActivity extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
         if(!workoutDone){
-            NotificationCompat.Builder notificationBuilder = notificationCreator.getChannel1Notification("Current exercise: " + customExercise.getExercise().getExerciseName(), "LOOOL");
+            NotificationCompat.Builder notificationBuilder = notificationCreator.getChannel1Notification("Current exercise: " + customExercise.getExercise().getExerciseName(),
+                                                                                                        "Current set: " + currentSet + "\n Reps: " + customExercise.getReps());
             notificationCreator.getManager().notify(1, notificationBuilder.build());
         }
     }

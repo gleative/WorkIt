@@ -13,8 +13,8 @@
         android:text="Action"
         android:textStyle="bold"
         android:textSize="25sp"
-        android:textColor="#ffff"
-        android:background="@color/colorRed"
+        android:textColor="@color/colorTextIcons"
+        android:background="@color/colorPrimary"
         android:padding="5dp"/>
 
     <TextView
@@ -44,12 +44,16 @@
         android:id="@+id/dialog_button_yes"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        android:textColor="@color/colorTextIcons"
         android:text="yes"/>
 
     <Button
         android:id="@+id/dialog_button_no"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:background="@color/colorAccent"
+        android:textColor="@color/colorTextIcons"
         android:text="no"/>
     </LinearLayout>
 

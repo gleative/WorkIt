@@ -27,9 +27,6 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ProfileActivity"
-            android:label="Profile" />
-        <activity
             android:name=".MyWorkoutActivity"
             android:label="My Workouts" />
         <activity

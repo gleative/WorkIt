@@ -63,9 +63,19 @@ public class WorkoutDoneActivity extends AppCompatActivity {
         seconds = (time / 1000) % 60;
     }
 
-    //
+    // Goes back to the home page
     public void finishWorkout(View view) {
         Intent intent = new Intent(this, MainActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); // So the user cant go back to the workout it just finished
+        startActivity(intent);
+    }
+
+    // So the user wont get back to start workout
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent intent = new Intent(this, MainActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
     }
 }

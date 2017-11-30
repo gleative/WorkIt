@@ -1,35 +1,20 @@
 package com.example.gleative.workit;
 
 import android.content.Intent;
-import android.support.design.widget.Snackbar;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
-import android.widget.Toast;
 
-import com.example.gleative.workit.adapter.ExercisesRecyclerAdapter;
-import com.example.gleative.workit.fragments.ExerciseInfoFragment;
 import com.example.gleative.workit.fragments.ExerciseListFragment;
 import com.example.gleative.workit.fragments.NavigationDrawerFragment;
 import com.example.gleative.workit.model.Exercise;
 import com.example.gleative.workit.model.Workout;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class ExerciseActivity extends AppCompatActivity implements ExerciseListFragment.OnExerciseFragmentInteractionListener, Spinner.OnItemSelectedListener{
@@ -40,10 +25,7 @@ public class ExerciseActivity extends AppCompatActivity implements ExerciseListF
 
     Toolbar toolbar;
     NavigationDrawerFragment navigationDrawerFragment;
-    ExerciseInfoFragment exerciseInfoFragment;
     ExerciseListFragment exerciseListFragment;
-    RecyclerView recyclerView;
-    ExercisesRecyclerAdapter exercisesRecyclerAdapter;
 
     private List<Exercise> exercisesList;
 
@@ -56,7 +38,7 @@ public class ExerciseActivity extends AppCompatActivity implements ExerciseListF
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_exercise);
 
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false); // Disables title bar text
 
@@ -90,7 +72,7 @@ public class ExerciseActivity extends AppCompatActivity implements ExerciseListF
     // Sets up a spinner, had to do it here, and not in the fragment. Because here vi access the activity_exercise, which we need!
     private void setUpSpinner(){
         // Spinner element
-        categorySpinner = (Spinner) findViewById(R.id.category_spinner);
+        categorySpinner = findViewById(R.id.category_spinner);
 
         // Adds on click listener on the spinner
         categorySpinner.setOnItemSelectedListener(this);

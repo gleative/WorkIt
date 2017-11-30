@@ -28,10 +28,10 @@
                     android:text="Workout name"
                     android:textSize="24sp"
                     android:textStyle="bold"
-                    android:textColor="#ffff"
+                    android:textColor="@color/colorTextIcons"
                     android:singleLine="true"
-                    android:maxLength="50"
-                    android:background="@color/colorRed"
+                    android:maxLength="80"
+                    android:background="@color/colorPrimary"
                     android:textColorHighlight="#000"
                     />
 
@@ -48,7 +48,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="15sp"
-                android:text="Workout Desc"/>
+                android:maxLength="1000"
+                android:text="Workout Desc"
+                android:lines="5"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -104,7 +106,7 @@
                 android:layout_marginEnd="16dp"
                 android:onClick="selectExerciseToRemoveFromWorkout"
                 android:src="@drawable/ic_delete"
-                app:backgroundTint="@color/colorRed"
+                app:backgroundTint="@color/colorPrimaryLight"
                 android:visibility="invisible"/>
 
             <android.support.design.widget.FloatingActionButton
@@ -115,8 +117,8 @@
                 android:layout_marginBottom="90dp"
                 android:layout_marginEnd="16dp"
                 android:onClick="addNewCustomExerciseToWorkout"
-                android:src="@drawable/ic_action_add"
-                app:backgroundTint="#00b200"
+                android:src="@drawable/ic_action_add_white"
+                app:backgroundTint="@color/colorPrimaryDark"
                 android:visibility="invisible"/>
 
 
@@ -128,7 +130,7 @@
                 android:layout_marginBottom="16dp"
                 android:layout_marginEnd="16dp"
                 android:onClick="displayOtherFabButtons"
-                android:src="@drawable/ic_edit"/>
+                android:src="@drawable/ic_edit_white"/>
 
         </android.support.design.widget.CoordinatorLayout>
 

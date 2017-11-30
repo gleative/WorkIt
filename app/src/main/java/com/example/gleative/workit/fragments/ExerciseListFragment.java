@@ -1,36 +1,26 @@
 package com.example.gleative.workit.fragments;
 
-import android.app.ProgressDialog;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.view.MenuItemCompat;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.ProgressBar;
-import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.gleative.workit.ExerciseActivity;
 import com.example.gleative.workit.R;
 import com.example.gleative.workit.adapter.AddExerciseAdapter;
 import com.example.gleative.workit.adapter.ExercisesRecyclerAdapter;
-import com.example.gleative.workit.adapter.OnExerciseSelectedListener;
 import com.example.gleative.workit.adapter.RecycleAdapterListener;
 import com.example.gleative.workit.model.CustomExercise;
 import com.example.gleative.workit.model.Exercise;
-import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -54,14 +44,10 @@ public class ExerciseListFragment extends Fragment implements RecycleAdapterList
     private RecyclerView recyclerView;
     private OnExerciseFragmentInteractionListener listener;
     ExercisesRecyclerAdapter adapter;
-    AddExerciseAdapter addExerciseAdapter;
-    RecycleAdapterListener recycleAdapterListener;
     private List<Exercise> exercisesList;
     private List<Exercise> eList;
 
     private ProgressBar loadingSpinner;
-
-    private int layout;
 
     // Empty constructor required
     public ExerciseListFragment(){}

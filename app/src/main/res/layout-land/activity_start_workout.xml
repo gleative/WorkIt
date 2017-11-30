@@ -47,6 +47,7 @@
                 android:text="Exercise Name"
                 android:textSize="20sp"
                 android:textStyle="bold"
+                android:textColor="@color/colorPrimaryText"
                 android:layout_gravity="center"/>
 
             <TextView
@@ -54,6 +55,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Exercises done: "
+                android:textColor="@color/colorSecondaryText"
                 android:layout_gravity="center"/>
 
         </LinearLayout>
@@ -69,6 +71,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:text="Reps:"
+                android:textColor="@color/colorSecondaryText"
                 android:layout_gravity="center"/>
 
             <TextView
@@ -78,6 +81,7 @@
                 android:layout_marginTop="-5dp"
                 android:textSize="45sp"
                 android:text="XX"
+                android:textColor="@color/colorPrimaryText"
                 android:layout_gravity="center"/>
 
             <TextView
@@ -85,6 +89,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Sets:"
+                android:textColor="@color/colorSecondaryText"
                 android:layout_gravity="center"/>
 
             <TextView
@@ -93,6 +98,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="-5dp"
                 android:text="XX/XX"
+                android:textColor="@color/colorPrimaryText"
                 android:textSize="55sp"
                 android:layout_gravity="center"/>
 
@@ -100,17 +106,17 @@
                 android:id="@+id/timer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="swag"/>
+                android:text="time"/>
 
             <Button
                 android:id="@+id/continue_button"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:layout_marginTop="15dp"
-                android:background="@color/colorRed"
+                android:background="@color/colorAccent"
                 android:text="proceed"
                 android:onClick="proceedInWorkout"
-                android:textColor="#ffffff"
+                android:textColor="@color/colorTextIcons"
                 android:layout_gravity="bottom|center"/>
 
         </LinearLayout>

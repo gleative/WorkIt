@@ -72,8 +72,8 @@
                     android:layout_margin="8dp"
                     android:paddingStart="15dp"
                     android:text="Exercise Name"
-                    android:textSize="25sp"
-                    android:textStyle="bold"/>
+                    android:textColor="@color/colorPrimaryText"
+                    android:textSize="25sp" />
 
                 <TextView
                     android:id="@+id/exercise_body_part_info"
@@ -83,6 +83,7 @@
                     android:layout_marginStart="8dp"
                     android:layout_marginEnd="8dp"
                     android:paddingStart="15dp"
+                    android:textColor="@color/colorSecondaryText"
                     android:text="Body Part"/>
 
             <android.support.v7.widget.CardView
@@ -97,6 +98,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="Desc"
+                        android:textColor="@color/colorSecondaryText"
                         android:padding="5dp"/>
             </android.support.v7.widget.CardView>
 

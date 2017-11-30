@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.example.gleative.workit.CreateCustomExerciseActivity">
+
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/appBarLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar_execise_name"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            app:layout_scrollFlags="scroll|enterAlways"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+            app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    </android.support.design.widget.AppBarLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_margin="5dp">
+
+        <ImageView
+            android:id="@+id/selected_exercise_picture1"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:src="@drawable/e12_1"
+            android:layout_weight="1"
+            />
+
+        <ImageView
+            android:id="@+id/selected_exercise_picture2"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:src="@drawable/e12_2"
+            android:layout_weight="1"/>
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="5dp"
+                android:textSize="25dp"
+                android:text="Body Part:"
+                android:textColor="@color/colorSecondaryText" />
+
+            <TextView
+                android:id="@+id/selected_exercise_body_part"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:textColor="@color/colorPrimaryText"
+                android:layout_gravity="center"
+                android:textSize="20dp"
+                android:text="Body Part" />
+
+            <EditText
+                android:id="@+id/sets"
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:textSize="30dp"
+                android:hint="Sets"
+                android:inputType="number"/>
+
+            <EditText
+                android:id="@+id/reps"
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:textSize="30dp"
+                android:hint="Reps"
+                android:inputType="number"/>
+
+
+
+        <Button
+            android:id="@+id/add_custom_exercise"
+            android:layout_width="200dp"
+            android:layout_height="60dp"
+            android:layout_marginTop="20dp"
+            android:background="@color/colorAccent"
+            android:textColor="@color/colorTextIcons"
+            android:text="add exercise"
+            android:onClick="addCustomExerciseToWorkout"
+            android:layout_gravity="center|bottom"/>
+
+
+    </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>
+
+

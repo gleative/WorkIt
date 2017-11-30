@@ -53,7 +53,6 @@ public class MyWorkoutInfoActivity extends AppCompatActivity implements WorkoutC
     TextView dialogTitleView, dialogMessageView, dialogItemNameView;
     Button updateWorkoutButton, cancelUpdateWorkoutButton, dialogYesBtn, dialogNoBtn;
     FloatingActionButton fabEdit, fabAdd, fabDelete;
-    Snackbar snackbar;
 
     boolean fabButtonIsOpen = false; // True if edit fab button is pressed
     boolean deleteExercise = false; // True when user wants to delete a exercise
@@ -88,10 +87,10 @@ public class MyWorkoutInfoActivity extends AppCompatActivity implements WorkoutC
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if(!(selectedWorkout.getWorkoutName().equals(workoutNameView.getText().toString()))){
-                    setVisibilityOnUpdateAndCancel(true);
+                    setVisibilityOnUpdateAndCancel(true); // Shows update and cancel button
                 }
                 else{
-                    setVisibilityOnUpdateAndCancel(false);
+                    setVisibilityOnUpdateAndCancel(false);  // Hides update and cancel button
                 }
             }
 
@@ -108,10 +107,10 @@ public class MyWorkoutInfoActivity extends AppCompatActivity implements WorkoutC
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if(!(selectedWorkout.getWorkoutDescription().equals(workoutDescView.getText().toString()))){
-                    setVisibilityOnUpdateAndCancel(true);
+                    setVisibilityOnUpdateAndCancel(true); // Shows update and cancel button
                 }
                 else{
-                    setVisibilityOnUpdateAndCancel(false);
+                    setVisibilityOnUpdateAndCancel(false); // Hides update and cancel button
                 }
             }
 
@@ -189,7 +188,7 @@ public class MyWorkoutInfoActivity extends AppCompatActivity implements WorkoutC
             }
         });
 
-        // Exits the dialog
+        // Exits the dialog, if the user presses the no button
         dialogNoBtn.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
@@ -322,13 +321,13 @@ public class MyWorkoutInfoActivity extends AppCompatActivity implements WorkoutC
         // If they dont want to hide fab buttons
         if(!value){
             fabButtonIsOpen = true;
-            fabEdit.setImageResource(R.drawable.ic_close);
+            fabEdit.setImageResource(R.drawable.ic_close_white);
             fabAdd.setVisibility(View.VISIBLE);
             fabDelete.setVisibility(View.VISIBLE);
         }
         else{
             fabButtonIsOpen = false;
-            fabEdit.setImageResource(R.drawable.ic_edit);
+            fabEdit.setImageResource(R.drawable.ic_edit_white);
             fabAdd.setVisibility(View.INVISIBLE);
             fabDelete.setVisibility(View.INVISIBLE);
         }

@@ -31,6 +31,7 @@
         android:text="Workout completed!"
         android:textSize="35sp"
         android:textStyle="bold"
+        android:textColor="@color/colorPrimaryText"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/appBarLayout" />
@@ -42,6 +43,7 @@
         android:layout_gravity="center"
         android:text="Time used: "
         android:textSize="20sp"
+        android:textColor="@color/colorPrimaryText"
         app:layout_constraintEnd_toStartOf="@+id/workout_time"
         app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintStart_toStartOf="parent"
@@ -53,7 +55,7 @@
         android:layout_height="wrap_content"
         android:text="Time"
         android:textSize="20sp"
-        android:textStyle="bold"
+        android:textColor="@color/colorSecondaryText"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/time_used_text"
         app:layout_constraintTop_toBottomOf="@id/workout_complete_text" />
@@ -83,6 +85,7 @@
                 android:layout_marginStart="8dp"
                 android:text="Fastest exercise: "
                 android:textSize="18sp"
+                android:textColor="@color/colorPrimaryText"
                 app:layout_constraintBottom_toTopOf="@+id/fastest_exercise_name"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/time_used_text" />
@@ -93,6 +96,7 @@
                 android:layout_height="wrap_content"
                 android:text="fastest exercise name"
                 android:textStyle="bold"
+                android:textColor="@color/colorSecondaryText"
                 app:layout_constraintBottom_toTopOf="@+id/fastest_exercise_time"
                 app:layout_constraintEnd_toEndOf="@+id/fastest_exercise_name_text"
                 app:layout_constraintStart_toStartOf="@+id/fastest_exercise_name_text"
@@ -103,6 +107,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="time"
+                android:textColor="@color/colorSecondaryText"
                 app:layout_constraintBottom_toTopOf="@+id/continue_button"
                 app:layout_constraintEnd_toEndOf="@+id/fastest_exercise_name"
                 app:layout_constraintStart_toStartOf="@+id/fastest_exercise_name"
@@ -137,7 +142,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Longest exercise: "
-                android:textSize="18sp" />
+                android:textSize="18sp"
+                android:textColor="@color/colorPrimaryText"/>
 
             <TextView
                 android:id="@+id/longest_exercise_name"
@@ -145,6 +151,7 @@
                 android:layout_height="wrap_content"
                 android:text="longest exercise name"
                 android:textStyle="bold"
+                android:textColor="@color/colorSecondaryText"
                 app:layout_constraintBottom_toTopOf="@+id/longest_exercise_time"
                 app:layout_constraintEnd_toEndOf="@+id/longest_exercise_name_text"
                 app:layout_constraintTop_toBottomOf="@+id/longest_exercise_name_text" />
@@ -154,6 +161,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="time"
+                android:textColor="@color/colorSecondaryText"
                 app:layout_constraintBottom_toTopOf="@+id/continue_button"
                 app:layout_constraintEnd_toEndOf="@+id/longest_exercise_name"
                 app:layout_constraintStart_toStartOf="@+id/longest_exercise_name"
@@ -171,10 +179,10 @@
         android:layout_height="70dp"
         android:layout_gravity="bottom|center"
         android:layout_marginBottom="20dp"
-        android:background="@color/colorRed"
+        android:background="@color/colorAccent"
         android:onClick="finishWorkout"
         android:text="finish"
-        android:textColor="#ffffff"
+        android:textColor="@color/colorTextIcons"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

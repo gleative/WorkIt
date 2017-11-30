@@ -1,14 +1,12 @@
 package com.example.gleative.workit;
 
 import android.content.Intent;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.gleative.workit.fragments.ExerciseListFragment;
@@ -34,15 +32,9 @@ public class CreateWorkoutActivity extends AppCompatActivity implements Exercise
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_workout);
 
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FragmentManager fragmentManager = getSupportFragmentManager();
-
-        // So we can access its methods
-        ExerciseListFragment exerciseListFragment = (ExerciseListFragment) getSupportFragmentManager().findFragmentById(R.id.exercise_list_fragment);
-
-        // Finds the EditText views
         workoutNameText = findViewById(R.id.workout_name);
         workoutDescriptionText = findViewById(R.id.workout_desc);
 
@@ -52,18 +44,18 @@ public class CreateWorkoutActivity extends AppCompatActivity implements Exercise
 
     private void setUpDrawer() {
         navigationDrawerFragment = (NavigationDrawerFragment) getSupportFragmentManager().findFragmentById(R.id.navigation_drawer_fragment);
-        DrawerLayout drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawerLayout = findViewById(R.id.drawer_layout);
         navigationDrawerFragment.setUpDrawer(drawerLayout, toolbar, R.id.nav_myWorkouts);
     }
 
     @Override
     protected void onStart(){
         navigationDrawerFragment.updateCheckedItem(R.id.nav_myWorkouts);
-
         super.onStart();
     }
 
 
+    // TODO: Tror du kan slette denne og implementations på toppen
     @Override
     public void onExerciseSelected(Exercise selectedExercise) {
         Intent intent = new Intent(this, CreateCustomExerciseActivity.class);
