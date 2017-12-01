@@ -36,6 +36,8 @@ public class MyWorkoutActivity extends AppCompatActivity implements WorkoutListF
         if(extras != null){
             startWorkout = extras.getInt("startWorkout"); // Gives value sendt from MainActivity
             fab.hide(); // Hides the FloatingActionButton, method only called when a user wants to start a workout.
+            // For some reason have to set title like this, or else it wouldnt apply the value
+            getSupportActionBar().setTitle("Start Workout");
         }
 
         setUpDrawer();

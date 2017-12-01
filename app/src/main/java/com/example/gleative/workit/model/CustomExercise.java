@@ -23,36 +23,10 @@ public class CustomExercise implements Parcelable{
     private Exercise exercise;
     private int sets;
     private int reps;
-    private int time;
 
     public CustomExercise(){
         super();
     }
-
-//    public CustomExercise(String _workoutID, int _exerciseID, int _sets, int _reps){
-//        this.workoutID = _workoutID;
-//        this.exerciseID = _exerciseID;
-//        this.sets = _sets;
-//        this.reps = _reps;
-//    }
-//
-//    public CustomExercise(Parcel parcel){
-//        this.workoutID = parcel.readString();
-//        this.exerciseID = parcel.readInt();
-//        this.sets = parcel.readInt();
-//        this.reps = parcel.readInt();
-//        this.time = parcel.readInt();
-//    }
-//
-//
-//    @Override
-//    public void writeToParcel(Parcel dest, int flags) {
-//        dest.writeString(this.workoutID);
-//        dest.writeInt(this.exerciseID);
-//        dest.writeInt(this.sets);
-//        dest.writeInt(this.reps);
-//        dest.writeInt(this.time);
-//    }
 
     public CustomExercise(String _customExerciseID, String _workoutID, int _exerciseID, Exercise _exercise, int _sets, int _reps){
         this.customExerciseID = _customExerciseID;
@@ -70,7 +44,6 @@ public class CustomExercise implements Parcelable{
         this.exercise = parcel.readParcelable(Exercise.class.getClassLoader());
         this.sets = parcel.readInt();
         this.reps = parcel.readInt();
-        this.time = parcel.readInt();
     }
 
 
@@ -82,7 +55,6 @@ public class CustomExercise implements Parcelable{
         dest.writeParcelable(this.exercise, flags);
         dest.writeInt(this.sets);
         dest.writeInt(this.reps);
-        dest.writeInt(this.time);
     }
 
     @Override
@@ -149,30 +121,4 @@ public class CustomExercise implements Parcelable{
     public void setReps(int reps) {
         this.reps = reps;
     }
-
-    public int getTime() {
-        return time;
-    }
-
-    public void setTime(int time) {
-        this.time = time;
-    }
-
-//    public static List<CustomExercise> getCustomExerciseData(){
-//        List<CustomExercise> customExerciseList = new ArrayList<>();
-//
-//        Random randomNumber = new Random();
-//        int number = randomNumber.nextInt(8);
-//
-//        for(int i = 0; i <= number; i++){
-//            CustomExercise customExercise = new CustomExercise();
-//            customExercise.setExercise(new Exercise());
-//            customExercise.setReps(12);
-//            customExercise.setSets(3);
-//
-//            customExerciseList.add(customExercise);
-//        }
-//
-//        return customExerciseList;
-//    }
 }

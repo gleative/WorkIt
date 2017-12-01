@@ -9,6 +9,5 @@ import com.example.gleative.workit.model.Exercise;
 
 public interface RecycleAdapterListener {
     void exerciseSelected(Exercise selectedExercise);
-
     void customExerciseSelected(CustomExercise selectedCustomExercise);
 }

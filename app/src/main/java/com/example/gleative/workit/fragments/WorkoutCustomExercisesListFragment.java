@@ -32,9 +32,6 @@ import java.util.List;
 
 public class WorkoutCustomExercisesListFragment extends Fragment implements RecycleAdapterListener{
 
-    private FirebaseDatabase firebaseDatabase;
-    private DatabaseReference dbReference;
-
     private RecyclerView recyclerView;
     private WorkoutCustomExercisesListFragment.OnCustomExerciseFragmentInteractionListener listener;
     private CustomExerciseRecyclerAdapter adapter;
@@ -47,9 +44,6 @@ public class WorkoutCustomExercisesListFragment extends Fragment implements Recy
         View view = inflater.inflate(R.layout.fragment_workout_selected_list, container, false);
 
         customExerciseList = new ArrayList<>();
-
-        firebaseDatabase = FirebaseDatabase.getInstance();
-        dbReference = firebaseDatabase.getReference().child("customExercises");
 
         setUpRecyclerView(view);
 

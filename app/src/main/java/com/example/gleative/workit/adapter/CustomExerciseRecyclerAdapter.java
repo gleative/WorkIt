@@ -24,10 +24,9 @@ import java.util.List;
 
 public class CustomExerciseRecyclerAdapter extends RecyclerView.Adapter<CustomExerciseViewHolder>{
 
-    FirebaseDatabase firebaseDatabase;
-    DatabaseReference dbReferenceExercises;
+    private FirebaseDatabase firebaseDatabase;
+    private DatabaseReference dbReferenceExercises;
 
-    private Exercise exercise;
     private List<CustomExercise> customExerciseData;
     private LayoutInflater inflater;
     private OnExerciseSelectedListener exerciseSelectedListener;
@@ -90,9 +89,7 @@ public class CustomExerciseRecyclerAdapter extends RecyclerView.Adapter<CustomEx
             }
 
             @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
+            public void onCancelled(DatabaseError databaseError) {}
         });
 
     }

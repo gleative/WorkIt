@@ -16,7 +16,6 @@ import android.widget.Toast;
 
 import com.example.gleative.workit.ExerciseActivity;
 import com.example.gleative.workit.R;
-import com.example.gleative.workit.adapter.AddExerciseAdapter;
 import com.example.gleative.workit.adapter.ExercisesRecyclerAdapter;
 import com.example.gleative.workit.adapter.RecycleAdapterListener;
 import com.example.gleative.workit.model.CustomExercise;
@@ -174,6 +173,7 @@ public class ExerciseListFragment extends Fragment implements RecycleAdapterList
 
             if(selectedCategory.equals("Starred")){
                 for(Exercise exercise: exercisesList){
+                    // If it is starred, add it to the list
                     if(exercise.getStarred().equals("1")){
                         newList.add(exercise);
                     }

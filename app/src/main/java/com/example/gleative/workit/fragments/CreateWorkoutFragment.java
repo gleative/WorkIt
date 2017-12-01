@@ -16,9 +16,6 @@ import com.example.gleative.workit.R;
 
 public class CreateWorkoutFragment extends Fragment{
 
-    private EditText workoutName;
-    private EditText workoutDesc;
-
     public CreateWorkoutFragment(){}
 
     @Override

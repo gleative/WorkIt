@@ -138,6 +138,7 @@ public class ExerciseActivity extends AppCompatActivity implements ExerciseListF
                 break;
             case "Starred":
                 exerciseListFragment.spinnerFilterExercises(selectedItem);
+                break;
         }
     }
 

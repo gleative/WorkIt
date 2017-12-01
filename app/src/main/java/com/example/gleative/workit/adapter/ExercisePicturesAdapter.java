@@ -59,7 +59,7 @@ public class ExercisePicturesAdapter extends PagerAdapter{
         imageView.setMinimumHeight(height);
         imageView.setMinimumWidth(width);
 
-        // Adds the pictures to the view pager, if string starts with "https" we know its from firbase storage, and display it then with glide, otherwise it is from drawable
+        // Adds the pictures to the view pager, if string starts with "https" we know its from firebase storage, and display it with glide, otherwise it is from drawable
         try{
             if(images.get(position).startsWith("https")){
                 Glide.with(activity.getApplicationContext()).load(images.get(position)).into(imageView);

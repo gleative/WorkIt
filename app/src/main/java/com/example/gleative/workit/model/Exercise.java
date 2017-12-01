@@ -150,7 +150,6 @@ public class Exercise implements Parcelable{
         this.starred = starredValue;
     }
 
-    // Legger til data sånn at det kan bli lagt inn i recycler view
     public static List<Exercise> getData(){
 
         List<Exercise> exerciseList = new ArrayList<>();

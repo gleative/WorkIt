@@ -18,8 +18,7 @@ import com.example.gleative.workit.model.Workout;
 
 public class WorkoutViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
-    private TextView workoutName;
-    private TextView workoutAmountExercises;
+    private TextView workoutName, workoutAmountExercises;
     private ImageView imgDelete;
     private OnWorkoutSelectedListener onWorkoutSelectedListener;
 
@@ -37,7 +36,7 @@ public class WorkoutViewHolder extends RecyclerView.ViewHolder implements View.O
 
     public void bind(Workout workout, OnWorkoutSelectedListener listener, int layoutType){
         this.workoutName.setText(workout.getWorkoutName());
-        this.workoutAmountExercises.setText("Exercises: " + workout.getAmountExercises());
+        this.workoutAmountExercises.setText("Exercises: "); // workout.getCustomExercises(), supposed to have this inside the setText. But it always shows 0.
         this.onWorkoutSelectedListener = listener;
 
         // Hides the imageview if user is going to start a workout

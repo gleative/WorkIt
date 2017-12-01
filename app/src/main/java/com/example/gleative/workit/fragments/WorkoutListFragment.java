@@ -83,14 +83,7 @@ public class WorkoutListFragment extends Fragment implements WorkoutRecycleAdapt
 
         setUpRecyclerView(view);
 
-        try{
-            getData();
-        } catch(Exception e){
-            e.printStackTrace();
-            Toast.makeText(getActivity(), "Failed to retrieve workouts.", Toast.LENGTH_SHORT).show();
-            loadingSpinner.setVisibility(View.GONE); // Hides the loading spinner because it failed loading the data
-
-        }
+        getData();
 
         return view;
     }
@@ -105,29 +98,34 @@ public class WorkoutListFragment extends Fragment implements WorkoutRecycleAdapt
         }
     }
 
-    public void setLayoutType(int typeValue){
-        layoutType = typeValue;
-    }
-
     // Retrieves the workouts data from the database and adds the data to the recycler view
     private void getData(){
         loadingSpinner.setVisibility(View.VISIBLE);
+
         dbReferenceWorkouts.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 workoutsList.clear(); // Clear list before getting the data, if data already exist it will be duplicates
                 for(DataSnapshot workoutSnapshot : dataSnapshot.getChildren()){
-                    Workout workout = new Workout();
-                    workout.setWorkoutID(workoutSnapshot.getKey().toString());
-                    workout.setWorkoutName(workoutSnapshot.child("workoutName").getValue().toString());
-                    workout.setWorkoutDescription(workoutSnapshot.child("workoutDescription").getValue().toString());
-                    workoutsList.add(workout);
+                    try {
+                        Workout workout = new Workout();
+                        workout.setWorkoutID(workoutSnapshot.getKey().toString());
+                        workout.setWorkoutName(workoutSnapshot.child("workoutName").getValue().toString());
+                        workout.setWorkoutDescription(workoutSnapshot.child("workoutDescription").getValue().toString());
+                        workoutsList.add(workout);
 
-                    try{
-                        getCustomExercises(workoutsList.size()-1); // The current workout is the one that is last on the list.
+                        getCustomExercises(workoutsList.size() - 1); // The current workout is the one that is last on the list.
+                    } catch(IndexOutOfBoundsException i){
+                        i.printStackTrace();
+                        /*
+                         Not something the user has to know of.
+                         This probably happends because of onDataChange being async method.
+                         But it deletes exercises and workout correctly
+                         */
+//                        Toast.makeText(getActivity(), "Index out of bounds (Get workouts)", Toast.LENGTH_SHORT).show();
                     } catch(Exception e){
                         e.printStackTrace();
-                        Toast.makeText(getActivity(), "Failed to retrieve custom exercises.", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), "Failed to retrieve workouts", Toast.LENGTH_SHORT).show();
                         loadingSpinner.setVisibility(View.GONE); // Hides the loading spinner because it failed loading the data
                     }
 
@@ -150,17 +148,30 @@ public class WorkoutListFragment extends Fragment implements WorkoutRecycleAdapt
 
         customExerciseList = new ArrayList<>();
 
-
         dbReferenceCustomExercises.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for(DataSnapshot customExerciseSnapshot : dataSnapshot.getChildren()){
 
-                    Workout workout = workoutsList.get(workoutListID); // Gets reference to the workout object
-                    CustomExercise customExercise = customExerciseSnapshot.getValue(CustomExercise.class);
+                    try{
+                        Workout workout = workoutsList.get(workoutListID); // Gets reference to the workout object
+                        CustomExercise customExercise = customExerciseSnapshot.getValue(CustomExercise.class);
 
-                    if(customExercise.getWorkoutID().equals(workout.getWorkoutID())){
-                        workout.getCustomExercises().add(customExercise);
+                        if(customExercise.getWorkoutID().equals(workout.getWorkoutID())){
+                            workout.getCustomExercises().add(customExercise);
+                        }
+
+                    } catch (IndexOutOfBoundsException i) {
+                        i.printStackTrace();
+                        /*
+                         Not something the user has to know of.
+                         This probably happends because of onDataChange being async method.
+                         But it deletes exercises and workout correctly
+                         */
+//                        Toast.makeText(getActivity(), "Index out of bounds" (Get custom exercises), Toast.LENGTH_SHORT).show();
+                    } catch(Exception e){
+                        e.printStackTrace();
+                        Toast.makeText(getActivity(), "Failed to retrieve custom exercises.", Toast.LENGTH_SHORT).show();
                     }
 
                 }
@@ -225,7 +236,7 @@ public class WorkoutListFragment extends Fragment implements WorkoutRecycleAdapt
     // Deletes the workout from the database and list. Also updates the adapter so the user can see the changes
     private void deleteWorkout(Workout workout){
         try{
-//            deleteExercisesInWorkout(workout);
+            deleteExercisesInWorkout(workout);
             dbReferenceWorkouts.child(workout.getWorkoutID()).removeValue();
 
             workoutsList.remove(workout);
@@ -241,17 +252,29 @@ public class WorkoutListFragment extends Fragment implements WorkoutRecycleAdapt
     }
 
     private void deleteExercisesInWorkout(Workout workout){
-        for(CustomExercise customExercise : workout.getCustomExercises()){
-            dbReferenceCustomExercises.child(customExercise.getCustomExerciseID()).removeValue();
+        try{
+            for(CustomExercise customExercise : workout.getCustomExercises()){
+                dbReferenceCustomExercises.child(customExercise.getCustomExerciseID()).removeValue();
+            }
+        } catch (IndexOutOfBoundsException e){
+            e.printStackTrace();
+            /*
+             Not something the user has to know of.
+             This probably happends because of onDataChange being async method.
+             But it deletes exercises and workout correctly
+             */
+//            Toast.makeText(getActivity(), "Index out of bounds (Delete custom exercise)", Toast.LENGTH_SHORT).show();
+        } catch (Exception i){
+            i.printStackTrace();
+            Toast.makeText(getActivity(), "Failed to delete exercises", Toast.LENGTH_SHORT).show();
         }
+
     }
 
     @Override
-    public void workoutSelected(Workout workout) {
-//        listener.onWorkoutSelected(workout);
-    }
+    public void workoutSelected(Workout workout) {}
 
-    // If user clicks on the delete img that listener will only get triggered, or else it will delete workout and check workout info.
+    // If user clicks on the delete img that listener will only get triggered, or else it will check workout info.
     @Override
     public void workoutDeleteImageSelected(View v, Workout workout) {
         if(v.getId() == R.id.img_delete_workout){

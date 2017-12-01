@@ -67,6 +67,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:hint="Sets"
+        android:maxLength="2"
         android:inputType="number"/>
 
     <EditText
@@ -75,6 +76,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:hint="Reps"
+        android:maxLength="2"
         android:inputType="number"/>
 
     <Button

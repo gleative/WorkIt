@@ -31,10 +31,10 @@ public class StartWorkoutActivity extends AppCompatActivity {
     private int position = 0; // 0 So it starts at the start of the workouts list.
 
     private CountDownTimer timer;
-    private int counter = 0;
-    private long seconds = 0;
-    private long minutes = 0;
-    private long hours = 0;
+//    private int counter = 0;
+//    private long seconds = 0;
+//    private long minutes = 0;
+//    private long hours = 0;
 
     private CountDownTimer timerExercise;
     private String fastestExerciseName, longestExerciseName;
@@ -99,17 +99,16 @@ public class StartWorkoutActivity extends AppCompatActivity {
 
             @Override
             public void onTick(long millisecondsLeft) {
-                counter++;
-
-                // Holds the amount of milliseconds
+                // Holds the amount of milliseconds, this math i did myself
                 workoutTime = 3600000 - millisecondsLeft;
 
-                NumberFormat displayTime = new DecimalFormat("00");
-                hours = (workoutTime / 3600000) % 24;
-                minutes = (workoutTime / 60000) % 60;
-                seconds = (workoutTime / 1000) % 60;
-
-                timerView.setText(displayTime.format(hours) + ":" + displayTime.format(minutes) + ":" + displayTime.format(seconds) + ":" + counter);
+                // Uncomment this and the declaration of the variables if you want to see the timer
+//                NumberFormat displayTime = new DecimalFormat("00");
+//                hours = (workoutTime / 3600000) % 24;
+//                minutes = (workoutTime / 60000) % 60;
+//                seconds = (workoutTime / 1000) % 60;
+//
+//                timerView.setText(displayTime.format(hours) + ":" + displayTime.format(minutes) + ":" + displayTime.format(seconds));
 
             }
 
@@ -124,6 +123,7 @@ public class StartWorkoutActivity extends AppCompatActivity {
         timerExercise = new CountDownTimer(3600000, 1000) {
             @Override
             public void onTick(long millisecondsLeft) {
+                // Holds the amount of milliseconds, this math i did myself
                 exerciseTime = 3600000 - millisecondsLeft;
             }
 
@@ -152,6 +152,8 @@ public class StartWorkoutActivity extends AppCompatActivity {
             outState.putLong("fastestExercise", fastestExercise);
             outState.putString("longestExerciseName", longestExerciseName);
             outState.putString("fastestExerciseName", fastestExerciseName);
+            outState.putLong("savedWorkoutTime", savedWorkoutTime); // save this aswell, so multiple orientation changes still holds the correct time
+            outState.putLong("savedExerciseTime", savedExerciseTime);
         } catch (Exception e){
             Toast.makeText(this, "Unable to save the data!", Toast.LENGTH_SHORT).show();
         }
@@ -171,6 +173,8 @@ public class StartWorkoutActivity extends AppCompatActivity {
             fastestExercise = savedInstanceState.getLong("fastestExercise");
             longestExerciseName = savedInstanceState.getString("longestExerciseName");
             fastestExerciseName = savedInstanceState.getString("fastestExerciseName");
+            savedWorkoutTime = savedInstanceState.getLong("savedWorkoutTime");
+            savedExerciseTime = savedInstanceState.getLong("savedExerciseTime");
         } catch (Exception e){
             Toast.makeText(this, "Unable to retrieve the saved values!", Toast.LENGTH_SHORT).show();
         }

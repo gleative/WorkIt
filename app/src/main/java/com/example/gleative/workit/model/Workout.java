@@ -105,21 +105,4 @@ public class Workout implements Parcelable {
             return 0;
         }
     }
-
-//    public static List<Workout> getData(){
-//        List<Workout> workoutList = new ArrayList<>();
-//
-//        for(int i = 0; i <= 7; i++){
-//            Workout workout = new Workout();
-//            workout.setWorkoutID(i);
-//            workout.setWorkoutName("Workout " + i);
-//            workout.setWorkoutDescription("Desc for workout" + i);
-//            workout.setCustomExercises(CustomExercise.getCustomExerciseData());
-//
-//            workoutList.add(workout);
-//
-//        }
-//
-//        return workoutList;
-//    }
 }

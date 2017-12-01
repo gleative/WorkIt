@@ -24,7 +24,6 @@ public class ExercisesRecyclerAdapter extends RecyclerView.Adapter<ExerciseViewH
     private LayoutInflater inflater;
     private OnExerciseSelectedListener exerciseSelectedListener;
     private RecycleAdapterListener recycleAdapterListener;
-    private String layoutType;
 
     public ExercisesRecyclerAdapter(Context context, List<Exercise> data, RecycleAdapterListener _recycleAdapterListener){
         this.exerciseData = data;
@@ -42,7 +41,6 @@ public class ExercisesRecyclerAdapter extends RecyclerView.Adapter<ExerciseViewH
         };
     }
 
-    // Gets the layout file
     @Override
     public ExerciseViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = inflater.inflate(R.layout.list_exercises, parent, false); // Inflater list_exercise layout, so it gets its design
@@ -68,19 +66,16 @@ public class ExercisesRecyclerAdapter extends RecyclerView.Adapter<ExerciseViewH
         return exerciseData.get(position);
     }
 
-
+    // Filters the list
     public void setFilter(List<Exercise> newList){
         this.exerciseData = newList;
         notifyDataSetChanged(); // This refreshes the adapter.
     }
 
+    // Updates the data
     public void updateAdapter(List<Exercise> newList){
         this.exerciseData = newList;
         notifyDataSetChanged();
-    }
-
-    public void clearData(){
-        this.exerciseData.clear();
     }
 
 }

@@ -16,7 +16,7 @@ import com.example.gleative.workit.model.Workout;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-public class CreateWorkoutActivity extends AppCompatActivity implements ExerciseListFragment.OnExerciseFragmentInteractionListener{
+public class CreateWorkoutActivity extends AppCompatActivity{
 
     DatabaseReference dbReference;
 
@@ -52,15 +52,6 @@ public class CreateWorkoutActivity extends AppCompatActivity implements Exercise
     protected void onStart(){
         navigationDrawerFragment.updateCheckedItem(R.id.nav_myWorkouts);
         super.onStart();
-    }
-
-
-    // TODO: Tror du kan slette denne og implementations på toppen
-    @Override
-    public void onExerciseSelected(Exercise selectedExercise) {
-        Intent intent = new Intent(this, CreateCustomExerciseActivity.class);
-        intent.putExtra("exercise", selectedExercise);
-        startActivity(intent);
     }
 
     // When user presses the add button

@@ -33,7 +33,6 @@ public class CreateCustomExerciseFragment extends Fragment{
     CustomExercise customExercise;
     Exercise selectedExercise;
 
-    private TextView exerciseName;
     private TextView exerciseBodyPart;
     private ImageView exercisePicture1, exercisePicture2;
     private EditText sets, reps;

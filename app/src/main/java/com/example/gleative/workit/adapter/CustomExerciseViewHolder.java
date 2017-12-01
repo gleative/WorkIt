@@ -19,14 +19,9 @@ import org.w3c.dom.Text;
 
 public class CustomExerciseViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
-    TextView customExerciseName;
-    TextView customExerciseBodyPart;
-    TextView customExerciseSets;
-    TextView customExerciseReps;
+    TextView customExerciseName, customExerciseBodyPart, customExerciseSets, customExerciseReps;
     ImageView customExerciseThumb1, customExerciseThumb2;
-
     Context context;
-
     OnExerciseSelectedListener onExerciseSelectedListener;
 
     public CustomExerciseViewHolder(View itemView){

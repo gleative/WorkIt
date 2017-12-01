@@ -1,7 +1,6 @@
 package com.example.gleative.workit.adapter;
 
 import android.content.Context;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
@@ -17,12 +16,9 @@ import com.example.gleative.workit.model.Exercise;
 
 public class ExerciseViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
-    TextView exerciseName;
-    TextView exerciseBodyPart;
-    ImageView exerciseThumb1;
-    ImageView exerciseThumb2;
+    TextView exerciseName, exerciseBodyPart;
+    ImageView exerciseThumb1, exerciseThumb2;
     OnExerciseSelectedListener onExerciseSelectedListener;
-
     Context context;
 
     public ExerciseViewHolder(View itemView){
